@@ -18,3 +18,14 @@
 + Take notes
 + Course's Project
 + Own Project / extend the course's project
+
+```JavaScript
+  const mapDispatchToProps = dispatch => {
+    return {
+      onTodoClick: id => {
+        dispatch(toggleTodo(id))
+      }
+    }
+  }
+
+```
