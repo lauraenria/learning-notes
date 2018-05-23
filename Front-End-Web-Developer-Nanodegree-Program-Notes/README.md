@@ -20,7 +20,7 @@
 * Project-2 Portfolio Site/index.html 
   * We can include favicon in your header. It is a web site icon that usually show up in browser's address bar / tab / bookmark and will further personalize your web page. See screenshot below:
   
-  ```HTML
+  ```css
     <link rel="shortcut icon" type="image/png" href="img/favicon.png">
    ```
     * We can also further personalize your webpage in header tag by configuring: [**Android Chrome theme-color**](https://developers.google.com/web/updates/2014/11/Support-for-theme-color-in-Chrome-39-for-Android?hl=en)
@@ -104,7 +104,7 @@ It gives a sustainable and maintainable naming structure for CSS code. It's conc
 # media queries section
 ## Learning tips Lesson 13 
 
-```html
+```
 <link rel="stylesheet" href="style.css">
 
 <link rel="stylesheet" media="screen  and (min-width: 500px)" href="over500.css">
@@ -131,13 +131,13 @@ It gives a sustainable and maintainable naming structure for CSS code. It's conc
 #### lesson examples:
 
 ```css
-@media screen  and (max-width: 400px)
+@media screen  and (max-width: 400px){}
 
-@media screen and (min-width: 301px) and (max-width: 600px)
+@media screen and (min-width: 301px) and (max-width: 600px){}
 
-@media screen  and (min-width: 601px)
+@media screen  and (min-width: 601px){}
 
-@media screen  and (min-width: 961px) 
+@media screen  and (min-width: 961px) {}
 
 ```
 
@@ -950,7 +950,7 @@ The goal is that each commit has a single focus. Each commit should record a sin
 
   * The **git diff** command can be used to see changes that have been made but haven't been committed, yet.
 
-```
+```Bash
 $ git diff
 ```
  Wanna know a secret? ```git log -p``` uses ```git diff``` under the hood.
@@ -1008,3 +1008,3064 @@ Globbing lets you use special characters to match patterns/characters. In the ``
 * [gitignore](https://git-scm.com/docs/gitignore#_pattern_format)
 * [Ignoring files](https://help.github.com/articles/ignoring-files/)
 * [gitignore.io](https://www.gitignore.io/)
+
+---
+* **git tag** Add tags to specific commits (a tag is an extra label for a commit that can indicate info eg "beta release")
+
+* **git branch** allows multiple lines of development
+
+* **git checkout** switch between different branches and tags
+
+* **git merge** combines changes on different branches
+
+### Git Tag Command
+
+```git
+$ git tag -a v1.0
+```
+
+This will open your code editor and wait for you to supply a message for the tag.
+
+```
+#
+# Write a message for tag:
+#   v1.0
+# Lines starting with '#' will be ignored.
+```
+
+>CAREFUL: In the command above (```git >tag -a v1.0```) the ```-a``` flag is used. >This flag tells Git to create an annotated flag. If you don't provide the flag (i.e. ```git tag v1.0```)> then it'll create what's called a *lightweight* tag.
+
+Annotated tags are recommended because they include a lot of extra information such as:
+
+* the person who made the tag
+* the date the tag was made
+* a message for the tag
+
+Because of this, you should always use annotated tags.
+
+**Verify Tag** ```use git log```
+
+**git log --decorate** (--decorate Flag) show us some details that are hidden from the default view.
+
+In the 2.13 update to Git, the log command has changed to automatically enable the --decorate flag. This means that you do not need to include the --decorate flag in your command, since it is automatically included, anyway! So the following commands result in the exact same output:
+
+```
+$ git log --decorate
+$ git log
+```
+[Check out the 2.13 release notes.](https://github.com/git/git/blob/v2.13.0/Documentation/RelNotes/2.13.0.txt#L176-L177)
+
+The tag information is at the very end of the first line:
+<pre>
+commit 6fa5f34790808d9f4dccd0fa8fdbc40760102d6e (HEAD -> master, tag: v1.0)
+</pre>
+
+Remember that tags are associated with a specific commit. This is why the tag is on the same line as the commit's SHA.
+
+**HEAD -> master** hat's information about a branch
+
+**Deleting A Tag**
+* **git tag -d** nameTag
+* **git tag --delete** nameTag
+
+What if you accidentally misspelled something in the tag's message, or mistyped the actual tag name (```v0.1``` instead of ```v1.0```). How could you fix this? The easiest way is just to delete the tag and make a new one.
+
+A Git tag can be deleted with the ```-d``` flag (for delete!) and the name of the tag:
+
+```git
+$ git tag -d v1.0
+$ git tag --delete v1.0
+```
+
+**Adding A Tag To A Past Commit :**
+
+All you have to do is provide the SHA of the commit you want to tag
+
+```git
+$ git tag -a v1.0 a87984
+```
+(after popping open a code editor to let you supply the tag's message) this command will tag the commit with the SHA a87084 with the tag v1.0.
+
+**Git Tag Recap**
+
+the ```git tag``` command is used to add a marker on a specific commit. The tag does not move around as new commits are added.
+
+```git
+$ git tag -a beta
+```
+This command will:
+
+* add a tag to the most recent commit
+
+* add a tag to a specific commit if a SHA is passed
+
+### Further Research
+* [Git Basics - Tagging from the Git Book](https://git-scm.com/book/en/v2/Git-Basics-Tagging) from the Git Book
+
+* [Git Tag from the Git Docs](https://git-scm.com/docs/git-tag) from the Git Docs
+---
+
+* **git branch** is used to list all branches
+  * **git branch name** create new branch
+```
+$ git branch
+```
+
+It can be used to:
+
+* list all branch names in the repository
+* create new branches
+* delete branches
+
+If we type out just git branch it will list out the branches in a repository
+
+### Create A Branch
+git branch and provide it the name of the branch 
+```
+$ git branch name
+```
+
+* **git checkout name** switch between branches
+
+* remove all files and directories from the Working Directory that Git is tracking
+* (files that Git tracks are stored in the repository, so nothing is lost)
+
+* go into the repository and pull out all of the files and directories of the commit that the branch points to
+
+**Branches In The Log**
+
+```
+$ git log --oneline --decorate
+```
+
+### The Active Branch
+**git it branch** an asterisk will appear next to the name of the active branch.
+
+### Delete A Branch
+
+After a branch's changes have been merged, you probably won't need the branch anymore. If you want to delete the branch, you'd use the -d flag. The command below includes the ```-d``` flag which tells Git to delete the provided branch
+
+```Bash
+$ git branch -d sidebar
+```
+ you can't delete a branch that you're currently on. So to delete the X branch, you'd have to switch to either to Y branch or create and switch to a new branch.
+
+ Git won't let you delete a branch if it has commits on it that aren't on any other branch
+
+### Further Research
+* [Git Branching - Basic Branching and Merging from the Git Docs](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+
+* [Learn Git Branching](https://learngitbranching.js.org/)
+
+* [Git Branching Tutorial from the Atlassian Blog](https://www.atlassian.com/git/tutorials/using-branches)
+
+###  Switch and Create Branch In One Command
+```
+* $ git checkout -b name
+* $ git checkout -b name master
+```
+create a branch and switch to it all in one command.
+
+### See All Branches At Once
+```
+* $ git log --oneline --decorate --graph --all
+```
+This shows all branches and therefore all commits in the repository.
+
+The ```--graph``` flag adds the bullets and lines to the leftmost part of the output. This shows the actual branching that's happening. The ```--all``` flag is what displays all of the branches in the repository.
+
+Running this command will show all branches and commits in the repository.
+
+# **merging**
+
+Combining branches together is called **merging**.
+
+* **regular merge** : is the same of fast-forward merge but because this combines two divergent branches, a commit is going to be made. And when a commit is made, a commit message needs to be supplied. Since this is a merge commit a default message is already supplied. You can change the message if you want, but it's common practice to use the default merge commit message. So when your code editor opens with the message, just close it again and accept that commit message.
+
+* **Fast-forward merge** : A Fast-forward merge will just move the currently checked out branch forward until it points to the same commit that the other branch. eg. The new branch is in the master branch
+
+**if you make a merge on the wrong branch**, use this command to undo the merge:
+
+**git reset --hard HEAD^**
+
+(Make sure to include the ^ character. It's a known as a "Relative Commit Reference" and indicates "the parent commit".) 
+
+* **```$ git merge <name-of-branch-to-merge-in```**
+When a merge happens, Git will:
+
+  * look at the branches that it's going to merge
+
+  *  look back along the branch's history to find a single commit that both branches have in their commit history
+
+  * combine the lines of code that were changed on the separate branches together
+
+  * makes a commit to record the merge
+
+**Whichever branch the special ```HEAD``` pointer is pointing at, that's the branch that will have the merge commit.**
+
+ # **merge conflict.**
+When a merge is performed and fails
+
+* ```$ git merge <other-branch>```
+
+There are two types of merges:
+
+* Fast-forward merge – the branch being merged in must be *ahead* of the checked out branch. The checked out branch's pointer will just be moved forward to point to the same commit as the other branch.
+
+* the regular type of merge
+  * two divergent branches are combined
+  * a merge commit is created
+
+### Further Research
+* [**Basic Merging**](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging#Basic-Merging) from Git Book
+
+* [**git-merge from**](https://git-scm.com/docs/git-merge) Git Docs
+* [**git merge**](https://www.atlassian.com/git/tutorials/using-branches/git-merge) from Atlassian blog
+
+If a merge conflict does occur, Git will try to combine as much as it can, but then it will leave special markers (e.g. >>> and <<<) that tell you where you (yep, you the programmer!) needs to manually fix.
+
+## What Causes A Merge Conflict
+
+A merge conflict will happen when the exact same line(s) are changed in separate branches. 
+
+## Forcing A Merge Conflict!
+
+## Merge Conflict Output Explained
+
+The output that shows in the Terminal is:
+
+```git
+$ git merge heading-update 
+Auto-merging index.html
+CONFLICT (content): Merge conflict in index.html
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+## **Merge Conflict Indicators Explanation**
+
+The editor has the following merge conflict indicators:
+
+* ```**<<<<<<<** HEAD``` everything below this line (until the next indicator) shows you what's on the current branch
+
+* ```**||||||| merged common ancestors**``` everything below this line (until the next indicator) shows you what the original lines were
+
+* ```**=======**``` is the end of the original lines, everything that follows (until the next indicator) is what's on the branch that's being merged in
+
+* ```**>>>>>>> heading-update**``` is the ending indicator of what's on the branch that's being merged in (in this case, the heading-update branch)
+
+## **Resolving A Merge Conflict**
+
+Git is using the merge conflict indicators to show you what lines caused the merge conflict on the two different branches as well as what the original line used to have. So to resolve a merge conflict, you need to:
+
+* choose which line(s) to keep
+* remove all lines with indicators
+
+### Merge Conflict Recap
+A merge conflict happens when the same line or lines have been changed on different branches that are being merged. Git will pause mid-merge telling you that there is a conflict and will tell you in what file or files the conflict occurred. To resolve the conflict in a file:
+
+* locate and remove all lines with merge conflict indicators
+* determine what to keep
+* save the file(s)
+* stage the file(s)
+* make a commit
+
+Be careful that a file might have merge conflicts in multiple parts of the file, so make sure you check the entire file for merge conflict indicators - a quick search for <<< should help you locate all of them.
+
+## Further Research
+* [Basic Merge Conflicts](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging#Basic-Merge-Conflicts) from the Git book
+* [How Conflicts Are Presented](https://git-scm.com/docs/git-merge#_how_conflicts_are_presented) from the Git docs
+
+# undoing changes
+
+* **git commit --amend** alter the most-recent commit
+  * will let you provide a new commit message. Code editor will open up and display the original commit message, change it if needed and save, then close.
+
+  * will let you include files (or changes to files) you might've forgotten to include.
+
+  *  **path git --amend:**
+      * edit the file(s)
+      * save the file(s)
+      * stage the file(s) and run git commit --amend
+
+
+* **git revert** reverses given commit 
+  * ```$ git revert <SHA-of-commit-to-revert>```
+
+  * will undo the changes that were made by the provided commit
+
+  * creates a new commit to record the change
+
+### Further Research
+* [git-revert](https://git-scm.com/docs/git-revert) from Git Docs
+
+* [git revert](https://www.atlassian.com/git/tutorials/undoing-changes) Atlassian tutor
+
+---
+
+* **git reset** erases commits  from the repository 
+
+  * ```$ git reset <reference-to-commit>```
+
+  * you have to delete in order
+
+  It can be used to:
+
+  * move the HEAD and current branch pointer to the referenced commit
+
+  * erase commits with the **--hard flag**
+
+  * move committed changes to the staging index with the **--soft flag**
+
+  * unstage committed changes **--mixed flag**
+
+to alleviate the stress a bit, Git does keep track of everything for about 30 days before it completely erases anything. To access this content, you'll need to use the **git reflog** command. Check out these links for more info:
+
+* [git-reflog](https://git-scm.com/docs/git-reflog)
+
+* [Rewriting History](https://www.atlassian.com/git/tutorials/rewriting-history)
+
+* [reflog, your safety net](http://gitready.com/intermediate/2009/02/09/reflog-your-safety-net.html)
+
+### Relative Commit References
+
+You can reference commits by their SHA, by tags, branches, and the special HEAD pointer. 
+
+But there are also special characters called **"Ancestry References"** that we can use to tell Git about relative references. Those characters are:
+
+* **```^```** – indicates the **parent commit**
+* **```~```** – indicates the **first parent commit**
+
+Here's how we can **refer to previous commits**:
+
+* the **parent commit** – the following indicate the parent commit of the current commit
+
+  * **```HEAD^```**
+
+  * **```HEAD~```**
+
+  * **```HEAD~1```**  
+
+* the **grandparent commit** – the following indicate the grandparent commit of the current commit
+
+  * **```HEAD^^```**
+
+  * **```HEAD~2```**  
+
+* the **great-grandparent commit** – the following indicate the great-grandparent commit of the current commit
+  * **```HEAD^^^```**
+  * **```HEAD~3```**
+
+  The main difference between the **```^```** and the **```~```** is when a commit is created from a merge. A merge commit has two parents. With a merge commit, the **```^```** reference is used to indicate the first parent of the commit while **```^2```** indicates the second parent. The first parent is the branch you were on when you ran git merge while the second parent is the branch that was merged in.
+
+
+Since **HEAD** points to the 9ec05ca commt:
+
+* **```HEAD^```** is the db7e87a commit
+
+* **```HEAD~1```** is also the db7e87a commit
+
+* **```HEAD^^```** is the 796ddb0 commit
+
+* **```HEAD~2```** is also the 796ddb0 commit
+
+* **```HEAD^^^```** is the 0c5975a commit
+
+* **```HEAD~3```** is also the 0c5975a commit
+
+* **```HEAD^^^2```** is the 4c9749e commit (this is the grandparent's (HEAD^^) second parent (^2))
+
+
+## [Git Reset's Flags](https://www.youtube.com/watch?time_continue=104&v=UN7ki2G2yKc)
+
+The way that Git determines the erasement is by the flag that's used. The flags are:
+
+* **```--mixed```** it's the defaul, the changes are unstaged.
+
+* **```--soft```** stage index
+
+* **```--hard```** trash
+
+## Backup Branch
+
+Before I do any resetting, I usually create a backup branch on the most-recent commit so that I can get back to the commits if I make a mistake:
+
+**```$ git branch backup```**
+
+💡 Back To Normal 💡
+
+If you created the **backup** branch prior to resetting anything, then you can easily get back to having the **master** branch point to the same commit as the backup branch. You'll just need to:
+
+remove the uncommitted changes from the working directory
+merge **backup** into **master** (which will cause a Fast-forward merge and move **master** up to the same point as **backup**)
+
+```Git
+$ git checkout -- index.html
+$ git merge backup
+```
+
+### Further Research
+* [**git-reset**](https://git-scm.com/docs/git-reset) from Git docs
+* [**Reset Demystified**](https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified) from Git Blog
+* [**Ancestry References**](https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#Ancestry-References) from Git Book
+
+
+
+## Expand On Your Git Skills
+
+* take the companion GitHub course
+* create a repo to track your computer's settings - [here](https://dotfiles.github.io/)
+* develop the next, awesome feature for your personal project
+* try tackling some [Git challenges with the Git-it app](https://github.com/jlord/git-it-electron)
+
+
+# Working With Remotes
+
+* collaborate with others
+
+* use GitHub and its feature to plan changes and implement them
+
+* contribute to an existing repository
+
+* develop an active project
+
+[**Version Control with Git - Udacity Course**](https://eu.udacity.com/course/version-control-with-git--ud123)
+
+💡 Always Use Topic Branches
+
+make all of your commits on descriptively named topic branches. Branches help isolate unrelated changes from each other.
+
+* **[git remote](https://youtu.be/414f0ukhOTY)** will let you manage and interact with remote repositories.
+  * output **origin** shortname used to refer to the main remote repository ( It's possible to rename).
+
+  * **git remote add** to create a connection from my locak repository to the remote repository
+
+  * **git remote -v** to see the full path to the remote repository,
+
+### Further Research
+* [**Working with Remotes**](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes#_showing_your_remotes) from the Git book
+* [**the ```git remote```
+ command**](https://git-scm.com/docs/git-remote)  from the Git docs
+
+---
+
+## [Remotes can be accessed](https://youtu.be/414f0ukhOTY)
+in a couple of ways:
+
+* with a URL
+* path to a file system
+
+A local repository can be connected to more than one remote repository.
+
+Why Multiple Remotes?
+
+* test out their change (branches) before you decide to implement your changes.
+
+* you have a project whose code is hosted on Github but deploys via [Git to Heroku](https://devcenter.heroku.com/articles/git). You would have one remote for the master and one for the deployment.
+
+
+**extra [Lighthouse project](https://github.com/GoogleChrome/lighthouse)** for auditing, performance metrics, and best practices for Progressive Web Apps.
+
+
+
+
+There are a couple of things to notice about the command you just ran on the command line:
+
+1. first, this command has the sub command add
+2. the word origin is used - this is setting the shortname that we discussed earlier
+
+* Remember that the word origin here isn't special in any way.
+
+* If you want to change this to repo-on-GitHub, then (before running the command) just change the word "origin" to "repo-on-GitHub":
+
+[**$ git remote add origin https://github.com/richardkalehoff/RichardsFantasticProject.git**](https://youtu.be/myuGLZLYpYY)
+
+3. third, the full path to the repository is added (i.e. the URL to the remote repository on the web)
+Now I'll use **git remote -v** to verify that I've added the remote repository correctly:
+
+
+---
+* **[git push](https://youtu.be/21TvMEtMRys)** is used to send commits from a local repository to a remote repository.
+* **```$ git push <remote-shortname> <branch>```**
+
+  * takes :
+    * the shortname of the remote repository you want to send commits to
+
+     * the name of the branch that has the commits you want to send
+
+
+* My remote's shortname is **origin** and the commits that I want to push are on the master branch. So I'll use the following command to send my commits to the remote repository on GitHub:
+      * **```$ git push origin master```**
+      * **git push** command on the terminal will asks for my username, password (which isn't displayed), and then displays information about what it's doing to send the commits.
+
+
+There a couple of things to notice:
+
+* Depending on how you have configured GitHub and the remote URL that's being used, you might have to enter your username and password.
+  * this will happen if you use the **```HTTP```** version of the remote (rather than the **```ssh```** version)
+  * If you have configured GitHub to use the SSH protocol and have supplied it with your SSH key then you don't need to worry about doing this step. Check the [Connecting to GitHub with SSH documentation page](https://help.github.com/articles/connecting-to-github-with-ssh/) if you're interested in using SSH with GitHub.
+
+* If you have to enter your username and password your username will show up after typing but your password will not. So just keep typing your password and press enter when you're done.
+    * If you encounter any errors with your password don't worry it'll just ask you to type it in again
+* Git does some compressing of things to make it smaller and then sends those off to the remote
+* A new branch is created - at the very bottom it says **```[new branch]```** and then **```master -> master```**
+
+the marker is **```origin/master```** and is called a tracking branch. A tracking branch's name includes the shortname of the remote repository as well as the name of the branch. 
+
+---
+
+
+* **[git pull](https://youtu.be/MjNU2LTDVAA)**
+  * **```$ git pull origin master```** will retrieve the commits from the **```master```** branch on the **```origin```** remote repository.
+
+  * You tell Git the shortname of the remote you want to get the changes from and then the branch that has the changes you want
+
+    * the commit(s) on the remote branch are copied to the local repository
+
+    * the local tracking branch **```(origin/master)```** is moved to point to the most recent commit
+
+    * the local tracking branch **```(origin/master)```** is merged into the local branch **```(master)```**
+
+    *Also, changes can be manually added on GitHub (but this is not recommended).
+
+There's several things to note about running this command:
+
+* the format is very similar to that of **```git push```** - there's counting and compressing and packing of items
+
+* it has the phrase "**fast-forward**" which means **Git did a fast-forward merge** 
+
+  * it displays information similar to **```git log --stat```** where it shows the files that have been changed and how many lines were added or removed in them
+
+  If you don't want to automatically merge the local branch with the tracking branch then you wouldn't use **```git pull```** you would use a different command called **```git fetch.```** You might want to do this if there are commits on the repository that you don't have but there are also commits on the local repository that the remote one doesn't have either.
+
+  # pull vs [Fetch](https://youtu.be/kxXdk2HcOBo)
+
+  **Git fetch** is used to retrieve commits from a remote repository's branch but it **does not automatically merge**   the local branch with the remote tracking branch after those commits have been received.
+
+* [**$ git fetch origin master**](https://youtu.be/jwyQUfE1Eqw)
+
+  * the commit(s) on the remote branch are copied to the local repository
+
+  * the local tracking branch (e.g. **```origin/master```**) is moved to point to the most recent commit
+
+  * the local branch does not change at all.
+
+
+
+  One main point when you want to use ```git fetch``` rather than ```git pull``` is if your remote branch and your local branch both have changes that neither of the other ones has. In this case, you want to fetch the remote changes to get them in your local branch and then perform a merge manually. Then you can push that new merge commit back to the remote.
+
+
+  # Forking A Repository
+
+  In version control terminology if you "fork" a repository that means you duplicate it. Typically you fork a repository that belongs to someone else. So you make an identical copy of their repository and that duplicate copy now belongs to you.
+
+  This concept of "forking" is also different from "cloning". When you clone a repository, you get an identical copy of the repository. But cloning happens on your local machine and you clone a remote repository. When you fork a repository, a new duplicate copy of the remote repository is created. This new copy is also a remote repository, but it now belongs to you.
+
+---
+
+* **```$ git shortlog```** how many commits each contributor has added to the repository
+
+  * **```-s```** to show just the number of commits (rather than each commit's message)
+
+  * **```-n```**  to sort them numerically (rather than alphabetically by author name).
+
+* **```$ git shortlog -s -n```**
+
+
+* **```git log --author=name```** flag to filter the commits to the provided author.
+
+  * **```git log --oneline --author="Paul Lewis"```** 
+
+* **```git log --grep=bug```** flag to  filter 
+
+  * spacing is an issue
+    eg *unit tests* = **```git log --grep="unit tests"```**.
+
+* [**git log --grep**](https://en.wikipedia.org/wiki/Grep) "fort"  Git will display only the commits that have the character f followed by the character o followed by r followed by t.
+
+[Shell Workshop](https://eu.udacity.com/course/shell-workshop--ud206)
+
+
+
+
+# ```CONTRIBUTING.md File```
+
+The first thing you should always look for in a project is a file with the name ```CONTRIBUTING.md``` that  lists out the information you should follow to contribute to the project. 
+Eg (explains how your code should be formatted)
+
+
+There are two main sections to this file:
+
+* the "For Contributors" section
+
+* the "For Maintainers" section
+
+  * ask questions of the project maintainer on the *issues page* .Each issue can:
+
+    * have a label or multiple labels applied to it
+    
+    * can be assigned to an individual
+    
+    * can be assigned a milestone (for example the issue will be resolved by the next major release)
+
+
+# Topic Branches
+
+The best way to organize the set of commits/changes you want to contribute back to the project is to *put them all on a topic branch*. 
+
+* a **topic branch** host commits for just a single concept or single area of change.
+
+# Best Practices
+
+* look for the project's ```CONTRIBUTING.md``` file.
+
+* look at the GitHub issues for the project
+
+  * look at the existing issues to see if one is similar to the change you want to contribute
+
+  * if necessary create a new issue
+
+  * communicate the changes you'd like to make to the project maintainer in the issue
+
+  When you start developing, commit all of your work on a topic branch:
+
+  * do not work on the master branch
+
+  * make sure to give the topic branch clear, descriptive name
+
+  As a general best practice for writing commits:
+
+  * make frequent, smaller commits
+
+  * use clear and descriptive commit messages
+
+  * update the README file, if necessary
+
+  
+  # Staying In Sync With A Remote Repository
+
+setup:
+
+* reviewing the project's CONTRIBUTING.md file
+* checking out the project's existing issues
+* talking with the project maintainer
+
+  A [**pull request**](https://youtu.be/twLr9ndsf90) is a request for the source repository to pull in your commits and merge them with their project. To create a pull request, a couple of things need to happen:
+
+* you must fork the source repository
+
+* clone your fork down to your machine
+
+* make some commits (ideally on a topic branch!)
+
+* push the commits back to your fork
+
+* [create a new pull request](https://youtu.be/d3AGtKmHxUk) and choose the branch that has your new commits
+
+You can go to [here](https://github.com/stars) to list out and filter all of the repositories that you have starred.
+
+Watching A Repository
+
+![Watch feature](watched-repos.png)
+
+[Including Upstream Changes](https://youtu.be/VvoC6hN6FjU) :
+"upstream" is typically used to refer to the source repository.
+
+* **git remote** rename command to rename eg. origin to mine and upstream to source-repo.
+
+  * **origin** : it's pointing to our forked repository.
+
+  * **upstream** : remote source-repo
+
+
+When working with a project that you've forked. The original project's maintainer will continue adding changes to their project. You'll want to keep your fork of their project in sync with theirs so that you can include any changes they make.
+
+To get commits from a source repository into your forked repository on GitHub you need to:
+
+* get the cloneable URL of the source repository
+
+* create a new remote with the **git remote add** command
+
+* use the shortname **upstream** to point to the source repository
+
+* provide the URL of the source repository
+
+* fetch the new **upstream** remote
+
+* merge the upstream's branch into a local branch
+** push the newly updated local branch to your **origin** repo
+
+
+If the project's maintainer is requesting changes to the pull request, then:
+
+* make any necessary commits on the same branch in your local repository that your pull request is based on
+* push the branch to the your fork of the source repository
+
+The commits will then show up on the pull request page.
+
+---
+
+* [**git rebase name-base**](https://youtu.be/H5JqcdIB5y0) To squash commits together
+
+  * **git rebase -i name-base** i- stands for "interactive"(bu you can perform a rebase in a non-interactive mode as well)
+
+  * [eg.](https://youtu.be/cL6ehKtJLUM) ```$ git rebase -i HEAD~3``` we're telling Git to use HEAD~3 as the base where all of the other commits (HEAD~2, HEAD~1, and HEAD) will connect to. **```HEAD~3```** is an ancestry reference, you could use **reference to a base**:
+   
+    * a **SHA**
+
+    * a **branch name**
+
+    * a **tag name**
+
+
+## Force Pushing
+In the video, I had to force push the branch. I had to do this because GitHub was trying to prevent me from accidentally deleting commits. Because I used the git rebase command, I effectively erased the three separate commits that recorded my addition of Florida, Paris, and Scotland. I used **```git rebase```** to combine or squash all of these commits into one, single commit.
+
+Using **```git rebase```** creates a new commit with a new SHA. When I tried using git push to send this commit up to GitHub, GitHub knew that accepting the push would erase the three separate commits, so it rejected it. So I had to force push the commits through using **```git push -f```**.
+
+⚠️ Force Pushing ⚠️
+
+In this instance, force pushing my commits was necessary. But if you try to push commits and GitHub rejects them, it's trying to help you, so make sure to review what commits you're pushing and the commits that are on GitHub to verify you're not about to overwrite content on your remote repository accidentally!
+
+## git rebase Commands
+
+* use **```p```** or **```pick```** – to keep the commit as is
+
+* use **```r```** or **```reword```** – to keep the commit's content but alter the commit message
+
+* use **```e```** or **```edit```** – to keep the commit's content but stop before committing so that you can:
+
+  * add new content or files
+
+  * remove content or files
+
+  *  alter the content that was going to be committed
+
+*  use **```s```** or squash – to combine this commit's changes into the previous commit (the commit above it in the list)
+
+* use **```f```** or **```fixup```** – to combine this commit's change into the previous one but drop the commit message
+
+* use **```x```** or **```exec```** – to run a shell command
+
+* use **```d```** or **```drop```** – to delete the commit
+
+
+
+So you should not rebase if you have already pushed the commits you want to rebase. If you're collaborating with other developers, then they might already be working with the commits you've pushed. If you then use git rebase to change things around and then force push the commits, then the other developers will now be out of sync with the remote repository. They will have to do some complicated surgery to their Git repository to get their repo back in a working state...and it might not even be possible for them to do that; they might just have to scrap all of their work and start over with your newly-rebased, force-pushed commits.
+
+
+I recommend that you create a **```backup** branch before rebasing, so that it's easy to return to your previous state. If you'r```e happy with the rebase, then you can just delete the **```backup```** branch!
+
+## Further Resear
+
+* [Git Branching - Rebasing]() from the Git Book
+
+* [git-rebase]() from the Git Docs
+
+* [here](https://www.atlassian.com/git/tutorials/rewriting-history#git-rebase) from the Atlassian blog
+
+## [extra](https://youtu.be/66Ut8Bv6kgc) : Open Source
+
+* [grabs.net](http://up-for-grabs.net/) 
+
+* [firsttimersonly](http://www.firsttimersonly.com/)
+
+* [first-timers-only label on GitHub](https://github.com/search?utf8=%E2%9C%93&q=label%3Afirst-timers-only+is%3Aopen&type=Issues&ref=searchresults)
+
+* ["first timers only" blog post](https://medium.com/@kentcdodds/first-timers-only-78281ea47455)
+
+* try tackling some Git and GitHub challenges with the [Git-it app](https://github.com/jlord/git-it-electron)
+
+Wanna see what a developer's very first pull request is? Check out at [here](http://firstpr.me/)
+
+
+
+
+# The Document Object Model [(DOM)](https://youtu.be/gndOFastyus) 
+### allows developers to interact with and control the rendered page. 
+
+The DOM stands for "Document Object Model" and is a tree-like structure that is a representation of the HTML document, the relationship between elements, and contains the content and properties of the elements.
+
+The DOM is not:
+
+* part of the JavaScript language
+
+The DOM is:
+
+* constructed from the browser
+* is globally accessible by JavaScript code using the document object
+
+The HTML DOM is a standard object model and programming interface for HTML. It defines:
+
+* The HTML elements as objects
+* The properties of all HTML elements
+* The methods to access all HTML elements
+
+The events for all HTML elements
+In other words: the [HTML DOM](https://youtu.be/B2UPRofY5ig) is a standard for how to get, change, add, or delete HTML elements.
+
+
+* HTML is received
+* HTML tags are converted to tokens
+* tokens are converted to Nodes
+* Nodes are converted to the DOM
+
+When you request a website, no matter what backend language is powering that website, it will respond with HTML. The browser receives a stream of HTML. The bytes are run through a complicated (but fully documented) parsing process that determines the different characters (e.g. the start tag character <, an attribute like href, a closing angle bracket like >). After parsing has occurred, a process called tokenization. **Tokenization** takes one character at a time and builds up **tokens**. The tokens are:
+
+* DOCTYPE
+* start tag
+* end tag
+* comment
+* character
+* end-of-file
+
+ The output of this stage is a tree-like structure - this is the DOM!
+
+ The **document** object is provided by the browser and is a representation of the HTML document. This object is not provided by the JavaScript language. ECMAScript is the language specification that JavaScript is based on, and it only references the document object model in one place, in its "Global Object" section:
+
+In addition to the properties defined in this specification the global object may have additional host defined properties. This may include a property whose value is the global object itself; for example, in the HTML document object model the window property of the global object is the global object itself. ([source](https://www.ecma-international.org/ecma-262/#sec-global-object))
+
+Basically, this says that the **document** object is not part of JavaScript, but is expected to *already exist* and be freely accessible to JavaScript code.
+
+The DOM is standardized by the W3C. There are a number of specifications that make up the DOM, here are few:
+
+* Core Specification
+* Events Specification
+* Style Specification
+* Validation Specification
+* Load and Save Specification
+* To see the full list of DOM specs, * check out the standard [HERE](https://www.w3.org/standards/techs/dom#w3c_all)
+
+Further Research
+
+* [DOM Introduction](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+
+* [Section 8.2 Parsing HTML documents](https://www.w3.org/TR/html5/syntax.html#parsing) from the W3C's HTML Documentation
+
+
+* [DOM Specification](https://www.w3.org/standards/techs/dom#w3c_all) on W3C
+
+* [HTML Document Object Model mentioned in the ECMAScript Specification ](https://www.ecma-international.org/ecma-262/#sec-global-object) - the language specification used by JavaScript
+
+---
+
+[Document.getElementById()](https://youtu.be/HTwkHkERtvQ), [video](https://youtu.be/oCm5Ft3NbdE) and the [documentation](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)
+
+* [Select Page Elements By Class Or Tag](https://youtu.be/mP04gbpghpY)
+
+* [Accessing Elements By Their Tag](https://youtu.be/cxqIYlQ4tu8) and [doc](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+
+# Selecting Multiple Elements DOM elements:
+
+* ```.getElementsByClassName()```
+* ```.getElementsByTagName()```
+
+There are a few important things to keep in mind about these two methods:
+
+* both methods use the *document* object
+* both return multiple items
+* the list that's returned is not an array
+
+// select all elements that have the class "accent-color"
+```document.getElementsByClassName('accent-color');```
+
+// select all "span" elements
+```document.getElementsByTagName('span');```
+
+### Further Research
+
+* [.getElementsByClassName()](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName) on MDN
+* [.getElementsByTagName()](https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByTagName) on MDN
+
+----
+
+[Node](https://youtu.be/GfeCBh7dsW4)
+
+* user interface (UI)
+
+* graphical user interface (GUI).
+
+
+* interface  list of properties and methods that are inherited.
+
+Node (with a capital "N"!) is a blueprint that contains information about all of the properties and methods for real nodes (with a lowercase "n"!). If you're not used to them, the words "**interface**", "**property**", and "**method**" can be kind of cryptic at first. Just remember that:
+
+* interface = blueprint
+
+* properties = data
+
+* methods = functionality
+
+[Node Interface](https://developer.mozilla.org/en-US/docs/Web/API/Node) on MDN, 
+[video](https://youtu.be/M2HMdiNdtYg)
+
+[Element Interface](https://developer.mozilla.org/en-US/docs/Web/API/Element) on MDN, [video](https://youtu.be/5womdssnSWA)
+ps. select and use ```$0```
+
+[video](https://youtu.be/kt3Suy4pfB4)
+
+[Web API Interfaces](https://developer.mozilla.org/en-US/docs/Web/API)
+
+## Further Research
+* [Node Interface](https://developer.mozilla.org/en-US/docs/Web/API/Node)
+* [Element Interface](https://developer.mozilla.org/en-US/docs/Web/API/Element)
+* [list of Web API Interfaces](https://developer.mozilla.org/en-US/docs/Web/API)
+
+[Why JQuery was influenced](https://youtu.be/FjpYmoQlYgI)
+
+* [.querySelector()](https://youtu.be/L5SbgvM0VCQ)
+
+* [.querySelectorAll()](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) , [video](https://youtu.be/XrS6vzAfBSk)
+
+## Further Research
+* [jQuery library](https://jquery.com/)
+
+* [.querySelector() method](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector) on MDN
+
+* [.querySelectorAll() method](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll) on MDN
+
+* [NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList) on MDN
+
+---
+
+[textContent](https://youtu.be/P3DuE86cTiU) and [docs](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)
+
+[.textContent vs .innerHTML](https://youtu.be/PbT6va8NLbI)
+
+[ .textContent vs .innerText ](https://youtu.be/x_F1R-VGxeE)
+
+## Further Research
+
+* [innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML) on MDN
+* [textContent](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent) on MDN
+* [innerText](https://developer.mozilla.org/en-US/docs/Web/API/Node/innerText) on MDN
+* [Article: The poor, misunderstood innerText](http://perfectionkills.com/the-poor-misunderstood-innerText/)
+* [Article: innertext vs. textcontent](https://kellegous.com/j/2013/02/27/innertext-vs-textcontent/)
+
+
+## Creating Text Nodes
+Just like you created new elements with the **.createElement()** method, you can also create new text nodes using the **.createTextNode()** method. Take a look at the following code that:
+
+* creates an paragraph element
+* creates a text node
+* appends the text node to the paragraph
+* appends the paragraph to the tag
+
+```javascript
+const myPara = document.createElement('p');
+const textOfParagraph = document.createTextNode('I am the text for the paragraph!');
+
+myPara.appendChild(textOfParagraph);
+document.body.appendChild(myPara);
+
+----
+
+const myPara = document.createElement('p');
+
+myPara.textContent = 'I am the text for the paragraph!';
+document.body.appendChild(myPara);
+```
+
+[**.insertAdjacentHTML()**](https://youtu.be/jLgn7ERoUGU)
+
+* the location of the HTML
+* the HTML text that is going to be inserted
+
+
+Some important things to note are:
+
+* if an element already exists in the DOM and this element is passed to .appendChild(), the ```.appendChild()``` method will move it rather than duplicating it
+
+* an element's .textContent property is used more often than creating a text node with the ```.createTextNode()``` method
+
+* the ```.insertAdjacentHTML()``` method's second argument has to be text, you can't pass an element
+
+### Further Research
+
+* [createElement](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement) on MDN
+
+* [createTextNode](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode) on MDN
+
+* [appendChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild) on MDN
+
+* [insertAdjacentHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML) on MDN
+
+
+
+---
+
+The difference between ```.firstChild``` and ```.firstElementChild```, is that ```.firstElementChild``` will always return the first element, while ```.firstChild``` might return whitespace (if there is any) to preserve the formatting of the underlying HTML source code.
+
+## Further Research
+* [removeChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/removeChild) on MDN and [video](https://youtu.be/xeLZabb-nXc)
+* [remove](https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove) on MDN
+* [firstChild](https://developer.mozilla.org/en-US/docs/Web/API/Node/firstChild) on MDN
+* [firstElementChild](https://developer.mozilla.org/en-US/docs/Web/API/ParentNode/firstElementChild) on MDN
+* [parentElement](https://developer.mozilla.org/en-US/docs/Web/API/Node/parentElement) on MDN
+
+---
+
+* ```.style.<prop>```
+* ```.cssText()```
+* ```.setAttribute()```
+* ```.className```
+* ```.classList```
+
+### futher Research
+
+* [Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) on MDN
+* [Article: CSS Specificity: Things You Should Know](https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/)
+
+---
+
+### Further Research
+* [style](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style) on MDN
+
+* [Article: Using dynamic styling information](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Object_Model/Using_dynamic_styling_information)
+
+* [DOM methods to control styling](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference#DOM-CSS_CSSOM)
+
+* [nextElementSibling](https://developer.mozilla.org/en-US/docs/Web/API/NonDocumentTypeChildNode/nextElementSibling) on MDN
+
+* [className](https://developer.mozilla.org/en-US/docs/Web/API/Element/className) on MDN
+
+* [classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) on MDN
+
+* [Specificity](https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity) on MDN
+
+* [Article: CSS Specificity: Things You Should Know](https://www.smashingmagazine.com/2007/07/css-specificity-things-you-should-know/) and [video](https://youtu.be/SIjgdT1O2Ns)
+
+
+# Working with Browser Events 
+###### (lesson 21)
+
+[**monitorEvents documentation**](https://developers.google.com/web/tools/chrome-devtools/console/events#monitor_events) and [video](https://youtu.be/6PFZQxV-d_8)
+
+The monitorEvents function will keep spitting out all of the events that are happening on the targeted element until the end of time...that, or until you refresh the page. Alternatively, the Chrome browser does offer an unmonitorEvents() function that will turn off the announcing of events for the targeted element:
+```
+// start displaying all events on the document object
+monitorEvents(document);
+
+// turn off the displaying of all events on the document object.
+unmonitorEvents(document);
+```
+One last little bit of info on monitorEvents is that this is for development/testing purposes only. It's not supposed to be used for production code.
+
+
+### Further Research
+[**addEventListener**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) on MDN, [video](https://youtu.be/bj4Lrxdx9Vo)
+[**EventTarget Interface**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+[**Introduction to events**](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
+[list of events](https://developer.mozilla.org/en-US/docs/Web/Events)
+
+
+### Further Research
+
+[**removeEventListener**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener) on MDN
+[**Easily jump to event listeners**](https://developers.google.com/web/updates/2015/05/easily-jump-to-event-listeners)
+[**Equality comparisons and sameness**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness)
+[**Article: Object Equality in JavaScript**](http://adripofjavascript.com/blog/drips/object-equality-in-javascript.html)
+[**EventTarget Interface**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+
+
+## Event Phases
+There are three different phases during the lifecycle of an event. They are:
+
+* the capturing phase
+* the at target phase
+* and the bubbling phase
+[video](https://youtu.be/rGhgPPYc2sg)
+
+
+So of the three phases in an event, which one does the ```.addEventListener()``` method actually use? And, how can we change it?
+
+Up until this point, we've only seen the ```.addEventListener()``` method called with two arguments, the:
+
+* event type
+* and the listener
+
+```javascript
+
+document.addEventListener('click', function () {
+   console.log('The document was clicked');
+});
+```
+There's actually a third argument to the ```.addEventListener()``` method; the useCapture argument. From it's name, you'd think that if this argument were left out, ```.addEventListener()``` would default to using the capturing phase. This is an incorrect assumption!
+**By default, when``` .addEventListener()``` is called with only two arguments, the method defaults to using the bubbling phase.**
+
+The code below uses ```.addEventListener()``` with only two arguments, so it will invoke the listener during the bubbling phase:
+```javascript
+
+document.addEventListener('click', function () {
+   console.log('The document was clicked');
+});
+```
+However, in this code, ```.addEventListener()``` is called with three arguments with the third argument being true (meaning it should invoke the listener earlier, during the capturing phase!).
+
+```javascript
+
+document.addEventListener('click', function () {
+   console.log('The document was clicked');
+}, true);
+```
+[video](https://youtu.be/4WYyk3AhCOU)
+
+Remember that the third argument of the ```.addEventListener()``` method is the boolean for the capturing phase. Since it's ```false```, that means the event listener should not run during the capturing phase...therefore it will run in the (default) bubble phase.
+
+```.preventDefault()```
+
+
+Further Research
+[**Event dispatch and DOM event flow**](https://www.w3.org/TR/DOM-Level-3-Events/#event-flow)  on W3C
+[**capture phase**](https://www.w3.org/TR/DOM-Level-3-Events/#capture-phase)  on W3C
+[**target phase**](https://www.w3.org/TR/DOM-Level-3-Events/#target-phase)  on W3C
+[**bubble phase**](https://www.w3.org/TR/DOM-Level-3-Events/#bubble-phase)  on W3C
+[**Event**](https://developer.mozilla.org/en-US/docs/Web/API/Event) on MDN
+[**Event reference**](https://developer.mozilla.org/en-US/docs/Web/Events) on MDN
+[**addEventListener**](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) on MDN
+
+
+
+### Further Research
+[**Article: Event delegation**](https://javascript.info/event-delegation)
+[**Article: How JavaScript Event Delegation Works**](https://davidwalsh.name/event-delegate)
+
+
+
+The Content Is Loaded Event
+
+If you're looking at somebody else's code, you may see that their code listens for the ```load``` event being used instead (e.g. ```document.onload(...)```). load fires later than ```DOMContentLoaded``` -- ```load``` waits until all of the images, stylesheets, etc. have been loaded (everything referenced by the HTML.) Many older developers use load in place of DOMContentLoaded as the latter wasn't supported by the very earliest browsers. But if you need to detect when your code can run, DOMContentLoaded is generally the better choice.
+
+```javascript
+
+document.addEventListener('DOMContentLoaded', function () {
+    console.log('the DOM is ready to be interacted with!');
+});
+```
+
+Further Research
+[DOMContentLoaded Event](https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded) docs on MDN
+
+
+
+# Performance
+
+Testing Code Performance
+The standard way to measure how long it takes code to run is by using ```performance.now()```. ```performance.now()``` returns a timestamp that is measured in milliseconds, so it's extremely accurate.
+
+[**performance.now()**](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) on MDN
+
+These are the steps to use ```performance.now()``` to measure the speed of your code:
+
+1. use ```performance.now()``` to get the an initial start time for the code
+2. run the code you want to test
+3. execute ```performance.now()``` to get another time measurement
+subtract the initial time from the final time
+
+[Example](https://youtu.be/ARy8Xpn6Ekg)
+```js
+const startingTime = performance.now();
+
+for (let i = 1; i <= 100; i++) { 
+  for (let j = 1; j <= 100; j++) {
+    console.log('i and j are ', i, j);
+  }
+}
+
+const endingTime = performance.now();
+console.log('This code took ' + (endingTime - startingTime) + ' milliseconds.');
+```
+
+### DocumentFragment
+```represents a minimal document object that has no parent. It is used as a lightweight version of Document that stores a segment of a document structure comprised of nodes just like a standard document.```
+
+So it's like creating another lightweight DOM tree. But the beneficial part of this is what it says next:
+
+```The key difference is that because the document fragment isn't part of the active document tree structure, changes made to the fragment don't affect the document, cause reflow, or incur any performance impact that can occur when changes are made.```
+
+
+In other words, changes made to a DocumentFragment happen off-screen; there's no reflow and repaint cost while you build this. So this is exactly what we need!
+
+We can use the ```.createDocumentFragment()``` method to create an empty DocumentFragment object. This code should be very familiar to you, because it looks so very similar to ```document.createElement()```.
+
+```javascript
+
+const fragment = document.createDocumentFragment();  // ← uses a DocumentFragment instead of a <div>
+
+for (let i = 0; i < 200; i++) {
+    const newElement = document.createElement('p');
+    newElement.innerText = 'This is paragraph number ' + i;
+
+    fragment.appendChild(newElement);
+}
+
+document.body.appendChild(fragment); // reflow and repaint here -- once!
+
+```
+
+
+## Further Research
+* [**performance.now()**](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) on MDN
+* [**Performance Interface**](https://developer.mozilla.org/en-US/docs/Web/API/Performance) on MDN
+* [**DocumentFragment Interface**](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) on MDN
+* [**createDocumentFragment docs**](https://developer.mozilla.org/en-US/docs/Web/API/Document/createDocumentFragment) on MDN
+
+# Add Page Content Efficiently
+
+## Reflow & Repaint
+
+**Reflow** is the process of the browser laying out the page. It happens when you first display the DOM (generally after the DOM and CSS have been loaded), and happens again every time something could change the layout. This is a fairly expensive (slow) process.
+
+**Repaint** happens after reflow as the browser draws the new layout to the screen. This is fairly quick, but you still want to limit how often it happens.
+
+### Virtual DOM
+By the way, this is why React and other "virtual DOM" libraries are so popular. You don't make changes to the DOM, but make changes to another structure (a "virtual DOM") and the library calculates the best way to update the screen to match. The catch is you then have to rework your code to use whatever library you're adopting, and sometimes you can do a better job updating the screen yourself (because you understand your own unique situation).
+
+#### Recap
+In this section, we took a brief look at what reflow and repaint are and saw how they can impact the performance of a website.
+
+Reflow is the process of calculating the dimensions and position of page elements. This is a computationally intensive (slow) tasks. Repaint is the process of drawing the pixels to the screen. This is faster than reflow, but is still not a fast process. You want to make sure that your code causes the fewest number of reflows as possible.
+
+##Further Research
+
+* [**Website Performance Optimization**](https://www.udacity.com/course/website-performance-optimization--ud884) course by Udaicty
+
+* [**Minimizing browser reflow**](https://developers.google.com/speed/articles/reflow) from PageSpeed Tools Guides
+
+* [**Avoid Large, Complex Layouts and Layout Thrashing**](https://developers.google.com/web/fundamentals/performance/rendering/avoid-large-complex-layouts-and-layout-thrashing) from Google's Web Fundamentals Guides
+
+* [**Performance Analysis Reference**](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/reference#rendering) from Google's Web Fundamentals Guides
+
+* [**Article Reflows & Repaints: CSS Performance Making Your JavaScript Slow?**](http://www.stubbornella.org/content/2009/03/27/reflows-repaints-css-performance-making-your-javascript-slow/)
+
+
+# The Call Stack
+## Single Threading
+the processing of one command at a time [(source)](https://en.wikipedia.org/wiki/Thread_(computing)#Single_threading)
+
+(meaning it can only perform one task at a time)
+
+Ok, so JavaScript can "process" one command at a time. The opposite of single-threading, is multithreading. There are numerous pros and cons to both which we won't be getting into (feel free to check out the [Wikipedia article on Threading](https://en.wikipedia.org/wiki/Thread_(computing)#Single_threading) for more info about the pros and cons). We're going to take a look at JavaScript's single-threaded model and how/why we should write our code to take advantage of it.
+
+
+
+
+
+## Further Research [video](https://youtu.be/J9iKeNhoXNM)
+
+* [**Call stack**](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack) on MDN
+* [**Call stack**](https://en.wikipedia.org/wiki/Call_stack) on Wikipedia
+
+
+
+
+Further Research
+* [**Concurrency model and Event Loop**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+
+* [**Events and Handlers Overview**](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
+
+* [**What the heck is the event loopanyway? by Philip Roberts on YouTube**](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+
+
+## synchronous
+existing or occurring at the same time
+
+All of the code we've been looking at runs in order, at the same time. Functions are added to the call stack, and then removed from the call stack when they've completed. However, there is some code that is not synchronous - meaning that the code is written just like any other code, but it is executed at some later point in time. 
+
+
+
+## The JavaScript Event Loop
+The simplest explanation of JavaScript's *concurrency model* uses two rules: 
+If some JavaScript is running, let it run until it is finished ("run-to-completion"). 
+If no JavaScript is running, run any pending event handlers.
+
+Since most JavaScript is run in response to an event, this is known as an *event loop*: 
+Pick up the next event, run its handler, and repeat.
+
+There are three parts you have to think about around the event loop:
+
+* the Call Stack
+* Web APIs/the browser
+* an Event Queue
+
+![the JavaScript Event Loop]()
+
+
+What happens if someone clicks before this block of code is done? When there is a click event and there is code already running, 
+the numbers function can't just be added directly to the Call Stack because of JavaScript's run-to-completion nature; 
+we can't interrupt any code that might currently be happening. So the function is placed in the Queue. 
+When all of the functions in the Call Stack have finished (also known as idle time), 
+then the Queue is checked to see if anything is waiting. 
+If something is in the Queue, then it's run, creating an entry on the call stack.
+[video](https://youtu.be/uBdemYBG-ek)
+
+Asynchronous code makes use of the JavaScript Event Loop. 
+Any asynchronous code (like ```setTimeout``` or the function passed to 
+```.addEventListener()```)is handled by the browser. 
+When this asynchronous code is ready to be executed, it's moved to the queue 
+where it waits until the Call Stack is empty. Whenever the Call Stack is empty, 
+code moves from the Queue over to the Call Stack and gets executed.
+
+### Further Research
+
+* [**Concurrency model and Event Loop**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+* [**Events and Handlers Overview**](https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Overview_of_Events_and_Handlers)
+* [**What the heck is the event loop anyway? by Philip Roberts on YouTube**](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+
+
+# Accessibility === A11y
+
+
+### Sources:
+
+* [**Disability Compendium**](http://disabilitycompendium.org/)
+* [**"The Perception of Color"**](http://www.ncbi.nlm.nih.gov/books/NBK11538/)
+* [**"Prevalence of Refractive Error in the United States, 1999-2004"**](http://archopht.jamanetwork.com/article.aspx?articleid=420707)
+
+
+
+* [**Web Content Accessibility Guidelines 2.0 (WCAG)**](https://www.w3.org/TR/WCAG20/)
+
+* [**Web Aim Checklist for WCAG 2.0**](http://webaim.org/standards/wcag/checklist)
+
+--
+
+[video](https://youtu.be/_bA6nnNqmZY)
+* Perceive
+* Operable
+* Understandable
+* Robust
+
+WebAIM checklist items: [video](https://youtu.be/UgjswqeeoTE)
+
+* [2.1.1](http://webaim.org/standards/wcag/checklist#sc2.1.1)
+* [1.3.2](http://webaim.org/standards/wcag/checklist#sc1.3.2) [video](https://youtu.be/-Ic5-P1ij9k)
+
+[focus](https://youtu.be/pZtO4l6Wg5s)
+
+Move focus around the page using your keyboard:
+
+* ```TAB will``` move focus forward
+* ```SHIFT - TAB``` will move focus backwards
+* ```Arrow keys``` can be used to navigate inside of a component
+
+[focus-management](https://www.w3.org/TR/html5/editing.html#focus-management)
+
+
+[**tabindex**](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) on MDN
+[w3 tabindex](https://www.w3.org/TR/html5/editing.html#sequential-focus-navigation-and-the-tabindex-attribute)
+[video](https://youtu.be/rvG7L-gsSuo)
+
+
+You can [read more about skip links](http://webaim.org/techniques/skipnav/) in this article on the Web AIM site.
+
+[focus-start-point](https://developers.google.com/web/updates/2016/03/focus-start-point?hl=en)
+[video](https://youtu.be/rD3db6-vmuo)
+
+
+# Focus in Complex Components [video](https://youtu.be/rPumANoosUQ)
+The ARIA Authoring Practices doc (or "ARIA Design Patterns doc") is a great resource for figuring out what kind of keyboard support your complex components should implement.
+
+There are currently two versions:
+
+* [**WAI-ARIA Authoring Practices 1.0**](https://www.w3.org/TR/wai-aria-practices/)
+* [**WAI-ARIA Authoring Practices 1.1 **](https://www.w3.org/TR/wai-aria-practices-1.1/)  (Newer working draft)
+
+ personally prefer the 1.1 version because the layout is a bit easier to navigate and 
+ it includes a few fixes currently missing from the 1.0 version.
+
+## Keyboard Design Patterns [video](https://youtu.be/i26AnhWMZPE)
+
+Take a look at the ARIA Authoring Best Practices guide to read more about the Radio pattern. I've linked to both versions so you can choose whichever one you prefer. Both patterns are nearly identical but do note that the 1.0 version is called "Radio Button" and the 1.1 version is called "Radio Group".
+
+
+* [**ARIA Authoring Best Practices 1.0 (Radio Button)**](https://www.w3.org/TR/wai-aria-practices/#radiobutton)
+* [**ARIA Authoring Best Practices 1.1 (Radio Group)**](https://www.w3.org/TR/wai-aria-practices-1.1/#radiobutton)
+
+  [**wai-aria-practices**](https://www.w3.org/TR/wai-aria-practices/#aria_ex)
+
+
+## Implementing Keyboard Event List
+
+Using the ARIA Authoring Best Practices doc 
+(either [**version**](https://www.w3.org/TR/wai-aria-practices/) 1.0 or [**version 1.1**](https://www.w3.org/TR/wai-aria-practices-1.1/)) 
+find the radio pattern and implement support for the Down Arrow and Right Arrow pattern using the "roving focus" technique. 
+I should point out that you'll also sometimes see this referred to as "roving tabindex."
+
+
+## [Offscreen Content](https://youtu.be/SCUVXoTqq_g)
+
+```document.activeElement```
+
+[**Read more about Document.activeElement**](https://developer.mozilla.org/en-US/docs/Web/API/Document/activeElement) on MDN
+
+Another tool you can use is the Chrome [Accessibility Developer Tools Extension](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en). This extension will not only add an Accessibility Properties panel to your Elements inspector, but it also adds an Accessibility option to the audits panel. Using this option you can quickly find accessibility issues in your page which you might have otherwise missed.
+
+[accessibility-developer](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en)
+
+
+# Modals and Keyboard Traps
+
+[Video](https://youtu.be/BoAsayPVogE)
+
+WebAIM checklist items:
+
+[2.1.2](http://webaim.org/standards/wcag/checklist#sc2.1.2)
+[<dialog>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) on MDN
+
+
+
+
+
+# Objects in Depth
+
+## Further Research
+* [**Intro to JavaScript**](https://www.udacity.com/course/intro-to-javascript--ud803)
+* [**Unquoted property names / object keys in JavaScript**](https://mathiasbynens.be/notes/javascript-properties)
+* [**Valid JavaScript variable names in ECMAScript 5**](https://mathiasbynens.be/notes/javascript-identifiers)
+* [**Valid JavaScript variable names in ECMAScript 6**](https://mathiasbynens.be/notes/javascript-identifiers-es6)
+
+
+
+# Create and Modify Properties
+## Creating Objects
+
+To create a new, blank (i.e., “empty”) object, you can use object **literal notation**, or the ```Object()``` **constructor function**.
+```javascript
+// Using literal notation:
+
+const myObject = {};
+```
+
+```javascript
+
+// Using the Object() constructor function:
+
+const myObject = new Object();
+```
+
+While both methods ultimately return an object without properties of its own, the Object() constructor function is a bit slower and more verbose. As such, the recommended way to create new objects in JavaScript is to use literal notation.
+Keep in mind that data within objects are **mutable**, meaning that data can be changed. 
+
+
+### Consider the following cat object:
+```
+const cat = {
+  age: 2,
+  name: 'Bailey',
+  meow: function () {
+    console.log('Meow!');
+  },
+  greet: function (name) {
+    console.log(`Hello ${name}`);
+  }
+};
+```
+Now, let's go ahead change it up a bit!
+```
+cat.age += 1;
+
+cat.age;
+// 3
+
+
+cat.name = 'Bambi';
+
+cat.name;
+// 'Bambi'
+```
+After incrementing the value of the age property by 1, and reassigning name's value to 'Bambi', our cat object now looks like:
+```
+{
+  age: 3,
+  name: 'Bambi',
+  meow: function () {
+    console.log('Meow!');
+  },
+  greet: function (name) {
+    console.log(`Hello ${name}`);
+  }
+};
+```
+
+## Adding Properties
+
+Properties can be added to objects simply by specifying the property name, then giving it a value. Let's start off with a blank object, then add two properties:
+
+```
+const printer = {};
+
+printer.on = true;
+printer.mode = 'black and white';
+```
+
+The above example uses dot notation to add properties, but keep in mind that square bracket notation works just as well:
+
+```javascript
+printer['remainingSheets'] = 168;
+```
+
+Likewise, we can add a method to the printer object in a similar manner. This time, the value of the property is an anonymous (i.e., unnamed) function:
+
+```javascript
+printer.print = function () {
+  console.log('The printer is printing!');
+};
+```
+
+Great! The complete ```printer``` object now looks like the following:
+
+```javascript
+{
+  on: true,
+  mode: 'black and white',
+  remainingSheets: 168,
+  print: function () {
+    console.log('The printer is printing!');
+  }
+}
+```
+
+## Removing Properties
+Recall that since objects are mutable, not only can we modify existing properties (or even add new ones) -- we can also delete properties from objects.
+
+Say that the printer object above actually doesn't have any modes (i.e., ```'black and white'```, ```'color'```, etc.). We can go ahead and remove that property from ```printer``` using the ```delete``` operator.
+
+```javascript
+delete printer.mode;
+
+// true
+```
+
+Note that ```delete``` directly mutates the object at hand. If we try to access a deleted property, the JavaScript interpreter will no longer be able to find the ```mode``` property because the ```mode``` key (along with its value, ```true```) have been deleted:
+
+```
+printer.mode;
+
+// undefined
+```
+
+Great! Let's see this all in action below.
+[video](https://youtu.be/wDxnseegDYs)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/25-adding-and-removing-properties.js)
+
+
+
+
+## Further Research
+* [The 'delete' operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete)on MDN
+
+## Invoking Object Methods
+
+```
+const developer = {
+  name: 'Andrew'
+};
+
+developer.sayHello = function () {
+  console.log('Hi there!');
+};
+```
+
+```
+{
+  name: 'Andrew',
+  sayHello: function () {
+    console.log('Hi there!');
+  }
+}
+```
+
+
+```
+developer.sayHello();
+// 'Hi there!'
+
+developer['sayHello']();
+// 'Hi there!
+
+```
+Passing Arguments Into Methods
+
+
+```
+
+const developer = {
+  name: 'Andrew',
+  sayHello: function () {
+    console.log('Hi there!');
+  },
+  favoriteLanguage: function (language) {
+    console.log(`My favorite programming language is ${language}`);
+  }
+};
+
+
+developer.favoriteLanguage('JavaScript');
+// My favorite programming language is JavaScript'
+
+```
+
+[video](https://youtu.be/MgNjr5z3MGw)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/39-calling-methods-demo.js)
+
+A method is a property of an object whose value is a function. Methods are called on objects in the following format: ```object.method()```.
+
+
+Using ```this```, methods can directly access the object that it is called on.
+
+```javascript
+const triangle = {
+  type: 'scalene',
+  identify: function () {
+    console.log(`This is a ${this.type} triangle.`);
+  }
+};
+
+triangle.identify();
+
+// 'This is a scalene triangle.'
+
+```
+
+Note that inside the identify() method, the value this is used. When you say this, what you're really saying is "this object" or "the object at hand."
+
+A value for ```this``` is set when a method is invoked on an object, and that value refers to that object. Since it is a reserved word, it should not be used as any variable name, function name, etc.
+
+[**video**](https://youtu.be/VOkwNvRW_s0)
+
+[**Here's the code from the preceding video**.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/46-this-demo.js)
+
+
+
+
+# Further Research
+[**Defining Methods**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_methods) on MDN
+[**"this"** in Methods](https://javascript.info/object-methods#this-in-methods)
+
+
+## Beware of Globals
+
+[video](https://youtu.be/fTVmpcG_9ss)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/57-this-without-object.js)
+
+### The window Object
+If you haven't worked with the ```window``` object yet, this object is provided by the browser environment and is globally accessible to your JavaScript code using the identifier, window. This object is not part of the JavaScript specification (i.e., ECMAScript); instead, it is developed by the [W3C](https://www.w3.org/Consortium/).
+
+This ```window``` object has access to a ton of information about the page itself, including:
+
+The page's URL (```window.location;```)
+The vertical scroll position of the page (window.scrollY')
+Scrolling to a new location (```window.scroll(0, window.scrollY + 200);``` to scroll 200 pixels down from the current location)
+Opening a new web page (```window.open("https://www.udacity.com/");```)
+
+
+Every variable declaration that is made at the global level (outside of a function) automatically becomes a property on the window object!
+
+```javascript
+var currentlyEating = 'ice cream';
+
+window.currentlyEating === currentlyEating
+// true
+```
+
+### Globals and var, let, and const
+Only declaring variables with the ```var``` keyword will add them to the window object. If you declare a variable outside of a function with either ```let``` or ```const```, it will not be added as a property to the ```window``` object.
+
+```javascript
+let currentlyEating = 'ice cream';
+
+window.currentlyEating === currentlyEating 
+// false!
+```
+
+### Global Functions are Methods on ```window```
+Similarly to how global variables are accessible as properties on the ```window``` object, any global function 
+declarations are accessible on the ```window``` object as methods:
+
+```javascript
+function learnSomethingNew() {
+  window.open('https://www.udacity.com/');
+}
+
+window.learnSomethingNew === learnSomethingNew
+// true
+```
+
+though, global variables and functions are not ideal. 
+
+* **Tight coupling**
+* **Name collisions**
+
+**Tight coupling** is a phrase that developers use to indicate code that is too dependent on the details of each other. 
+The word "coupling" means the "pairing of two items together." In tight coupling, pieces of code are joined together 
+in a way where changing one unintentionally alters the functioning of some other code.
+
+A **name collision** occurs when two (or more) functions depend on a variable with the same name. A major problem with 
+this is that both functions will try to update the variable and or set the variable, but these changes are overridden 
+by each other!
+
+
+## Further Research
+* [**The window object**](https://developer.mozilla.org/en-US/docs/Web/API/Window) on MDN
+* [**The window specification**](https://www.w3.org/TR/html5/browsers.html#the-window-object) on W3C
+* [**Article: Globals are Bad**]()
+* [**Coupling**](http://wiki.c2.com/?GlobalVariablesAreBad) on Wikipedia
+* [**Name Collision**](https://en.wikipedia.org/wiki/Name_collision) on Wikipedia
+
+
+# Object Methods
+
+```
+const myNewFancyObject = new Object();
+
+const dictionary = {
+  car: 'automobile',
+  apple: 'healthy snack',
+  cat: 'cute furry animal',
+  dog: 'best friend'
+};
+
+```
+
+* Object.keys()
+* Object.values()
+
+
+```
+Object.keys(dictionary);
+
+// [car, apple, 'cat', 'dog']
+
+Object.values(dictionary);
+
+// ['automobile', 'healthy snack', 'cute furry animal', 'best friend']
+```
+
+[video](https://youtu.be/mRgapwiy-MQ)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/70-objectkeys-and-objectvalues-demo.js)
+
+
+
+How do you know if your browser does support Object.values()? Check out the [Browser Compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values#Browser_compatibility)!
+
+
+
+# Further Research
+[**Object.keys()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys) on MDN
+[**Object.values()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values) on MDN
+[**Browser Compatibility**](http://tokenposts.blogspot.com.au/2012/04/javascript-objectkeys-browser.html)
+
+
+
+Further Research
+[**JavaScript: The Good Parts**](http://javascript.crockford.com/) by Douglas Crockford
+[**JJavaScript: The Good Parts via**](https://www.goodreads.com/book/show/2998152-javascript) Goodreads
+
+
+
+## [First-Class Functions](https://youtu.be/8VjddoyyG1Q)
+
+JavaScript functions can:
+
+1. Be stored in variables
+2. Be returned from a function.
+3. Be passed as arguments into another function.
+Note that while we can, say, treat a function as an object, a key difference between a function and an object is that 
+functions can be called (i.e., invoked with ()), while regular objects cannot.
+[**video**](https://youtu.be/FpT_U0pOB-c) and 
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/4-functions-are-first-class-functions-demo.js)
+
+A function that returns another function is known as higher-order function. Consider this example:
+```
+function alertThenReturn() {
+  alert('Message 1!');
+
+  return function () {
+    alert('Message 2!');
+  };
+}
+
+
+// const innerFunction = alertThenReturn();
+
+// innerFunction();
+
+// alertThenReturn()();
+
+```
+[video](https://youtu.be/tKzF0-cDblg) and
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/9-returning-functions-demo.js)
+
+
+Further Research
+* [**First-class function**](https://en.wikipedia.org/wiki/First-class_function) on Wikipedia
+
+
+## [Callbacks](https://youtu.be/pJfiPKKiu9Q)
+
+
+ A function that takes other functions as arguments (and/or returns a function, as we learned in the previous section) 
+ is known as a **higher-order function**. A function that is passed as an argument into another function is called a 
+ **callback** function.
+
+[**video**](https://youtu.be/nXPC4YTKdZg) and 
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/16-callback-demo.js)
+
+
+[video](https://youtu.be/g99g07TZYvo) and [Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/22-forEach-demo.js)
+
+
+# Scope
+
+[block scope vs. function scope.](https://edgecoders.com/function-scopes-and-block-scopes-in-javascript-25bbd7f293d7) 
+
+These determine where a variable can be seen in some code. Computer scientists call this **lexical scope**.
+
+However, there also exists another kind of scope called **runtime scope**. When a function is run, 
+it creates a new runtime scope. This scope represents the *context* of the function, or more specifically, 
+the set of variables available for the function to use.
+
+[video](https://youtu.be/EZ3owNzefF4)
+
+
+A function's runtime scope describes the variables available for use inside a given function. 
+The code inside a function has access to:
+
+1. The function's arguments.
+2. Local variables declared within the function.
+3. Variables from its parent function's scope.
+4. Global variables.
+
+![Alt text](https://thumb.ibb.co/gBOq3y/scope_image.png)
+
+The nested ```child()``` function has access to all ```a```, ```b```, and ```c``` variables. That is, these variables 
+are in the ```child()``` function's scope.
+
+[video](https://youtu.be/1OcdRnbiepI)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/35-scope-demo.js)
+
+
+JavaScript are traditionally defined in the scope of a function, rather than in the scope of a block. Since entering a 
+function will change scope, any variables defined inside that function are not available outside of that function. 
+On the other hand, if there are any variables defined inside a block (e.g., within an if statement), 
+those variables are available outside of that block.
+
+
+
+💡 Block-Scoping 💡
+ES6 syntax allows for additional scope while declaring variables with the ```let``` and ```const``` keywords. 
+These keywords are used to declare block-scoped variables in JavaScript, and largely replace the need for ```var```.
+
+We've used them throughout this course, but for a closer look, check out our course: [**ES6 - JavaScript Improved**](https://www.udacity.com/course/es6-javascript-improved--ud356). Via MDN:
+
+* [**let**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let)
+* [**const**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const)
+
+
+
+## Scope Chain
+Whenever your code attempts to access a variable during a function call, the JavaScript interpreter will always start off by looking within its own local variables. If the variable isn't found, the search will continue looking up what is called the scope chain. Let's take a look at an example:
+
+```
+function one() {
+  two();
+  function two() {
+    three();
+    function three() {
+      // function three's code here
+    }
+  }
+}
+
+one();
+```
+
+
+
+![Alt text](https://thumb.ibb.co/mmp86J/scope_chain.png)
+
+When resolving a variable, the JavaScript engine begins by looking at the nested child function's locally-defined 
+variables. If found, then the value is retrieved; if not, the JavaScript engine continues to looking outward until 
+the variable is resolved. If the JavaScript engine reaches the global scope and is still unable to resolve the 
+variable, the variable is undefined.
+
+
+💡 The Global (window) Object💡
+Recall that when JavaScript applications run inside a host environment (e.g., a browser), the host provides a 
+window object, otherwise known as the [**global object**](https://developer.mozilla.org/en-US/docs/Glossary/Global_object). Any global variables declared are accessed as properties of 
+this object, which represents the outermost level of the scope chain.
+
+
+## Variable Shadowing
+
+
+What happens when you create a variable with the *same name* as another variable somewhere in the scope chain?
+
+
+JavaScript won't throw an error or otherwise prevent you from creating that extra variable. In fact, the variable with 
+local scope will just temporarily "shadow" the variable in the outer scope. This is called **variable shadowing**. 
+Consider the following example:
+
+```javascript
+const symbol = '¥';
+
+function displayPrice(price) {
+  const symbol = '$';
+  console.log(symbol + price);
+}
+
+displayPrice('80');
+// '$80'
+```
+
+
+ow does the JavaScript interpreter know which value of ```symbol``` to use? Well, since the variable pointing to '$' 
+is declared inside a function (i.e., the "inner" scope), it will override any variables of the same name that belong 
+in an outer scope -- such as the global variable pointing to ```'¥'```. 
+As a result, ```'$80'``` is displayed rather than ```'¥80'```.
+
+## Summary
+When a function is run, it creates its own scope. A function's scope is the set of variables available for use within 
+that function. The scope of a function includes:
+
+* The function's arguments.
+* Local variables declared within the function.
+* Variables from its parent function's scope.
+* Global variables.
+
+Variables in JavaScript are also function-scoped. This means that any variables defined inside a function are not 
+available for use outside the function, though any variables defined within blocks (e.g. if or for) are available 
+outside that block.When it comes to accessing variables, the JavaScript engine will traverse the scope chain, 
+first looking at the innermost level (e.g., a function's local variables), then to outer scopes, eventually reaching 
+the global scope if necessary.
+In this section, we've seen quite a few examples of a nested function being able to access variables declared in 
+its parent function's scope (i.e., in the scope in which that function was nested). These functions, combined with 
+the lexical environment it which it was declared, actually have a very particular name: **closure**.
+
+## Further Research
+* [**Intro to JavaScript**](https://www.udacity.com/course/intro-to-javascript--ud803) (Lesson 5's coverage ofscope)
+* Douglas Crockford's discussion of block-scoped variables in [**The Better Parts**](https://www.youtube.com/watch?v=Ji6NHEnNHcA&t=26m9s)
+* [**Functions and Function Scope**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions) on MDN
+
+
+## Closures
+
+
+Functions Retain Their Scope
+We just looked at how function scope works and how a scope chain is created. Just to recap: when an **identifier** 
+(i.e., a variable) is used, the JavaScript engine will check the scope chain to retrieve the value for that identifier. 
+The identifier might be found in the local scope (either in the function or block). If it's not found locally, then it 
+might exist in an outer scope. It'll then keep checking the next outer scope followed by the next outer scope until 
+it reaches the global scope (if necessary).
+
+The process of a function retaining access to its scope is called a closure.
+
+MDN defines a closure as:
+
+```
+"the combination of a function and the lexical environment within which that function was declared."
+```
+
+This definition might not make a lot of sense if you don't know what the words "lexical environment" mean. 
+The [**ES5 spec**](http://es5.github.io/#x10.2) refers to a lexical environment as:
+```
+"the association of Identifiers to specific variables and functions based upon the lexical nesting structure of ECMAScript code."
+```
+
+In this case, the "lexical environment" refers the code as it was written in the JavaScript file. As such, a closure is:
+
+* The function itself, and
+* The code (but more importantly, the *scope chain* of where the function is declared
+
+[video](https://youtu.be/qSUqXlJ3CII)
+
+## Creating a Closure
+Every time a function is defined, closure is created for that function. Strictly speaking, then, 
+every function has closure! This is because functions close over at least one other context along the scope chain: 
+the global scope. However, the capabilities of closures really shine when working with a nested function 
+(i.e., a function defined within another function).
+
+Recall that a nested function has access to variables outside of it. From what we have learned about the scope chain, 
+this includes the variables from the outer, enclosing function itself (i.e., the parent function)! These nested functions 
+close over (i.e., capture) variables that aren't passed in as arguments nor defined locally, 
+otherwise known as **free variables**.
+
+[video-1](https://youtu.be/dCcypTP_LEg)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/53-closure-demo-1.js)
+
+[video-2](https://youtu.be/ojZBKgCv83s)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L2-functions-at-runtime/57-closure-demo-2.js)
+
+
+## Garbage Collection
+
+JavaScript manages memory with automatic **garbage collection**. This means that when data is no longer referable 
+(i.e., there are no remaining references to that data available for executable code), 
+it is "garbage collected" and will be destroyed at some later point in time. This frees up the resources 
+(i.e., computer memory) that the data had once consumed, making those resources available for re-use.
+
+
+Let's look at garbage collection in the context of closures. We know that the variables of a parent function are 
+accessible to the nested, inner function. If the nested function captures and uses its parent's variables 
+(or variables along the scope chain, such as its parent's parent's variables), those variables will stay in 
+memory as long as the functions that utilize them can still be referenced.
+
+
+```
+function myCounter() {
+  let count = 0;
+
+  return function () {
+    count += 1;
+    return count;
+  };
+}
+```
+The existence of the nested function keeps the count variable from being available for garbage collection, therefore 
+count remains available for future access. After all, a given function (and its scope) does not end when the function 
+is returned. Remember that functions in JavaScript retain access to the scope that they were created in!
+
+
+## Further Research
+* [**Memory Management**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management) on MDN
+* [**Closures**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) on MDN
+* [**Lexical Environments**](http://es5.github.io/#x10.2) in the ES5 spec
+
+## [**Immediately-Invoked Function Expressions (IIFE)**](https://youtu.be/jHrk_5erjxE)
+
+differences between function *declarations* and function *expressions*.
+
+A **function declaration** defines a function and does not require a variable to be assigned to it. It simply declares a function, and doesn't itself return a value. Here's an example:
+
+```javascript
+function returnHello() {
+  return 'Hello!';
+}
+```
+
+a **function expression** does return a value. Function expressions can be anonymous or named, and are part of another expression's syntax. They're commonly assigned to variables.
+
+```javascript
+// anonymous
+const myFunction = function () {
+  return 'Hello!';
+};
+
+// named
+const myFunction = function returnHello() {
+  return 'Hello!';
+};
+```
+
+An immediately-invoked function expression, or IIFE (pronounced iffy), is a function that is called immediately after it is defined. Check out the following example:
+
+```javascript
+(function sayHi(){
+    alert('Hi there!');
+  }
+)();
+
+// alerts 'Hi there!'
+
+//an anonymous function expression that takes in a single argument:
+
+(function (name){
+    alert(`Hi, ${name}`);
+  }
+)('Andrew');
+
+// alerts 'Hi, Andrew'
+
+// example of an IIFE, this time taking two arguments and returning 
+
+(function (x, y){
+    console.log(x * y);
+  }
+)(2, 3);
+
+// 6
+
+```
+
+One of the primary uses for IIFE's is to create **private scope** (i.e., private state). 
+
+
+```javascript
+const myFunction = (
+  function () {
+    const hi = 'Hi!';
+    return function () {
+      console.log(hi);
+    }
+  }
+)();
+```
+
+![Alt text](https://preview.ibb.co/jCAMBJ/iife_with_a_closure.png)
+
+```myFunction``` refers to an IIFE with a locally-defined variable, ```hi```, and a returned function that closes over ```hi``` and prints its value to the console.
+
+
+💡 Alternative Syntax for IIFE's 💡
+
+```javascript
+(function sayHi(){
+   alert('Hi there!');
+ }
+)();
+
+// alerts 'Hi there!'
+
+
+(function sayHi(){
+   alert('Hi there!');
+}());
+
+// alerts 'Hi there!'
+```
+
+Among developers, Douglas Crockford has mentioned that wrapping the entire unit in parentheses (as presented directly above) helps readers understand that what they're seeing is indeed an expression. Feel free to check out his chat [here](https://www.youtube.com/watch?feature=player_detailpage&v=taaEzHI9xyY#t=2020s).
+
+
+## IIFE's, Private Scope, and Event Handling
+
+[**video**](https://youtu.be/lowdzRLtNKg)
+
+## Benefits of Immediately-Invoked Function Expressions
+
+We've seen how using an immediately-invoked function expression creates a private scope that protects variables or methods from being accessed. IIFE's ultimately use the returned functions to access private data within the closure. This works out very well: while these returned functions are publicly-accessible, they still maintain privacy for the variables defined within them!
+
+Another great opportunity to use an IFFE is when you want to execute some code without creating extra global variables. However, note that an IIFE is only intended to be invoked once, to create a unique execution context. If you have some code that is expected to be re-used (e.g., a function meant to be executed more than once in the application), declaring the function and then invoking it might be a better option.
+
+All in all, if you simply have a one-time task (e.g., initializing an application), an IIFE is a great way to get something done without polluting your the global environment with extra variables. Cleaning up the global namespace decreases the chance of collisions with duplicate variable names, after all.
+
+## Summary
+An **immediately-invoked function expression (IIFE)** is a function that is called immediately after it is defined. Utilizing an IIFE alongside closures allows for a **private scope**, which maintains privacy for variables defined within them. And since less variables are created, an IIFE will help to minimize pollution of the global environment, hindering the chances of variable name collisions.
+
+## Further Research
+* [**Function Declarations vs. Function Expressions**](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
+
+* [**An Introduction to IIFEs - Immediately Invoked Function Expressions**](http://adripofjavascript.com/blog/drips/an-introduction-to-iffes-immediately-invoked-function-expressions.html) on A Drip of JavaScript
+
+* [**Immediately-Invoked Function Expression (IIFE)**](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) by Ben Alman
+
+Lesson Summary
+
+* [**Addy Osmani's Learning JavaScript Design Patterns**](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+
+
+# [Classes and Object](https://youtu.be/7XpQpOnkCSk)
+
+
+* we have created objects using the object literal notation. 
+
+* write functions that return objects. 
+
+* the constructor function
+
+To instantiate (i.e., *create*) a new object, we use the ```new``` keyword/operator to invoke the function and the name with a capital letter:
+
+```javascript
+new Name();
+```
+## Constructor Functions: Structure and Syntax
+
+```javascript
+function SoftwareDeveloper() {
+  this.favoriteLanguage = 'JavaScript';
+}
+```
+i.e. there should not be return statement).
+
+## Creating a New Object
+```
+let developer = new SoftwareDeveloper();
+```
+
+![Alt text](https://thumb.ibb.co/h9yi8y/object_from_constructor_function.png)
+
+[**video**](https://youtu.be/EW8avAH_qTs)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/11-comparing-objects.js)
+
+## Creating Multiple Objects
+
+```JavaScript
+let engineer = new SoftwareDeveloper();
+let programmer = new SoftwareDeveloper();
+
+console.log(engineer);
+// SoftwareDeveloper { favoriteLanguage: 'JavaScript' }
+
+console.log(programmer);
+// SoftwareDeveloper { favoriteLanguage: 'JavaScript' }
+```
+
+## Constructor Functions Can Have Parameters
+
+```JavaScript
+
+function SoftwareDeveloper(name) {
+  this.favoriteLanguage = 'JavaScript';
+  this.name = name;
+}
+
+let instructor = new SoftwareDeveloper('Andrew');
+
+console.log(instructor);
+// SoftwareDeveloper { favoriteLanguage: 'JavaScript', name: 'Andrew' }
+
+```
+we can create different objects using the same constructor. 
+
+```JavaScript
+let teacher = new SoftwareDeveloper('Richard');
+
+console.log(teacher);
+// SoftwareDeveloper { favoriteLanguage: 'JavaScript', name: 'Richard' }
+```
+
+[**video**](https://youtu.be/Gg8W66hSfqw)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/15-instantiating-an-object.js)
+
+
+
+⚠️ Omitting the new Operator ⚠️
+What happens if you inadvertently invoke a constructor function without using the new operator?
+```javascript
+function SoftwareDeveloper(name) {
+   this.favoriteLanguage = 'JavaScript';
+   this.name = name;
+}
+
+let coder = SoftwareDeveloper('David');
+
+console.log(coder);
+// undefined
+```
+Without using the ```new``` operator, no object was created. The function was invoked just like any other regular function. Since the function doesn't return anything (except ```undefined```, which all functions return by default), the coder variable ended up being assigned to ```undefined```.
+
+since this function was invoked as a regular function, the value of ```this``` is also drastically different.
+
+
+## Seeing the Object's Constructor (instanceOf - which returns a boolean) 
+
+[**video**](https://youtu.be/T-b960E8K4I)
+
+[**Here's the code from the preceding video.**](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/22-how-to-view-constructor-references.js)
+
+## 💡 instanceOf and the Prototype Chain 💡
+
+the ```instanceOf``` operator actually tests whether or not that constructor appears in the **prototype chain** of an object. This means that we can't always check exactly which constructor created that object, but it does give us insight as to what other properties and methods an object may have access to.
+
+## Summary
+JavaScript's class system is built directly on using functions and objects. Calling (i.e., invoking) a **constructor function** with the ```new``` operator instantiates a new object. The same constructor function can be used to create different objects.
+
+## Further Research
+* [**The new operator**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) on MDN
+
+* [**The instanceOf operator**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) on MDN
+
+ ## [this](https://youtu.be/v2yF-ItJdzY) in Constructor Functions
+
+```javascript
+
+function Cat(name) {
+ this.name = name;
+ this.sayName = function () {
+   console.log(`Meow! My name is ${this.name}`);
+ };
+}
+
+const bailey = new Cat('Bailey')
+
+//  newly-created object
+
+{
+  name: 'Bailey',
+  sayName: function () {
+    console.log(`Meow! My name is ${this.name}`);
+  }
+}
+
+bailey.sayName();
+
+// 'Meow! My name is Bailey'
+
+
+```
+
+the value assigned to ```this``` is based on the object that invokes the method where ```this``` is defined. 
+
+```javascript
+
+const dog = {
+  bark: function () {
+    console.log('Woof!');
+  },
+  barkTwice: function () {
+    this.bark();
+    this.bark();
+    // without "this" we get 
+    // ReferenceError: bark is not defined
+  }
+};
+
+dog.bark();
+// Woof!
+
+dog.barkTwice();
+// Woof!
+// Woof!
+
+```
+
+[**What Does this Get Set To?**](https://youtu.be/Xwfi1wCB8OM)
+
+![img](https://image.ibb.co/dj4XmJ/this_grid.png)
+
+If a constructor function is called with the 
+```new``` operator, the value of ```this``` is set to the newly-created object. If a method is invoked on an object, ```this``` is set to that object itself. And if a function is simply invoked, ```this``` is set to the global object: ```window```.
+
+The fourth way to call functions allows us to set ```this``` ourselves! 
+
+
+ps. When a function is invoked (i.e., as a function, rather than as a method or with the ```new``` operator), ```this``` gets set to the global object: ```window```.
+
+## Summary
+
+* When invoking constructor functions with the ```new``` operator, a ```this``` variable is set to the newly-created object. 
+
+* When invoking a method on an object, ```this``` is set to that object itself. 
+
+* And when invoking a function in a browser environment, ```this``` is set to window, otherwise known as the global object.
+
+* set of ways to invoke functions: with ```apply()```, and with ```call()```, ```bind()```. 
+
+
+## Further Research
+* [**The this operator**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this) on MDN
+
+
+
+# [Setting Our Own `this`](https://youtu.be/jMEwWv5hkYI)
+
+Recall that functions, objects, and the this keyword are all interconnected. Whether you're invoking a constructor function with the new operator, invoking a method on an object, or simply invoking a function normally -- each form of invocation sets the value of `this` a bit differently.
+
+But what if we want to set the value of this ourselves? 
+
+## More Ways to Invoke Functions
+
+* **`call()`** is a method directly invoked onto a function. We first pass into it a single value to set as the value of this; then we pass in any of the receiving function's arguments one-by-one, separated by commas.
+
+```javascript
+
+function multiply(n1, n2) {
+  return n1 * n2;
+}
+
+multiply(3, 4);
+
+// 12
+
+multiply.call(window, 3, 4);
+
+// 12
+```
+We first invoke the ```call()``` method directly onto the ```multiply()``` function. Note that the multiply preceding ```.call(window, 3, 4)``` is not followed by any parentheses. ```call()``` will be handling the invocation and the ```multiply()``` function's arguments itself!
+
+Outside of [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), both ways of invoking multiply() above are equivalent.
+
+ Using ```call()``` to invoke a method allows us to "borrow" a method from one object -- then use it for *another* object!
+
+```javascript
+const mockingbird = {
+  title: 'To Kill a Mockingbird',
+  describe: function () {
+    console.log(`${this.title} is a classic novel`);
+  }
+};
+
+mockingbird.describe();
+
+// 'To Kill a Mockingbird is a classic novel'
+
+const pride = {
+  title: 'Pride and Prejudice'
+};
+
+mockingbird.describe.call(pride);
+// 'Pride and Prejudice is a classic novel'
+
+```
+
+Let's break down what happened when ```mockingbird.describe.call(pride);``` is executed!
+
+First, the ```call()``` method is invoked onto mockingbird.describe (which points to a function). Then, the value of this is passed into the ```call()``` method: ```pride```.
+
+Since ```mockingbird's describe()``` method references ```this.title```, we need to access the title property of the object that this refers to. But since we've set our own value of ```this```, the value of ```this.title``` will be accessed from the pride object! As a result, ```mockingbird.describe.call(pride);``` is executed, and we see ```Pride and Prejudice is a classic novel``` in the console.
+
+* **`apply()`** method is called on a function to not only invoke that function, but also to associate with it a specific value of ```this```. However, rather than passing arguments one-by-one, separated by commas -- ```apply()``` **takes the function's arguments in an *array***.
+
+```javascript
+function multiply(n1, n2) {
+  return n1 * n2;
+}
+
+multiply.call(window, 3, 4);
+
+// 12
+
+multiply.apply(window, [3, 4]);
+
+// 12
+
+```
+
+```javascript
+const mockingbird = {
+  title: 'To Kill a Mockingbird',
+  describe: function () {
+    console.log(`${this.title} is a classic novel`);
+  }
+};
+
+
+const pride = {
+  title: 'Pride and Prejudice'
+};
+
+mockingbird.describe.call(pride);
+
+// 'Pride and Prejudice is a classic novel'
+
+mockingbird.describe.apply(pride);
+
+// 'Pride and Prejudice is a classic novel'
+
+
+```
+
+## Choosing One Method Over the Other
+
+```call()``` may be limited if you don't know ahead of time the number of arguments that the function needs. In this case, ```apply()``` would be a better option, since it simply takes an array of arguments.
+
+[Explanation video](https://youtu.be/rHMH0budUKk)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/44-invoking-functions-demo.js)
+
+
+
+```javascript
+const andrew = {
+  name: 'Andrew'
+};
+
+function introduce(language) {
+  console.log(`I'm ${this.name} and my favorite programming language is ${language}.`);
+}
+
+introduce.call(andrew, 'JavaScript')
+
+//'I'm Andrew and my favorite programming language is JavaScript.'
+
+```
+
+Callbacks and ```this```
+
+[**video**](https://youtu.be/r7bmNJHFttE)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/50-callbacks-and-this-demo.js)
+
+ ps. if a function is simply invoked, this is set to the global object: window.
+
+## Saving this with an Anonymous Closure
+
+Recall that simply invoking a normal function will set the value of this to the global object (i.e., window).
+
+
+```javascript
+function invokeTwice(cb) {
+   cb();
+   cb();
+}
+
+const dog = {
+  age: 5,
+  growOneYear: function () {
+    this.age += 1;
+  }
+};
+
+dog.growOneYear();
+
+dog.age; 
+// 6
+
+
+```
+One way to resolve this issue is to use an **anonymous closure** to close over the dog object:
+
+```javascript
+invokeTwice(function () { 
+  dog.growOneYear(); 
+});
+
+dog.age;
+// 7
+```
+Since this is such a common pattern, JavaScript provides an alternate and less verbose approach: the **bind()** method.
+
+* **`bind()`**  is a method that is also called on a function, but unlike ```call()``` or ```apply()```, which both invoke the function right away -- ```bind()``` returns a new function that, when called, has ```this``` set to the value we give it.
+
+[video](https://youtu.be/t225UNDPO9c)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/56-using-bind.js)
+
+
+Under the hood, ```bind()``` returns a new function that can be called like a normal function (e.g., myFunction()), but inside of it, a method will be invoked method-style (e.g., ```myObject.myMethod()```). This has helps us when we see potential scope issues with ```this``` when passing callback functions.
+
+```javascript
+
+const driver = {
+  name: 'Danica',
+  displayName: function () {
+    console.log(`Name: ${this.name}`);
+  }
+};
+
+const car = {
+  name: 'Fusion'
+};
+
+```
+
+Write an expression using ```bind()``` that allows us to "borrow" the ```displayName()``` method from driver for the ```car``` object to use. Note: The expression itself is sufficient (no need to save it to a variable).
+
+```javascript
+
+driver.displayName.bind(car);
+```
+
+## Summary
+JavaScript provides three methods that allow us to set the value of ```this``` for a given function:
+
+* ```call()``` invokes the function and has arguments passed in individually, separated by commas.
+* ```apply()``` is similar to ```call()```; it invokes the function just the same, but arguments are passed in as an array.
+* ```bind()``` returns a new function ```with this``` bound to a specific object, allowing us to call it as a regular function.
+
+For further research, we recommend checking out Kyle Simpson's [**You Don't Know JS**](https://legacy.gitbook.com/book/maximdenisov/you-don-t-know-js/details) series on ```this```, linked below.
+
+Did you know that you can *even* base *objects* on other *objects*? This is the main idea behind **prototypal inheritance**, and by *implementing* it, objects can take on properties of *other objects*. We'll cover all this and more, coming up next!
+
+Further Research
+* Kyle Simpson's [**You Don't Know JS**](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md#you-dont-know-js-this--object-prototypes)
+
+* [**call()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call) on MDN
+
+* [**apply()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) on MDN
+
+* [**bind()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) on MDN
+
+# [**Prototypal Inheritance**](https://youtu.be/KdHMZEzRI4s)
+
+we simply added methods directly into the constructor function itself:
+
+```javascript
+
+function Cat() {
+ this.lives = 9;
+
+ this.sayName = function () {
+   console.log(`Meow! My name is ${this.name}`);
+ };
+}
+
+```
+
+![img](https://preview.ibb.co/iPUgJ8/prototype_chain_diagram.png)
+
+The ```Cat()``` constructor function is invoked using the ```new``` operator, which creates the ```bailey``` instance (object). Note that the meow() method is defined in the prototype of the bailey object's constructor function. The prototype is just an object, and all objects created by that constructor are secretly linked to the prototype. As such, we can execute ```bailey.meow()``` as if it were ```bailey```'s own method!
+
+
+Recall that each function has a ```prototype``` property, which is really just an object. When this function is invoked as a constructor using the ```new``` operator, it creates and returns a new object. This object is secretly linked to its constructor's ```prototype```, and this secret link allows the object to access the ```prototype```'s properties and methods as if it were its own!
+
+Since we know that the ```prototype``` property just points to a regular object, that object itself also has a secret link to its prototype. And that prototype object also has reference to its own prototype -- and so on. This is how the **prototype chain** is formed.
+
+## Finding Properties and Methods on the Prototype Chain
+
+Whether you're accessing a property (e.g., ```bailey.lives;```) or invoking a method (i.e., ```bailey.meow();```), the JavaScript interpreter looks for them along the prototype chain in a very particular order:
+
+1. First, the JavaScript engine will look at the object's own properties. This means that any properties and methods defined directly in the object itself will take precedence over any properties and methods elsewhere if their names are the same (similar to variable shadowing in the scope chain).
+
+2. If it doesn't find the property in question, it will then search the object's constructor's prototype for a match.
+
+3. If the property doesn't exist in the prototype, the JavaScript engine will continue looking up the chain.
+
+4. At the very end of the chain is the ``Object()`` object, or the top-level parent. If the property still cannot be found, the property is undefined.
+
+Previously, we simply defined methods directly in a constructor function itself. Let's see how things look if we defined methods in the constructor's ```prototype``` instead!
+
+
+[**video**](https://youtu.be/Vx_LcB0sQDE)
+
+[**Here's the code from the preceding video.**](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/66-methods-and-prototype.js)
+
+💡 Replacing the prototype Object 💡
+
+```javascript
+function Hamster() {
+  this.hasFur = true;
+}
+
+let waffle = new Hamster();
+let pancake = new Hamster();
+
+```
+
+First, note that even after we make the new objects, waffle and pancake, we can still add properties to Hamster's prototype and it will still be able to access those new properties.
+
+```javascript
+
+Hamster.prototype.eat = function () {
+  console.log('Chomp chomp chomp!');
+};
+
+waffle.eat();
+// 'Chomp chomp chomp!'
+
+pancake.eat();
+// 'Chomp chomp chomp!'
+```
+Now, let's replace Hamster's prototype object with something else entirely:
+
+```javascript
+Hamster.prototype = {
+  isHungry: false,
+  color: 'brown'
+};
+```
+The previous objects don't have access to the updated prototype's properties; they just retain their secret link to the old prototype:
+
+```javascript
+
+console.log(waffle.color);
+// undefined
+
+waffle.eat();
+// 'Chomp chomp chomp!'
+
+console.log(pancake.isHungry);
+// undefined
+```
+any new ```Hamster``` objects created moving forward will use the updated prototype:
+
+```javascript
+
+const muffin = new Hamster();
+
+muffin.eat();
+// TypeError: muffin.eat is not a function
+
+console.log(muffin.isHungry);
+// false
+
+console.log(muffin.color);
+// 'brown'
+
+```
+
+[**video**](https://youtu.be/MaNixLkrYTE)
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/72-prototype-demo.js)
+
+## Checking an Object's Properties
+
+ where a particular property is coming from! 
+
+* ```hasOwnProperty()``` allows you to find the origin of a particular property. Upon passing in a string of the property name you're looking for, the method will return a boolean indicating whether or not the property belongs to the object itself 
+
+
+```javascript
+function Phone() {
+  this.operatingSystem = 'Android';
+}
+
+Phone.prototype.screenSize = 6;
+```
+
+
+```javascript
+const myPhone = new Phone();
+
+const own = myPhone.hasOwnProperty('operatingSystem');
+
+console.log(own);
+// true
+```
+
+```javascript
+
+const inherited = myPhone.hasOwnProperty('screenSize');
+
+console.log(inherited);
+// false
+
+```
+
+* ```isPrototypeOf()``` checks whether or not an object exists in another object's prototype chain. Using this method, you can confirm if a particular object serves as the prototype of another object. 
+
+```javascript
+
+const rodent = {
+  favoriteFood: 'cheese',
+  hasTail: true
+};
+```
+
+Let's now build a Mouse() constructor function, and assign its prototype to rodent:
+
+```javascript
+
+function Mouse() {
+  this.favoriteFood = 'cheese';
+}
+
+Mouse.prototype = rodent;
+
+```
+If we create a new Mouse object, its prototype should be the rodent object. Let's confirm:
+
+```javascript
+
+const ralph = new Mouse();
+
+const result = rodent.isPrototypeOf(ralph);
+
+console.log(result);
+// true
+
+```
+
+* ```Object.getPrototypeOf()``` if you're not sure what a certain object's prototype is,  retrieving the prototype of a given object.
+
+```javascript
+
+const myPrototype = Object.getPrototypeOf(ralph);
+
+console.log(myPrototype);
+// { favoriteFood: 'cheese', hasTail: true }
+
+```
+
+## The constructor Property
+
+*  Accessing an object's ```constructor``` property returns a reference to the constructor function that created that object in the first place!
+
+```javascript
+
+function Longboard() {
+  this.material = 'bamboo';
+}
+
+const board = new Longboard();
+
+```
+
+If we access board's constructor property, we should see the original constructor function itself:
+
+```javascript
+
+console.log(board.constructor);
+
+// function Longboard() {
+//   this.material = 'bamboo';
+// }
+
+```
+
+Keep in mind that if an object was created using literal notation, its constructor is the built-in Object() constructor function!
+
+
+```javascript
+
+const rodent = {
+  favoriteFood: 'cheese',
+  hasTail: true
+};
+
+console.log(rodent.constructor);
+// function Object() { [native code] }
+
+```
+
+
+```javascript
+
+const capitals = {
+  California: 'Sacramento',
+  Washington: 'Olympia',
+  Oregon: 'Salem',
+  Texas: 'Austin'
+};
+
+Object.getPrototypeOf(capitals);
+
+// A reference to Objecet()''s prototype
+
+Object.getPrototypeOf(capitals) === Object.prototype
+
+// true
+
+```
+
+Keep in mind that since ```capitals``` was created with object literal notation, its constructor is the built-in ```Object()``` constructor function itself!
+
+
+## Summary
+Inheritance in JavaScript is when an object is based on *another* object. Inheritance allows us to reuse existing code, having objects take on properties of other objects.
+
+When a function is called as a constructor using the ```new``` operator, the function creates and returns a new object. This object is secretly linked to its constructor's ```prototype```, which is just another object. Using this secret link allows an object to access the ```prototype```'s properties and methods as if it were its own. If JavaScript does not find a particular property within an object, it will keep looking up the prototype chain, eventually reaching ```Object()``` (top-level parent) if necessary.
+
+We also looked at a few methods and properties that allow use to check the origins and references of objects and their prototypes, namely:
+
+* ```hasOwnProperty()```
+* ```isPrototypeOf()```
+* ```Object.getPrototypeOf()```
+* ```.constructor```
+
+## Further Research
+* [**Object Playground**](http://www.objectplayground.com/)
+* [**hasOwnProperty()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwnProperty) on MDN
+* [**isPrototypeOf()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isPrototypeOf) on MDN
+* [**Object.getPrototypeOf()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf) on MDN
+* [**.constructor**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/constructor) on MDN
+
+
+## Prototypal Inheritance: Subclasses
+
+One of the benefits of implementing inheritance is that it allows you to *reuse existing code*. By establishing inheritance, we can **subclass**, that is, have a "child" object take on most or all of a "parent" object's properties while retaining unique properties of its own.
+
+
+## Inheritance Via Prototypes
+ 
+ When calling any property on any object, the JavaScript engine will first look for the property in the object itself (i.e., the object's own, non-inherited properties). If the property is not found, JavaScript will then look at the object's prototype. If the property still isn't found in the object's prototype, JavaScript will continue the search up the **prototype chain**.
+
+## The Secret Link
+
+```javascript
+
+const bear = {
+  claws: true,
+  diet: 'carnivore'
+};
+
+unction PolarBear() { 
+  // ...
+}
+
+PolarBear.prototype = bear;
+
+
+const snowball = new PolarBear();
+
+snowball.color = 'white';
+snowball.favoriteDrink = 'cola';
+
+```
+This is how the snowball object looks at this point:
+
+```javascript
+
+{
+  color: 'white',
+  favoriteDrink: 'cola'
+}
+
+console.log(snowball.claws);
+// true
+
+console.log(snowball.diet);
+// 'carnivore'
+
+```
+
+* ```_proto__``` property (note the two underscores on each end), is a property of all objects (i.e., instances) made by a constructor function, and points directly to that constructor's ```prototype``` object.
+
+```javascript
+
+console.log(snowball.__proto__);
+
+// { claws: true, diet: 'carnivore' }
+
+console.log(snowball.__proto__ === bear);
+
+// true
+
+```
+
+Since the __proto__ property refers to the same object as PolarBear's prototype, bear, comparing them returns true.
+
+**It is highly discouraged to reassign the ```__proto__``` property, or even use it in any code you write.**
+
+First, there compatibility issues across browsers. What's more: since the JavaScript engine searches and accesses properties along the prototype chain, mutating an object's prototype can lead to performance issues. The MDN article for [proto](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/proto) even warns against using this property in red text at the very top of the page!
+
+
+It's great to know the secret link for learning how functions and objects are interconnected, but **you should not use ```__proto__``` to manage inheritance**. If you ever just need to review an object's prototype, you can still use ```Object.getPrototypeOf()```.
+
+💡 What About Just Inheriting the Prototype? 💡
+
+Let's say we want a 
+```Child``` object to inherit from a ```Parent``` object. Why shouldn't we just set 
+```Child.prototype = Parent.prototype```?
+
+First, recall that objects are passed by reference. This means that since the Child.prototype object and the Parent.prototype object refer to the same object -- any changes you make to Child's prototype will also be made to Parent's prototype! We don't want children being able to modify properties of their parents!
+
+Consider the following:
+```javascript
+function GuineaPig (name) {
+  this.name = name;
+  this.isCute = true;
+}
+
+const waffle = new GuineaPig('Waffle');
+```
+What does ```waffle.__proto__``` refer to?
+
+```GuineaPig.prototype```
+
+When the new instance of ```GuineaPig``` is created, the special property ```waffle.__proto__``` is set to ```GuineaPig.prototype```. This secret link allows instances of the GuineaPig constructor to access properties of ```GuineaPig.prototype```. Keep in mind that **you should never use the ```__proto__``` in any code you write**.
+
+
+
+Consider the following:
+
+
+```javascript
+
+function Car (color, year) {
+  this.color = color;
+  this.year = year;
+}
+
+Car.prototype.drive = function () {
+  console.log('Vroom vroom!');
+}; 
+
+const car = new Car('silver', 1988);
+
+```
+
+What happens when ```car.drive();``` is executed?
+
+
+![img](https://image.ibb.co/euZzAo/js_prototypal_inheritance_explanation.png)
+
+
+## Object.create()
+
+*  ```Object.create()``` a way for us to set up the prototype of an object ourselves. It takes in a single object as an argument, and returns a new object with its ```__proto__``` property set to what argument is passed into it. From that point, you simply set the returned object to be the prototype of the child object's constructor function.
+
+Example
+
+```javascript
+
+const mammal = {
+  vertebrate: true,
+  earBones: 3
+};
+
+```
+
+Recall that ```Object.create()``` takes in a single object as an argument, and returns a new object. That new object's ```__proto__``` property is set to whatever was originally passed into ```Object.create()```. Let's save that returned value to a variable, rabbit:
+
+```javascript
+
+const rabbit = Object.create(mammal);
+
+```
+
+We expect the new rabbit object to be blank, with no properties of its own:
+
+```javascript
+
+console.log(rabbit);
+// {}
+
+```
+However, rabbit should now be secretly linked to mammal. That is, its __proto__ property should point to mammal:
+
+```javascript
+
+console.log(rabbit.__proto__ === mammal);
+// true
+
+```
+
+Great! This means that now, rabbit extends mammal (i.e., rabbit inherits from mammal). As a result, rabbit can access mammal's properties as if it were its own.
+
+```javascript
+console.log(rabbit.vertebrate);
+// true
+
+console.log(rabbit.earBones);
+// 3
+
+```
+
+```Object.create()``` gives us a clean method of establishing prototypal inheritance in JavaScript. We can easily extend the prototype chain this way, and we can have objects inherit from just about any object we want.
+
+[video](https://youtu.be/K7CKb7MlAT4)
+
+[Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L3-objects-and-classes/90-objectcreate-demo.js)
+
+Consider the following:
+
+```javascript
+
+function Parent() {
+  // ...
+}
+
+function Child() {
+  // ...
+}
+
+Child.prototype = Object.create(Parent.prototype);
+
+const child = new Child()
+
+//The following is then executed:
+
+child instanceof Parent;
+
+// What is printed to the console?
+
+ //true
+```
+
+```Object.create()``` takes in a single object as an argument, and returns a new object. That new object's ```__proto__``` property is set to whatever was originally passed into ```Object.create()```.
+
+In this quiz, ```Parent.prototype``` was the argument passed into ```Object.create()```. The return value of the expression ```Object.create(Parent.prototype);```was then set to the value of theChildconstructor'sprototypeproperty. After that, we instantiate a new ```object:child```.
+
+The expression child instanceof Parent; returns a boolean indicating whether the ```Parent``` constructor exists in the ```child``` object's prototype chain. Since we know this is true after executing the first expression (i.e., ```Child.prototype = Object.create(Parent.prototype);```), the console outputs ```true```
+
+
+**What is true about ```Object.create()```?** 
+
+It returns a new object whose __proto__ property is set to the object passed into Object.create()
+
+Using Object.create(), we can have objects inherit from just about any object we want (i.e., not only the prototype)
+
+Object.create() allows us to implement prototypal inheritance without mutating the prototype
+
+## Summary
+Inheritance in JavaScript is all about setting up the prototype chain. This allows us to ```subclass```, that is, create a "child" object that inherits most or all of a "parent" object's properties and methods. We can then implement any of the child object's unique properties and methods separately, while still retaining data and functionality from its parent.
+
+An object (instance) is secretly linked to its constructor function's prototype object through that instance's ```__proto__``` property. **You should never use the ```__proto__``` in any code you write**. Using ```__proto__``` in any code, or even inheriting just the prototype directly, leads to some unwanted side effects.
+
+To efficiently manage inheritance in JavaScript, an effective approach is to avoid mutating the prototype completely. ```Object.create()``` allows us to do just that, taking in a parent object and returning a new object with its ```__proto__``` property set to that parent object.
+
+## Further Research
+* [**Inheritance and the prototype chain**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) on MDN
+* [**Object.create()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) on MDN
