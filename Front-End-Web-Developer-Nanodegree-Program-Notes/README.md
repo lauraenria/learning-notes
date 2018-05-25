@@ -4069,3 +4069,1863 @@ To efficiently manage inheritance in JavaScript, an effective approach is to avo
 ## Further Research
 * [**Inheritance and the prototype chain**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain) on MDN
 * [**Object.create()**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) on MDN
+
+# Lesson 10 - [1. Update to "Function"](https://youtu.be/CCfficj6zG0)
+
+* 2. Arrow Functions
+* 3. Using Arrow Functions
+* 4. "this" and Regular Functions
+* 5. "this" and Arrow Functions
+* 6. Default Function Parameters
+* 7. Defaults and Destructuring
+* 8. Class Preview
+* 9. JavaScript's Illusion of Classes
+* 10. Super and Extends
+
+# 2. Arrow Functions
+
+ES6 introduces a new kind of function called the **arrow function**.
+
+```javascript
+const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(function(name) { 
+  return name.toUpperCase();
+});
+
+const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(
+  name => name.toUpperCase()
+);
+
+```
+
+NOTE: how ```map() works?``` It's a method on the Array prototype. You pass a function to it, and it calls that function once on every element in the array. It then gathers the returned values from each function call and makes a new array with those results. For more info, check out [MDN's documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map).
+
+## Convert a function to an arrow function
+```javascript
+const names = ['Afghanistan', 'Aruba', 'Bahamas', 'Chile', 'Fiji', 'Gabon', 'Luxembourg', 'Nepal', 'Singapore', 'Uganda', 'Zimbabwe'];
+
+const longNames = names.filter(function(name) {
+  return name.length > 6;
+});
+
+const longNames = names.filter( name => name.length > 6);
+```
+
+* remove the function keyword
+* remove the parentheses
+* remove the opening and closing curly braces
+* remove the return keyword
+* remove the semicolon
+* add an arrow ( => ) between the parameter list and * the function body
+
+
+* [**video**](https://youtu.be/CM4j786p3Vs)
+
+
+##  3. Using Arrow Functions
+
+Regular functions can be either **function declarations** or **function expressions**, however arrow functions are *always* **expressions**. In fact, their full name is *"arrow function expressions"*, so they can only be used where an expression is valid. This includes being:
+
+* stored in a variable,
+* passed as an argument to a function,
+* and stored in an object's property.
+
+```javascript
+
+// arrow function is stored in a variable.
+
+const greet = name => `Hello ${name}!`;
+
+// you'd call it like this:
+
+greet('Asser');
+
+// Returns: Hello Asser!
+
+```
+
+## Parentheses and arrow function parameteres
+
+```javascript
+
+const sayHello = name => `Hello ${name}!`
+
+// empty parameter list requires parentheses
+const sayHi = () => console.log('Hello Udacity Student!');
+sayHi();
+
+// multiple parameters requires parentheses
+const orderIceCream = (flavor, cone) => console.log(`Here's your ${flavor} ice cream in a ${cone} cone.`);
+orderIceCream('chocolate', 'waffle');
+
+```
+
+## Concise and block body syntax
+
+All of the arrow functions we've been looking at have only had a single expression as the function body:
+
+```javascript
+// concise body syntax
+const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(
+  name => name.toUpperCase()
+);
+
+```
+
+this format of the function body is called the *"concise body syntax"*. The concise syntax:
+
+* has no curly braces surrounding the function body
+* and automatically returns the expression.
+
+If you need more than just a single line of code in your arrow function's body, then you can use the *"block body syntax"*.
+
+Important things to keep in mind with the block syntax:
+
+* it uses curly braces to wrap the function body
+* and a return statement needs to be used to actually return something from the function.
+
+
+```javascript
+// block body syntax
+const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map( name => {
+  name = name.toUpperCase();
+  return `${name} has ${name.length} characters in their name`;
+});
+
+```
+
+ps. arrow functions are only expressions, there's no such thing as an arrow function declaration.
+
+## 4. ["this" and Regular Functions](https://youtu.be/JCDcj_tKnmY)
+  
+The value of the this keyword is based completely on how its function (or method) is called. this could be any of the following:
+
+#### 1. A new object
+If the function is called with new:
+
+```
+const mySundae = new Sundae('Chocolate', ['Sprinkles', 'Hot Fudge']);
+```
+In the code above, the value of this inside the Sundae constructor function is a new object because it was called with new.
+
+#### 2. A specified object
+If the function is invoked with call/apply:
+
+```
+const result = obj1.printName.call(obj2);
+```
+In the code above, the value of this inside printName() will refer to obj2 since the first parameter of call() is to explicitly set what this refers to.
+
+#### 3. A context object
+If the function is a method of an object:
+```
+data.teleport();
+```
+In the code above, the value of this inside teleport() will refer to data.
+
+#### 4. The global object or undefined
+If the function is called with no context:
+```
+teleport();
+```
+In the code above, the value of this inside ```teleport()``` is either the ```global object``` or, if in ```strict mode```, it's ```undefined```.
+  
+TIP: ```this``` in JavaScript is a complicated topic. We just did a quick overview, but for an in-depth look at how this is determined, check out [this All Makes Sense Now!](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md) from Kyle Simpson's book series [You Don't Know JS](https://github.com/getify/You-Dont-Know-JS/blob/master/README.md).
+
+
+## 5. "this" and Arrow Functions
+
+With regular functions, the value of ```this``` is set based on *how the function is called*. With arrow functions, the value of ```this``` is based on the *function's surrounding context*. In other words, the value of ```this``` *inside* an arrow function is the same as the value of ```this``` *outside* the function.
+
+```javascript
+
+// constructor
+function IceCream() {
+  this.scoops = 0;
+}
+
+// adds scoop to ice cream
+IceCream.prototype.addScoop = function() {
+  setTimeout(function() {
+    this.scoops++;
+    console.log('scoop added!');
+  }, 500);
+};
+
+const dessert = new IceCream();
+dessert.addScoop();
+
+//Prints:
+//scoop added!
+
+```
+
+After running the code above, you'd think that dessert.scoops would be 1 after half a millisecond. But, unfortunately, it's not:
+
+```javascript
+
+//Prints:
+//0
+
+```
+The function passed to ```setTimeout()``` is called without ```new```, without ```call()```, without ```apply()```, and without a context object. That means the value of this inside the function is the global object and **NOT** the ```dessert``` object. So what actually happened was that a new scoops variable was created (with a default value of undefined) and was then incremented (```undefined``` + 1 results in ```NaN```):
+
+```javascript
+
+console.log(scoops);
+//Prints:
+NaN
+
+```
+
+One way around this is to use closure:
+
+```javascript
+
+// constructor
+function IceCream() {
+  this.scoops = 0;
+}
+
+// adds scoop to ice cream
+IceCream.prototype.addScoop = function() {
+  const cone = this; // sets `this` to the `cone` variable
+  setTimeout(function() {
+    cone.scoops++; // references the `cone` variable
+    console.log('scoop added!');
+  }, 0.5);
+};
+
+const dessert = new IceCream();
+dessert.addScoop();
+
+console.log(dessert.scoops);
+
+//Prints:
+//1
+
+```
+The code above will work because instead of using this inside the function, it sets the cone variable to this and then looks up the cone variable when the function is called. This works because it's using the value of the this outside the function. So if we check the number of scoops in our dessert right now, we'll see the correct value of 1.
+
+
+Well that's exactly what arrow functions do, so let's replace the function passed to setTimeout() with an arrow function and since arrow functions inherit their this value from the surrounding context, this code works!
+
+```javascript
+
+// constructor
+function IceCream() {
+  this.scoops = 0;
+}
+
+// adds scoop to ice cream
+IceCream.prototype.addScoop = function() {
+  setTimeout(() => { // an arrow function is passed to setTimeout
+    this.scoops++;
+    console.log('scoop added!');
+  }, 0.5);
+};
+
+const dessert = new IceCream();
+dessert.addScoop();
+
+console.log(dessert.scoops);
+
+//Prints:
+//1
+```
+
+## 6. Default Function Parameters
+
+* To create a **default parameter**, you add an equal sign ( = ) and then whatever you want the parameter to default to if an argument is not provided. In the code above, both parameters have default values of strings, but they can be any JavaScript type!
+
+```javascript
+
+function greet(name = 'Student', greeting = 'Welcome') {
+  return `${greeting} ${name}!`;
+}
+
+greet(); // Welcome Student!
+greet('James'); // Welcome James!
+greet('Richard', 'Howdy'); // Howdy Richard!
+
+```
+
+## 7. [Defaults and [Destructuring](https://classroom.udacity.com/courses/ud356/lessons/42383e89-ac6a-491a-b7d0-198851287bbe/concepts/7c7be588-31e9-4c62-9dad-ecf23f943b19) QUIZ DA FARE
+
+* Destructuring allow you to specify the elements you want to extract from an array or object *on the left side of an assignment*.
+
+```Eg. Destructuring values from an array```
+
+```javascript
+const point = [10, 25, -34];
+
+const [x, y, z] = point;
+
+console.log(x, y, z);
+//  10 25 -34
+```
+**TIP**: You can also ignore values when destructuring arrays. For example, ```const [x, , z] = point```; ignores the ```y``` coordinate and discards it.
+
+```javascript
+
+function createGrid([width = 5, height = 5] = []) {
+  return `Generates a ${width} x ${height} grid`;
+}
+
+```
+if ```createGrid()``` is called without any argument then it will use this default empty array (that new ```= []``` in the function's parameter).
+
+```javascript
+
+function buildHouse({floors = 1, color = 'red', walls ='brick'} = {}){
+    return `Your house has ${floors} floor(s) with ${color} ${walls} walls.`;
+}
+console.log(buildHouse());
+
+
+console.log(buildHouse()); // Your house has 1 floor(s) with red brick walls.
+console.log(buildHouse({})); // Your house has 1 floor(s) with red brick walls.
+console.log(buildHouse({floors: 3, color: 'yellow'})); // Your house has 3 floor(s) with yellow brick walls.
+
+```
+
+
+## 8. Class Preview
+
+```javascript
+
+Class Preview
+Here's a quick peek of what a JavaScript class look like:
+
+class Dessert {
+  constructor(calories = 250) {
+    this.calories = calories;
+  }
+}
+
+class IceCream extends Dessert {
+  constructor(flavor, calories, toppings = []) {
+    super(calories);
+    this.flavor = flavor;
+    this.toppings = toppings;
+  }
+  addTopping(topping) {
+    this.toppings.push(topping);
+  }
+}
+
+```
+
+## 8. JavaScript's Illusion of Classes
+
+```javascript
+
+function Plane(numEngines) {
+  this.numEngines = numEngines;
+  this.enginesActive = false;
+}
+
+// methods "inherited" by all instances
+Plane.prototype.startEngines = function () {
+  console.log('starting engines...');
+  this.enginesActive = true;
+};
+
+const richardsPlane = new Plane(1);
+richardsPlane.startEngines();
+
+const jamesPlane = new Plane(4);
+jamesPlane.startEngines();
+
+```
+
+```javascript
+
+class Plane {
+  constructor(numEngines) {
+    this.numEngines = numEngines;
+    this.enginesActive = false;
+  }
+
+  startEngines() {
+    console.log('starting engines…');
+    this.enginesActive = true;
+  }
+}
+
+```
+
+ [Convert a Function to a Class](https://youtu.be/JvpG_hX0-_0)
+
+ * **static method**, the keyword static is placed in front of the method name. 
+
+## 10. Super and Extends
+
+```javascript
+
+class Tree {
+  constructor(size = '10', leaves = {spring: 'green', summer: 'green', fall: 'orange', winter: null}) {
+    this.size = size;
+    this.leaves = leaves;
+    this.leafColor = null;
+  }
+
+  changeSeason(season) {
+    this.leafColor = this.leaves[season];
+    if (season === 'spring') {
+      this.size += 1;
+    }
+  }
+}
+
+class Maple extends Tree {
+  constructor(syrupQty = 15, size, leaves) {
+    super(size, leaves);
+    this.syrupQty = syrupQty;
+  }
+
+  changeSeason(season) {
+    super.changeSeason(season);
+    if (season === 'spring') {
+      this.syrupQty += 1;
+    }
+  }
+
+  gatherSyrup() {
+    this.syrupQty -= 3;
+  }
+}
+
+const myMaple = new Maple(15, 5);
+myMaple.changeSeason('fall');
+myMaple.gatherSyrup();
+myMaple.changeSeason('spring');
+
+```
+
+Both Tree and Maple are JavaScript classes. The Maple class is a "subclass" of Tree and uses the extends keyword to set itself as a "subclass". To get from the "subclass" to the parent class, the super keyword is used. Did you notice that super was used in two different ways? In Maple's constructor method, super is used as a function. In Maple's changeSeason() method, super is used as an object.
+
+
+```javascript
+
+function Tree(size, leaves) {
+  this.size = (typeof size === "undefined")? 10 : size;
+  const defaultLeaves = {spring: 'green', summer: 'green', fall: 'orange', winter: null};
+  this.leaves = (typeof leaves === "undefined")?  defaultLeaves : leaves;
+  this.leafColor;
+}
+
+Tree.prototype.changeSeason = function(season) {
+  this.leafColor = this.leaves[season];
+  if (season === 'spring') {
+    this.size += 1;
+  }
+}
+
+function Maple (syrupQty, size, leaves) {
+  Tree.call(this, size, leaves);
+  this.syrupQty = (typeof syrupQty === "undefined")? 15 : syrupQty;
+}
+
+Maple.prototype = Object.create(Tree.prototype);
+Maple.prototype.constructor = Maple;
+
+Maple.prototype.changeSeason = function(season) {
+  Tree.prototype.changeSeason.call(this, season);
+  if (season === 'spring') {
+    this.syrupQty += 1;
+  }
+}
+
+Maple.prototype.gatherSyrup = function() {
+  this.syrupQty -= 3;
+}
+
+const myMaple = new Maple(15, 5);
+myMaple.changeSeason('fall');
+myMaple.gatherSyrup();
+myMaple.changeSeason('spring');
+
+```
+[Extending Classes from ES5 to ES6](https://youtu.be/b8fEBUFk-Oo)
+
+## 10. Working with JavaScript Subclasses
+In a subclass constructor function,```super``` must be called before ```this```
+
+```javascript
+class Apple {}
+class GrannySmith extends Apple {
+  constructor(tartnessLevel, energy) {
+    this.tartnessLevel = tartnessLevel; // `this` before `super` will throw an error!
+    super(energy); 
+  }
+}
+
+```
+right way:
+
+```javascript
+class Vehicle {
+	constructor(color = 'blue', wheels = 4, horn = 'beep beep') {
+		this.color = color;
+		this.wheels = wheels;
+		this.horn = horn;
+	}
+
+	honkHorn() {
+		console.log(this.horn);
+	}
+}
+
+// your code goes here
+class Bicycle extends Vehicle {
+    constructor(color = 'blue', wheels = 2, horn = 'honk honk') {
+        super(color, wheels, horn);
+    }
+}
+```
+
+const myVehicle = new Vehicle();
+myVehicle.honkHorn(); // beep beep
+const myBike = new Bicycle();
+myBike.honkHorn(); // honk honk
+
+
+# Lesson 11 Built-ins
+
+## 1. [Symbol](https://youtu.be/kbVmzEQ4Hr0)
+
+* A **Symbol** is a unique and immutable data type that is often used to identify object properties.
+
+To create a symbol, you write ```Symbol()``` with an optional string as its **description**.
+
+```javascript
+const sym1 = Symbol('apple');
+console.log(sym1);
+
+Symbol(apple)
+
+const sym2 = Symbol('banana');
+const sym3 = Symbol('banana');
+console.log(sym2 === sym3);
+
+//false
+
+```
+the result is false because the description is only used to describe the symbol. 
+
+
+```javascript
+
+const bowl = {
+  'apple': { color: 'red', weight: 136.078 },
+  'banana': { color: 'yellow', weight: 183.15 },
+  'orange': { color: 'orange', weight: 170.097 }
+};
+
+```
+
+The bowl contains fruit which are objects that are properties of the bowl. But, we run into a problem when the second banana gets added.
+
+```javascript
+
+const bowl = {
+  'apple': { color: 'red', weight: 136.078 },
+  'banana': { color: 'yellow', weight: 183.151 },
+  'orange': { color: 'orange', weight: 170.097 },
+  'banana': { color: 'yellow', weight: 176.845 }
+};
+console.log(bowl);
+Object {apple: Object, banana: Object, orange: Object}
+
+```
+
+Instead of adding another banana to the bowl, our previous banana is overwritten by the new banana being added to the bowl. To fix this problem, we can use symbols.
+
+```javascript
+
+const bowl = {
+  [Symbol('apple')]: { color: 'red', weight: 136.078 },
+  [Symbol('banana')]: { color: 'yellow', weight: 183.15 },
+  [Symbol('orange')]: { color: 'orange', weight: 170.097 },
+  [Symbol('banana')]: { color: 'yellow', weight: 176.845 }
+};
+console.log(bowl);
+Object {Symbol(apple): Object, Symbol(banana): Object, Symbol(orange): Object, Symbol(banana): Object}
+
+```
+
+By changing the bowl’s properties to use symbols, each property is a unique Symbol and the first banana doesn’t get overwritten by the second banana.
+
+
+## 2. Iteration & Iterable Protocols
+
+* **The iterable protocol** is used for defining and customizing the iteration behavior of objects. What that really means is you now have the flexibility in ES6 to specify a way for iterating through values in an object.
+
+```javascript
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+for (const digit of digits) {
+  console.log(digit);
+}
+
+// 0 
+// 1 
+// 2 
+// 3 
+// 4 
+// 5 
+// 6 
+// 7 
+// 8 
+// 9 
+
+```
+Any object that is iterable can use the new for...of loop.
+
+The **iterator method**, which is available via the constant ```[Symbol.iterator]```, is a zero arguments function that returns an iterator object. An iterator object is an object that conforms to the iterator protocol.
+
+***The iterator protocol** is used to define a standard way that an object produces a sequence of values. What that really means is you now have a process for defining how an object will iterate. This is done through implementing the ```.next()``` method.
+
+#### How it Works
+An object becomes an iterator when it implements the .next() method. The .next() method is a zero arguments function that returns an object with two properties:
+
+1. value : the data representing the next value in the sequence of values within the object
+
+2. ```done``` : a boolean representing if the iterator is *done* going through the sequence of values
+
+* If done is *true*, then the iterator has reached the end of its sequence of values.
+
+* If done is *false*, then the iterator is able to produce another value in its sequence of values.
+
+```javascript
+
+const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const arrayIterator = digits[Symbol.iterator]();
+
+console.log(arrayIterator.next());
+console.log(arrayIterator.next());
+console.log(arrayIterator.next());
+
+Object {value: 0, done: false}
+Object {value: 1, done: false}
+Object {value: 2, done: false}
+
+```
+
+
+## 3. A Set in Mathematics
+
+If you think back to mathematics, a set is a collection of distinct items. For example, ```{2, 4, 5, 6}``` is a set because each *number* is *unique* and appears only once. However, ```{1, 1, 2, 4}``` is not a set because it *contains duplicate entries* (the 1 is in there more than once!).
+
+In JavaScript, we can already represent something similar to a mathematical set using an array.
+
+```javascript
+
+const nums = [2, 4, 5, 6];
+
+```
+
+However, arrays do not enforce items to be unique. If we try to add another 2 to ```nums```, JavaScript won't complain and will add it without any issue.
+
+```javascript
+nums.push(2);
+console.log(nums)
+
+//[2, 4, 5, 6, 2]
+
+```
+
+## 4. Sets
+
+In ES6, there’s a new built-in object that behaves like a mathematical set and works similarly to an array. This new object is conveniently called a "Set". The biggest differences between a set and an array are:
+
+Sets are not indexed-based - you do not refer to items in a set based on their position in the set
+items in a Set can’t be accessed individually
+Basically, a Set is an object that lets you store unique items. You can add items to a Set, remove items from a Set, and loop over a Set. These items can be either primitive values or objects.
+
+##How to Create a Set
+There’s a couple of different ways to create a Set. The first way, is pretty straightforward:
+```
+const games = new Set();
+console.log(games);
+
+```
+```Set {}```
+
+This creates an empty Set ```games``` with no items.
+
+If you want to create a Set from a list of values, you use an array:
+
+```javascript
+
+const games = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
+console.log(games);
+Set {'Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart'}
+
+```
+
+## 5. Modifying Sets
+
+* .add() methods returns the Set if an item is successfully added.
+
+* .delete() method returns a Boolean (true or false) depending on successful deletion.
+
+* .clear() method if you want to delete all the items from a Set
+
+```javascript
+const games = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
+
+games.add('Banjo-Tooie');
+games.add('Age of Empires');
+games.delete('Super Mario Bros.');
+
+console.log(games);
+
+```
+
+```javascript
+
+Set {'Banjo-Kazooie', 'Mario Kart', 'Banjo-Tooie', 'Age of Empires'}
+
+```
+```javascript
+
+games.clear()
+console.log(games);
+
+```
+
+```javascript
+
+Set {}
+
+```
+
+TIP: If you attempt to ```.add()``` a duplicate item to a Set, you won’t receive an error, but the item will not be added to the Set. Also, if you try to ```.delete()``` an item that is not in a Set, you won’t receive an error, and the Set will remain unchanged.
+
+## 6.  Working with Sets
+
+* ```.size``` property to return the number of items in a Set:
+
+* ```.has()``` method to check if an item exists in a Set. If the item is in the Set, then .has() will return ```true```. Otherwise will return ```false```.
+
+* ```.values()``` method to return the values in a Set. The return value of the ```.values()``` method is a ```SetIterator``` object. 
+
+* ```.keys() method``` will behave the exact same way as the .values() method by returning the values of a Set within a new Iterator Object. The .keys() method is an alias for the .values() method for similarity with maps.
+
+```javascript
+
+const months = new Set(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']);
+
+console.log(months.size); // 12
+
+console.log(months.has('September')); // true
+
+console.log(months.values());
+
+SetIterator {'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'}
+```
+
+## 7. Sets & Iterators
+
+#### Using the SetIterator
+
+Because the .values() method returns a new iterator object (called SetIterator), you can store that iterator object in a variable and loop through each item in the Set using .next().
+```javascript
+
+const iterator = months.values();
+iterator.next();
+Object {value: 'January', done: false}
+
+iterator.next();
+Object {value: 'February', done: false}
+
+```
+[**Video**](https://youtu.be/Hd205fgC7qo)
+
+#### Using a for...of Loop
+
+An easier method to loop through the items in a Set is the for...of loop.
+```javascript
+
+const colors = new Set(['red', 'orange', 'yellow', 'green', 'blue', 'violet', 'brown', 'black']);
+for (const color of colors) {
+  console.log(color);
+}
+
+// red 
+// orange 
+// yellow 
+// green 
+// blue 
+// violet 
+// brown 
+// black
+
+```
+
+## 8 WeakSet
+
+* **WeakSet** is just like a normal Set with a few key differences:
+
+1. a WeakSet can only contain objects
+2. a WeakSet is not iterable which means it can’t be looped over
+3. a WeakSet does not have a ```.clear()``` method
+
+You can create a WeakSet just like you would a normal Set, except that you use the ```WeakSet``` constructor.
+
+```javascript
+
+let student1 = { name: 'James', age: 26, gender: 'male' };
+let student2 = { name: 'Julia', age: 27, gender: 'female' };
+let student3 = { name: 'Richard', age: 31, gender: 'male' };
+
+const roster = new WeakSet([student1, student2, student3]);
+console.log(roster);
+WeakSet {Object {name: 'Julia', age: 27, gender: 'female'}, Object {name: 'Richard', age: 31, gender: 'male'}, Object {name: 'James', age: 26, gender: 'male'}}
+
+```
+…but if you try to add something other than an object, you’ll get an error.
+
+```javascript
+
+roster.add('Amanda');
+Uncaught TypeError: Invalid value used in weak set(…)
+
+```
+
+WeakSets do not have a ```.clear()``` method.
+
+## Garbage Collection
+
+ JavaScript, memory is allocated when new values are created and is "automatically" freed up when those values are no longer needed. This process of freeing up memory after it is no longer needed is what is known as garbage collection.
+
+WeakSets take advantage of this by exclusively working with objects. If you set an object to null, then you’re essentially deleting the object. And when JavaScript’s garbage collector runs, the memory that object previously occupied will be freed up to be used later in your program.
+
+```javascript
+
+student3 = null;
+console.log(roster);
+
+// WeakSet {Object {name: 'Julia', age: 27, gender: 'female'}, Object {name: 'James', age: 26, gender: 'male'}}
+
+```
+
+[video](https://youtu.be/yAOA1otYfBM)
+
+What makes this so useful is you don’t have to worry about deleting references to deleted objects in your WeakSets, JavaScript does it for you. When an object is deleted, the object will also be deleted from the WeakSet when garbage collection runs. This makes WeakSets useful in situations where you want an efficient, lightweight solution for creating groups of objects.
+
+The point in time when garbage collection happens depends on a lot of different factors. Check out [MDN’s documentation](The point in time when garbage collection happens depends on a lot of different factors. Check out MDN’s documentation to learn more about the algorithms used to handle garbage collection in JavaScript.) to learn more about the algorithms used to handle garbage collection in JavaScript.
+
+
+
+## 9. [Maps](https://youtu.be/H5DJPfcN2P4)
+
+If Sets are similar to Arrays, then Maps are similar to Objects because Maps store key-value pairs similar to how objects contain named properties with values.
+
+Essentially, a Map is an object that lets you store key-value pairs where both the keys and the values can be objects, primitive values, or a combination of the two.
+
+## How to Create a Map
+To create a Map, simply type:
+
+```javascript
+const employees = new Map();
+console.log(employees);
+
+Map {}
+```
+This creates an empty Map ```employee``` with no key-value pairs.
+
+## Modifying Maps
+
+Unlike Sets, you can’t create Maps from a list of values; instead, you add key-values by using the Map’s ```.set()``` method.
+
+```javascript
+const employees = new Map();
+
+employees.set('james.parkes@udacity.com', { 
+    firstName: 'James',
+    lastName: 'Parkes',
+    role: 'Content Developer' 
+});
+employees.set('julia@udacity.com', {
+    firstName: 'Julia',
+    lastName: 'Van Cleve',
+    role: 'Content Developer'
+});
+employees.set('richard@udacity.com', {
+    firstName: 'Richard',
+    lastName: 'Kalehoff',
+    role: 'Content Developer'
+});
+
+console.log(employees);
+
+// <!-- Map {'james.parkes@udacity.com' => Object {...}, 'julia@udacity.com' => Object {...}, 'richard@udacity.com' => Object {...}} -->
+
+```
+* ```set()``` method takes two arguments. The first argument is the **key**, which is used to reference the second argument, the **value**.
+
+* ```delete()``` method to remove key-value pairs. It also returns ```true``` if a key-value pair is successfully deleted from the Map object, and ```false``` if unsuccessful. The return value of ```.set()``` is the ```Map``` object itself if successful.
+
+
+```javascript
+employees.delete('julia@udacity.com');
+employees.delete('richard@udacity.com');
+console.log(employees);
+
+// Map {'james.parkes@udacity.com' => Object {firstName: 'James', lastName: 'Parkes', role: 'Course Developer'}}
+
+```
+Again, similar to Sets, you can use the .clear() method to remove all key-value pairs from the Map.
+
+```javascript
+
+employees.clear()
+console.log(employees);
+
+// Map {}
+
+```
+**TIP**: If you ```.set()``` a key-value pair to a Map that already uses the same key, you won’t receive an error, but the key-value pair will overwrite what currently exists in the Map. Also, if you try to ```.delete()``` a key-value that is not in a Map, you won’t receive an error, and the Map will remain unchanged.
+
+# 10. Working with Maps
+
+After you’ve built your Map, you can use the .has() method to check if a key-value pair exists in your Map by passing it a key.
+
+```javascript
+
+const members = new Map();
+
+members.set('Evelyn', 75.68);
+members.set('Liam', 20.16);
+members.set('Sophia', 0);
+members.set('Marcus', 10.25);
+
+console.log(members.has('Xavier'));
+console.log(members.has('Marcus'));
+
+// false
+// true
+
+```
+
+And you can also retrieve values from a Map, by passing a key to the .get() method.
+
+```javascript
+
+console.log(members.get('Evelyn'));
+// 75.68
+
+```
+
+## 11. Looping Through Maps
+
+you’ve got three different options to choose from:
+
+1. Step through each key or value using the Map’s default iterator
+2. Loop through each key-value pair using the new ```for...of``` loop
+3. Loop through each key-value pair using the Map’s ```.forEach()``` method
+
+## 1. Using the **MapIterator**
+
+Using both the ```.keys()``` and ```.values()``` methods on a Map will return a new iterator object called ```MapIterator```. You can store that iterator object in a new variable and use ```.next()``` to loop through each key or value. Depending on which method you use, will determine if your iterator has access to the Map’s keys or the Map’s values.
+
+```javascript
+
+let iteratorObjForKeys = members.keys();
+iteratorObjForKeys.next();
+Object {value: 'Evelyn', done: false}
+
+Use .next() to the get the next key value.
+
+iteratorObjForKeys.next();
+Object {value: 'Liam', done: false}
+
+```
+
+And so on.
+
+```javascript
+
+iteratorObjForKeys.next();
+Object {value: 'Sophia', done: false}
+
+```
+
+On the flipside, use the .values() method to access the Map’s values, and then repeat the same process.
+
+```javascript
+
+let iteratorObjForValues = members.values();
+iteratorObjForValues.next();
+Object {value: 75.68, done: false}
+
+```
+
+## 2. Using a **for...of** Loop
+Your second option for looping through a Map is with a for...of loop.
+
+```javascript
+
+for (const member of members) {
+  console.log(member);
+}
+//  ['Evelyn', 75.68]
+//  ['Liam', 20.16]
+//  ['Sophia', 0]
+//  ['Marcus', 10.25]
+
+```
+
+## 3. Using a **forEach** Loop
+Your last option for looping through a Map is with the .forEach() method.
+
+```javascript
+members.forEach((value, key) => console.log(key, value));
+
+
+//  'Evelyn' 75.68
+//  'Liam' 20.16
+//  'Sophia' 0
+//  'Marcus' 10.25
+
+```
+
+```javascript
+const members = new Map();
+
+members.set('Evelyn', 75.68);
+members.set('Liam', 20.16);
+members.set('Sophia', 0);
+members.set('Marcus', 10.25);
+
+for (const [key, value] of members) {
+    console.log(key, value);
+}
+
+```
+
+## 12. WeakMaps
+
+**tip**: WeakMaps exhibit the same behavior as a WeakSets, except WeakMaps work with key-values pairs instead of individual items.
+
+**What is a WeakMap?**
+A WeakMap is just like a normal Map with a few key differences:
+
+1. a WeakMap can only contain objects as keys,
+2. a WeakMap is not iterable which means it can’t be looped and
+3. a WeakMap does not have a ```.clear()``` method.
+
+You can create a WeakMap just like you would a normal Map, except that you use the ```WeakMap``` constructor.
+
+```javascript
+
+const book1 = { title: 'Pride and Prejudice', author: 'Jane Austen' };
+const book2 = { title: 'The Catcher in the Rye', author: 'J.D. Salinger' };
+const book3 = { title: 'Gulliver’s Travels', author: 'Jonathan Swift' };
+
+const library = new WeakMap();
+library.set(book1, true);
+library.set(book2, false);
+library.set(book3, true);
+
+console.log(library);
+
+// WeakMap {Object {title: 'Pride and Prejudice', author: 'Jane Austen'} => true, Object {title: 'The Catcher in the Rye', author: 'J.D. Salinger'} => false, Object {title: 'Gulliver’s Travels', author: 'Jonathan Swift'} => true}
+
+```
+
+…but if you try to add something other than an object as a key, you’ll get an error!
+
+```javascript
+
+library.set('The Grapes of Wrath', false);
+
+Uncaught TypeError: Invalid value used as weak map key(…)
+
+```
+
+This is expected behavior because WeakMap can only contain objects as keys. Again, similar to WeakSets, WeakMaps leverage garbage collection for easier use and maintainability.
+
+##**Garbage Collection**
+
+In JavaScript, memory is allocated when new values are created and is "automatically" freed up when those values are no longer needed. This process of freeing up memory after it is no longer needed is what is known as garbage collection.
+
+WeakMaps take advantage of this by exclusively working with objects as keys. If you set an object to ```null```, then you’re essentially deleting the object. And when JavaScript’s garbage collector runs, the memory that object previously occupied will be freed up to be used later in your program.
+
+```javascript
+
+book1 = null;
+console.log(library);
+
+// WeakMap {Object {title: 'The Catcher in the Rye', author: 'J.D. Salinger'} => false, Object {title: 'Gulliver’s Travels', author: 'Jonathan Swift'} => true}
+
+```
+
+[**video**](https://youtu.be/sUE_JjiF_q4)
+
+What makes this so useful is you don’t have to worry about deleting keys that are referencing deleted objects in your WeakMaps, JavaScript does it for you.When an object is deleted, the object key will also be deleted from the WeakMap when garbage collection runs. This makes WeakMaps useful in situations where you want an efficient, lightweight solution for creating groupings of objects with metadata.
+
+The point in time when garbage collection happens is dependent on a lot of different factors. Check out [MDN’s documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management#Garbage_collection) to learn more about the algorithms used to handle garbage collection in JavaScript.
+
+## 13 [Promises](https://youtu.be/8L1a-_c8mCg)
+
+A JavaScript Promise is created with the new [Promise constructor function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - ```new Promise()```. A promise will let you start some work that will be done **asynchronously** and let you get back to your regular work. When you create the promise, you must give it the code that will be run asynchronously. You provide this code as the argument of the constructor function:
+
+```javascript
+
+new Promise(function () {
+    window.setTimeout(function createSundae(flavor = 'chocolate') {
+        const sundae = {};
+        // request ice cream
+        // get cone
+        // warm up ice cream scoop
+        // scoop generous portion into cone!
+    }, Math.random() * 2000);
+});
+
+```
+
+his code creates a promise that will start in a few seconds after I make the request. Then there are a number of steps that need to be made in the ```createSundae``` function.
+
+## Indicated a Successful Request or a Failed Request
+
+once that's all done, how does JavaScript notify us that it's finished and ready for us to pick back up by passing two functions into our initial function. Typically we call these:
+
+* ```resolve``` and 
+
+* ```reject```.
+
+The function gets passed to the function we provide the Promise constructor - typically the word "resolve" is used to indicate that this function should be called when the request completes successfully. Notice the ```resolve``` on the first line:
+
+```javascript
+
+new Promise(function (resolve, reject) {
+    window.setTimeout(function createSundae(flavor = 'chocolate') {
+        const sundae = {};
+        // request ice cream
+        // get cone
+        // warm up ice cream scoop
+        // scoop generous portion into cone!
+        resolve(sundae);
+    }, Math.random() * 2000);
+});
+
+```
+Now when the sundae has been successfully created, it calls the ```resolve``` method and passes it the data we want to return - in this case the data that's being returned is the completed sundae. So the ```resolve``` method is used to indicate that the request is complete and that it completed *successfully*.
+
+If there is a problem with the request and it couldn't be completed, then we could use the second function that's passed to the function. Typically, this function is stored in an identifier called "reject" to indicate that this function should be used if the request fails for some reason. Check out the reject on the first line:
+
+```javascript
+
+new Promise(function (resolve, reject) {
+    window.setTimeout(function createSundae(flavor = 'chocolate') {
+        const sundae = {};
+        // request ice cream
+        // get cone
+        // warm up ice cream scoop
+        // scoop generous portion into cone!
+        if ( /* iceCreamConeIsEmpty(flavor) */ ) {
+            reject(`Sorry, we're out of that flavor :-(`);
+        }
+        resolve(sundae);
+    }, Math.random() * 2000);
+});
+
+```
+So the ```reject``` method is used when the request *could not be completed*. Notice that even though the request fails, we can still return data - in this case we're just returning text that says we don't have the desired ice cream flavor.
+
+A Promise constructor takes a function that will run and then, after some amount of time, will either complete successfully (using the ```resolve``` method) or unsuccessfully (using the ```reject``` method). When the outcome has been finalized (the request has either completed successfully or unsuccessfully), the promise is now *fulfilled* and will notify us so we can decide what to do with the response.
+
+## Promises Return Immediately
+
+The first thing to understand is that a Promise will immediately return an object.
+
+```javascript
+
+const myPromiseObj = new Promise(function (resolve, reject) {
+    // sundae creation code
+});
+
+```
+
+* ```.then()``` method on it that we can use to have it notify us if the request we made in the promise was either successful or failed. It takes two functions:
+  * the function to run if the request completed successfully
+  * the function to run if the request failed to complete
+
+
+```javascript
+
+mySundae.then(function(sundae) {
+    console.log(`Time to eat my delicious ${sundae}`);
+}, function(msg) {
+    console.log(msg);
+    self.goCry(); // not a real method
+});
+
+```
+
+[**Promises course**](https://www.udacity.com/course/javascript-promises--ud898) **!!!important!!!**
+
+
+## 17. [Proxies](https://youtu.be/lYXhxgt6suk)
+
+To create a proxy object, we use the Proxy constructor - ```new Proxy();```. The proxy constructor takes two items:
+
+* the object that it will be the proxy for
+* an object containing the list of methods it will handle for the proxied object
+
+The second object is called the **handler**.
+
+## A Pass Through Proxy
+
+The simplest way to create a proxy is to provide an object and then an empty handler object.
+
+```javascript
+var richard = {status: 'looking for work'};
+var agent = new Proxy(richard, {});
+
+agent.status; // returns 'looking for work'
+
+```
+The above it just passes the request directly to the source object. If we want the proxy object to actually intercept the request we need the handler object.
+
+The key to making Proxies useful is the handler object that's passed as the second object to the Proxy constructor. The handler object is made up of a methods that will be used for property access. Let's look at the ```get```:
+
+## Get Trap
+The ```get``` trap is used to "intercept" calls to properties:
+
+```javascript
+const richard = {status: 'looking for work'};
+const handler = {
+    get(target, propName) {
+        console.log(target); // the `richard` object, not `handler` and not `agent`
+        console.log(propName); // the name of the property the proxy (`agent` in this case) is checking
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.status; // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
+
+```
+
+In the code above, the handler object has a get method (called a "trap" since it's being used in a Proxy). When the code agent.status; is run on the last line, because the get trap exists, it "intercepts" the call to get the status property and runs the get trap function. This will log out the target object of the proxy (the richard object) and then logs out the name of the property being requested (the status property). And that's *all it does*! It doesn't actually log out the property! This is important - *if a trap is used, you need to make sure you provide all the functionality for that specific trap*.
+
+
+## Accessing the Target object from inside the proxy
+This will access the property on the target object and will return it (return the property on the target object:) ```return target[propName];``` as the last line of the get trap.
+
+```javascript
+
+const richard = {status: 'looking for work'};
+const handler = {
+    get(target, propName) {
+        console.log(target);
+        console.log(propName);
+        return target[propName];
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.status; // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
+
+```
+## Having the proxy return info, directly
+Alternatively, we could use the proxy to provide direct feedback:
+
+```javascript
+
+const richard = {status: 'looking for work'};
+const handler = {
+    get(target, propName) {
+        return `He's following many leads, so you should offer a contract as soon as possible!`;
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.status; // returns the text `He's following many leads, so you should offer a contract as soon as possible!`
+
+```
+
+With this code, the Proxy doesn't even check the target object, it just directly responds to the calling code.
+
+So the ```get``` trap will take over whenever any property on the proxy is accessed. If we want to intercept calls to change properties, then the ```set``` trap needs to be used!
+
+* The ```set``` trap is used for intercepting code that will change a property. The ```set``` trap receives: 
+
+```javascript
+
+const richard = {status: 'looking for work'};
+const handler = {
+    set(target, propName, value) {
+        if (propName === 'payRate') { // if the pay is being set, take 15% as commission
+            value = value * 0.85;
+        }
+        target[propName] = value;
+    }
+};
+const agent = new Proxy(richard, handler);
+agent.payRate = 1000; // set the actor's pay to $1,000
+agent.payRate; // $850 the actor's actual pay
+
+```
+
+## Other Traps
+So we've looked at the ```get``` and ```set``` traps (which are probably the ones you'll use most often), but there are actually a total of 13 different traps that can be used in a handler!
+
+1.[the get trap]() - lets the proxy handle calls to property access
+2.[the set trap]() - lets the proxy handle setting the property to a new 
+3.[the apply trap]() - lets the proxy handle being invoked (the object being proxied is a function)
+4.[the has trap]() - lets the proxy handle the using in operator
+5.[the deleteProperty trap]() - lets the proxy handle if a property is deleted
+6.[the ownKeys trap]() - lets the proxy handle when all keys are requested
+7.[the construct trap]() - lets the proxy handle when the proxy is used with the new keyword as a constructor
+8.[the defineProperty trap]() - lets the proxy handle when defineProperty is used to create a new property on the object
+9.[the getOwnPropertyDescriptor trap]() - lets the proxy handle getting the property's descriptors
+10.[the preventExtenions trap]() - lets the proxy handle calls to Object.preventExtensions() on the proxy object
+11.[the isExtensible trap]() - lets the proxy handle calls to Object.isExtensible on the proxy object
+12.[the getPrototypeOf trap]() - lets the proxy handle calls to Object.getPrototypeOf on the proxy object
+13.[the setPrototypeOf trap]() - lets the proxy handle calls to Object.setPrototypeOf on the proxy object
+
+As you can see, there are a lot of traps that let the proxy manage how it handles calls back and forth to the proxied object.
+
+## 18 Proxies vs. ES5 Getter/Setter
+
+With ES5's getter and setter methods, you need to know before hand the properties that are going to be get/set:
+
+```javascript
+
+var obj = {
+    _age: 5,
+    _height: 4,
+    get age() {
+        console.log(`getting the "age" property`);
+        console.log(this._age);
+    },
+    get height() {
+        console.log(`getting the "height" property`);
+        console.log(this._height);
+    }
+};
+
+```
+
+```javascript
+
+obj.age; // logs 'getting the "age" property' & 5
+obj.height; // logs 'getting the "height" property' & 4
+
+```
+
+```javascript
+
+obj.weight = 120; // set a new property on the object
+obj.weight; // logs just 120
+
+```
+
+With ES6 Proxies, we do not need to know the properties beforehand:
+
+```javascript
+
+const proxyObj = new Proxy({age: 5, height: 4}, {
+    get(targetObj, property) {
+        console.log(`getting the ${property} property`);
+        console.log(targetObj[property]);
+    }
+});
+
+proxyObj.age; // logs 'getting the age property' & 5
+proxyObj.height; // logs 'getting the height property' & 4
+
+```
+
+All well and good, just like the ES5 code, but look what happens when we add a new property:
+
+```javascript
+
+proxyObj.weight = 120; // set a new property on the object
+proxyObj.weight; // logs 'getting the weight property' & 120
+
+```
+
+A ```weight``` property was added to the proxy object, and when it was later retrieved, it displayed a log message!
+
+So some functionality of proxy objects may seem similar to existing ES5 getter/setter methods. But with proxies, you do not need to initialize the object with getters/setters for each property when the object is initialized.
+
+## Proxies Recap
+
+A proxy object sits between a real object and the calling code. The calling code interacts with the proxy instead of the real object. To create a proxy:
+
+* use the ```new Proxy()``` constructor
+  * pass the object being proxied as the first item
+  * the second object is a handler object
+
+* the handler object is made up of 1 of 13 different "traps"
+* a trap is a function that will intercept calls to properties let you run code
+* if a trap is not defined, the default behavior is sent to the target object
+
+Proxies are a powerful new way to create and manage the interactions between objects.
+
+
+## 19 Generators
+
+Whenever a function is invoked, the JavaScript engine starts at the top of the function and runs every line of code until it gets to the bottom. There's no way to stop the execution of the function in the middle and pick up again at some later point. This **"run-to-completion"** is the way it's always been:
+
+
+```javascript
+
+function getEmployee() {
+    console.log('the function has started');
+
+    const names = ['Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard'];
+
+    for (const name of names) {
+        console.log(name);
+    }
+
+    console.log('the function has ended');
+}
+
+getEmployee();
+
+
+// the function has started
+// Amanda
+// Diego
+// Farrin
+// James
+// Kagure
+// Kavita
+// Orit
+// Richard
+// the function has ended
+```
+
+## Pausable Functions
+
+If we do want to be able to pause a function mid-execution, then we'll need a new type of function available to us in **ES6** - **generator functions**.
+
+```javascript
+
+// syntax function* names() { /* ... * /}
+
+function* getEmployee() {
+    console.log('the function has started');
+
+    const names = ['Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard'];
+
+    for (const name of names) {
+        console.log(name);
+    }
+
+    console.log('the function has ended');
+
+```
+the asterisk (i.e. ```*```) right after the function keyword indicates that this function is actually a generator.
+
+The asterisk of the generator can actually be placed anywhere between the function keyword and the function's name.
+
+The community has coalesced into having the asterisk appear right next to the function keyword (i.e. ```function* name() { … }```). But there others that recommend having the asterisk touch the function's name instead. So it's important to realize that the asterisk indicates that it is a generator but that the placement of the asterisk is not important.
+
+
+```javascript
+
+getEmployee();
+
+// this is the response I get in Chrome:
+getEmployee {[[GeneratorStatus]]: "suspended", [[GeneratorReceiver]]: Window}
+
+```
+
+## 20 Generators & Iterators
+
+When a generator is invoked, it doesn't actually run any of the code inside the function. Instead, it creates and returns an iterator. This iterator can then be used to execute the actual generator's inner code.
+
+
+```javascript
+
+const generatorIterator = getEmployee();
+generatorIterator.next();
+
+// the function has started
+// Amanda
+// Diego
+// Farrin
+// James
+// Kagure
+// Kavita
+// Orit
+// Richard
+// the function has ended
+```
+
+## The Yield Keyword
+
+* ```yield Keyword``` is new and was introduced with ES6. It can only be used inside generator functions. ```yield``` is what causes the generator to pause. 
+
+
+```javascript
+
+function* getEmployee() {
+    console.log('the function has started');
+
+    const names = ['Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard'];
+
+    for (const name of names) {
+        console.log(name);
+        yield;
+    }
+
+    console.log('the function has ended');
+}
+
+const generatorIterator = getEmployee();
+generatorIterator.next();
+
+//the function has started
+//Amanda
+
+// It's paused! 
+
+generatorIterator.next();
+
+// Diego
+
+// etc.
+
+```
+
+## Yielding Data to the "Outside" World
+
+Instead of logging the names to the console and then pausing, let's have the code "return" the name and then pause.
+
+```javascript
+
+function* getEmployee() {
+    console.log('the function has started');
+
+    const names = ['Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard'];
+
+    for (const name of names) {
+        yield name;
+    }
+
+    console.log('the function has ended');
+}
+
+```
+
+Notice that now instead of ```console.log(name)```; that it's been switched to yield name;. With this change, when the generator is run, it will ```"yield"``` the name back out to the function and then pause its execution. Let's see this in action:
+
+```javascript
+
+const generatorIterator = getEmployee();
+let result = generatorIterator.next();
+result.value // is "Amanda"
+
+generatorIterator.next().value // is "Diego"
+generatorIterator.next().value // is "Farrin"
+
+```
+
+the iterator's  ```.next()``` will be called one more time than there are yield expressions in the generator function.
+
+The first call to ```.next()``` will start the function and run to the first yield. The second call to ```.next()``` will pick up where things left off and run to the second yield. The third and final call to ```.next()``` will pick up where things left off again and run to the end of the function.
+
+
+## 21 Sending Data into/out of a Generator
+
+So we can get data out of a generator by using the yield keyword. We can also send data back into the generator, too. We do this using the .next() method:
+
+```javascript
+
+function* displayResponse() {
+    const response = yield;
+    console.log(`Your response is "${response}"!`);
+}
+
+const iterator = displayResponse();
+
+iterator.next(); // starts running the generator function
+iterator.next('Hello Udacity Student'); // send data into the generator
+// the line above logs to the console: Your response is "Hello Udacity Student"!
+
+```
+
+Calling .next() with data (i.e. .next('Richard')) will send data into the generator function where it last left off. It will "replace" the yield keyword with the data that you provided.
+
+So the yield keyword is used to pause a generator and used to send data outside of the generator, and then the .next() method is used to pass data into the generator. Here's an example that makes use of both of these to cycle through a list of names one at a time:
+
+```javascript
+
+function* getEmployee() {
+    const names = ['Amanda', 'Diego', 'Farrin', 'James', 'Kagure', 'Kavita', 'Orit', 'Richard'];
+    const facts = [];
+
+    for (const name of names) {
+        // yield *out* each name AND store the returned data into the facts array
+        facts.push(yield name); 
+    }
+
+    return facts;
+}
+
+const generatorIterator = getEmployee();
+
+// get the first name out of the generator
+let name = generatorIterator.next().value;
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is cool!`).value; 
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is awesome!`).value; 
+
+// pass data in *and* get the next name
+name = generatorIterator.next(`${name} is stupendous!`).value; 
+
+// you get the idea
+name = generatorIterator.next(`${name} is rad!`).value; 
+name = generatorIterator.next(`${name} is impressive!`).value;
+name = generatorIterator.next(`${name} is stunning!`).value;
+name = generatorIterator.next(`${name} is awe-inspiring!`).value;
+
+// pass the last data in, generator ends and returns the array
+const positions = generatorIterator.next(`${name} is magnificent!`).value; 
+
+// displays each name with description on its own line
+positions.join('\n');
+
+```
+Generators are a powerful new kind of function that is able to pause its execution while also maintaining its own state. Generators are great for iterating over a list of items one at a time so you can handle each item on its own before moving on to the next one. You can also use generators to handle nested callbacks. 
+
+Generators will also be used heavily in upcoming additions to the JavaScript language. One upcoming feature that will make use of them is [async functions](https://github.com/tc39/ecmascript-asyncawait).
+
+
+# lesson 12 Professional [Developer-fu](https://youtu.be/ue0FpyoZhts)
+
+## Some code doesn't work in old browsers
+
+**how do we know about these changes?**
+
+We learn (or actually build) the language specifications!
+
+Just like the [World Wide Web Consortium (W3C)](https://www.w3.org/) is the standards body for things like HTML, CSS, and SVG, [Ecma International](https://www.ecma-international.org/) is an industry association that develops and oversees standards like JavaScript and JSON. You can find the *specifications for ES6*cxs[here](http://www.ecma-international.org/ecma-262/6.0/index.html).
+
+## Further info
+Ecma International is an important industry community and definitely worth checking out in more detail:
+
+* [wikipedia-Ecma_International](https://en.wikipedia.org/wiki/Ecma_International)
+* [ecma-international.org](http://www.ecma-international.org/memento/index.html)
+
+
+## How Can You Know What Features Browsers Support?
+
+With new language specifications coming out every year and with browsers updating every other month, it can be quite challenging to know what browser supports which language features. Each browser maker (except for Safari) has a website that tracks its development status. Checkout the platform feature updates for each browser:
+
+* Google Chrome - [here](https://www.chromestatus.com/features#ES6)
+* Microsoft Edge - [here](https://developer.microsoft.com/en-us/microsoft-edge/platform/status/?q=ES6)
+* Mozilla Firefox - [here](https://platform-status.mozilla.org/)
+
+NOTE: Safari doesn't have it's own platform status website. Under the hood, though, Safari is powered by the open source browser engine, Webkit. The status for Webkit features can be found [here](https://webkit.org/status/).
+
+This can be a lot of information to track down. If you prefer a birdseye view of all the feature support for all JavaScript code, check out the ECMAScript Compatibility Table built by [@kangax](https://twitter.com/kangax):
+
+* [http://kangax.github.io/compat-table/es6/](http://kangax.github.io/compat-table/es6/)
+
+![img](https://preview.ibb.co/h4Txi8/es6_compatibility_tables.png)
+
+# 22 Polyfills
+
+* polyfill, or polyfiller is javascript file that patches a whole by replicating some native feature that's missing. It is a piece of code (or plugin) that provides the technology that you, the developer, expect the browser to provide natively.
+
+Coined by [Remy Sharp](https://twitter.com/rem) - [https://remysharp.com/2010/10/08/what-is-a-polyfill](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)
+
+## Further research:
+[https://en.wikipedia.org/wiki/Polyfill](https://en.wikipedia.org/wiki/Polyfill)
+
+
+**An example polyfill**
+
+The code below is a polyfill for the new ES6 String method, ```startsWith()```:
+
+```javascript
+
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function (searchString, position) {
+    position = position || 0;
+    return this.substr(position, searchString.length) === searchString;
+  };
+}
+
+```
+
+As you can see, a polyfill is just regular JavaScript.
+
+This code is a simple polyfill (check it out on MDN), but there's also a significantly more robust one, [here](https://github.com/mathiasbynens/String.prototype.startsWith/blob/master/startswith.js)
+
+If the browser supports ES6 and has the native ```startsWith``` method, then there's no reason to polyfill it. If this check didn't exist, then this polyfill would overwrite the native implementation.
+
+[**Polyfill Walkthrough**](https://youtu.be/vDmB-gT-U88)
+
+## Polyfills aren't only for patching missing JavaScript features
+JavaScript is the language used to create a polyfill, but a polyfill doesn't just patch up missing JavaScript features! There are polyfills for all sorts of browser features:
+
+* SVG
+* Canvas
+* Web Storage (local storage / session storage)
+* Video
+* HTML5 elements
+* Accessibility
+* Web Sockets
+* and many more! 
+
+For a more-complete list of polyfills, check out [this link](https://github.com/Modernizr/Modernizr/wiki/HTML5-Cross-Browser-Polyfills)
+
+## 23 [Transpiling](https://youtu.be/Ku2NATTmgks)
+
+The most popular JavaScript transpiler is called [Babel](https://babeljs.io/).
+
+Babel's original name was slightly more descriptive - 6to5. This was because, originally, Babel converted ES6 code to ES5 code. Now, Babel does a lot more. It'll convert ES6 to ES5, JSX to JavaScript, and Flow to JavaScript.
+
+[Babel's REPL](http://babeljs.io/repl/#?babili=false&evaluate=true&lineWrap=false&presets=es2015)
+
+
+The way Babel transforms code from one language to another is through plugins. There are plugins that transform ES6 arrow functions to regular ES5 functions (the [ES2015 arrow function plugin](http://babeljs.io/docs/plugins/transform-es2015-arrow-functions/)). There are plugins that transform ES6 template literals to regular string concatenation (the [ES2015 template literals transform](http://babeljs.io/docs/plugins/transform-es2015-template-literals/)). For a full list, check out all of [Babel's plugins](http://babeljs.io/docs/plugins/).
+
+Now, you're busy and you don't want to have to sift through a big long list of plugins to see which ones you need to convert your code from ES6 to ES5. So instead of having to use a bunch of individual plugins, Babel has **presets** which are groups of plugins bundled together. So instead of worrying about which plugins you need to install, we'll just use the [ES2015 preset](http://babeljs.io/docs/plugins/preset-es2015/) that is a collection of all the plugins we'll need to convert all of our ES6 code to ES5.
+
+```.babelrc``` file. This is where you'd put all of the plugins and/or presets that the project will use.
+
+
+![img](https://preview.ibb.co/buafmT/es6_preset_in_project.png)
+
+Code editor with ```..babelrc```. file that has ES2015 preset listed.
+
+
+**WARNING**: Babel uses both [Node](https://nodejs.org/) and [NPM](https://www.npmjs.com/) to distribute its plugins. So before you can install anything, make sure you have both of these tools installed:
+
+* install [Node](https://nodejs.org/) (which will automatically install NPM)
+
+[**Transpiling Walkthrough**](https://youtu.be/QGE5Emfg1hI)
+
+## [Transpiling Recap](https://youtu.be/ihtUq_Ve0fk)
+
+
+It's important to stay on top of all the changes JavaScript is going through. The best way to do that is to start making use of the new features that are added. The problem is that not all browsers support these new features. So to have your cake and eat it too, you can write in ES6 and then use a transpiler to convert it to ES5 code. This lets you transform your project's code base to the newest version of the language while still letting it run everywhere. Then, once all of the browsers your app has to run on fully support ES6 code, you can stop transpiling your code and just serve the straight ES6 code, directly!
+
+END Javascript Course
+
+
+## Arcade Game
+
+* [Object-Oriented JavaScript](https://classroom.udacity.com/courses/ud711)
+
+* [OOJS Notes.](https://docs.google.com/document/d/1F9DY2TtWbI29KSEIot1WXRqqao7OCd7OOC2W3oubSmc/pub?embedded=true)
+
+* [HTML5 Canvas](https://www.udacity.com/course/ud292) !Important!
+
+* [art assets and provided game engine](https://github.com/udacity/frontend-nanodegree-arcade-game)
+
+* [**video**](https://youtu.be/kaifTslArtY)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
