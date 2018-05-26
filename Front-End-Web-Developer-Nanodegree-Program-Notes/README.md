@@ -4391,10 +4391,9 @@ console.log(buildHouse({floors: 3, color: 'yellow'})); // Your house has 3 floor
 
 ## 8. Class Preview
 
-```javascript
-
-Class Preview
 Here's a quick peek of what a JavaScript class look like:
+
+```javascript
 
 class Dessert {
   constructor(calories = 250) {
@@ -5304,7 +5303,9 @@ const handler = {
     }
 };
 const agent = new Proxy(richard, handler);
-agent.status; // logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
+agent.status; 
+
+// logs out the richard object (not the agent object!) and the name of the property being accessed (`status`)
 
 ```
 
@@ -5325,7 +5326,9 @@ const handler = {
     }
 };
 const agent = new Proxy(richard, handler);
-agent.status; // (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
+agent.status; 
+
+// (1)logs the richard object, (2)logs the property being accessed, (3)returns the text in richard.status
 
 ```
 ## Having the proxy return info, directly
@@ -5340,7 +5343,9 @@ const handler = {
     }
 };
 const agent = new Proxy(richard, handler);
-agent.status; // returns the text `He's following many leads, so you should offer a contract as soon as possible!`
+agent.status; 
+
+// returns the text `He's following many leads, so you should offer a contract as soon as possible!`
 
 ```
 
