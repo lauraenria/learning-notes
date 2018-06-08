@@ -99,7 +99,7 @@ It gives a sustainable and maintainable naming structure for CSS code. It's conc
 
 * [Responsive Hero Images](https://cloudfour.com/thinks/responsive-hero-images/)
 
-*[Responsive Images Audits](https://cloudfour.com/thinks/responsive-images-audits/)
+* [Responsive Images Audits](https://cloudfour.com/thinks/responsive-images-audits/)
 
 # media queries section
 ## Learning tips Lesson 13 
@@ -1444,7 +1444,40 @@ make all of your commits on descriptively named topic branches. Branches help is
 ### Further Research
 * [**Working with Remotes**](https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes#_showing_your_remotes) from the Git book
 * [**the ```git remote```
- command**](https://git-scm.com/docs/git-remote)  from the Git docs
+ command**](https://git-scm.!com/docs/git-remote)  from the Git docs
+
+
+
+## What if I do "git init in a folder" and when I have to push Bash ask me about the remote repository?
+
+```
+$ git push
+
+fatal: The current branch master has no upstream branch.
+To push the current branch and set the remote as upstream, use
+
+    git push --set-upstream origin master
+
+```
+
+* go on **GitHub**
+* **create manually a new repository**
+
+![create a new repository](create a new repository.png)
+
+![push an existing repository from the command line](push an existing repository from the command line.png)
+
+
+* use the command: ```git remote add origin [repository url]```
+```
+$ git remote add origin https://github.com/lauraenria/CatClicker.git
+```
+* then use:  
+  * ```git push --set-upstream origin master```
+  * ```git push -u origin master```
+```
+ git push --set-upstream origin master
+```
 
 ---
 
@@ -2305,6 +2338,8 @@ When this asynchronous code is ready to be executed, it's moved to the queue
 where it waits until the Call Stack is empty. Whenever the Call Stack is empty, 
 code moves from the Queue over to the Call Stack and gets executed.
 
+
+
 ### Further Research
 
 * [**Concurrency model and Event Loop**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
@@ -2312,7 +2347,7 @@ code moves from the Queue over to the Call Stack and gets executed.
 * [**What the heck is the event loop anyway? by Philip Roberts on YouTube**](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 
 
-# Accessibility === A11y
+# Lesson 1: Accessibility === A11y
 
 
 ### Sources:
@@ -2334,6 +2369,8 @@ code moves from the Queue over to the Call Stack and gets executed.
 * Operable
 * Understandable
 * Robust
+
+# Lesson 2: Focus
 
 WebAIM checklist items: [video](https://youtu.be/UgjswqeeoTE)
 
@@ -2413,10 +2450,246 @@ WebAIM checklist items:
 [<dialog>](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) on MDN
 
 
+# Lesson 3: Semantics Basics
+
+## 3.13 [Writing Semantic HTML: The Name Game](https://youtu.be/fUt5pLJp0HQ)
+
+WebAIM Guideline 1.1: [http://webaim.org/standards/wcag/checklist#g1.1](http://webaim.org/standards/wcag/checklist#g1.1)
+
+The [MDN page on](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label) ```label``` demonstrates the two options for associating a ```label``` with the thing it's labelling.
+
+The W3C spec has a [list of what types of elements work with a ```label``` tag.](https://www.w3.org/TR/html5/forms.html#category-label)
+
+* [course's GitHub Repository](https://github.com/udacity/ud891)
+
+* [live version](http://udacity.github.io/ud891/lesson3-semantics-built-in/16-labelling-input-elements/flight-booking.html)
+
+## 3.15 [Text Alternatives](https://youtu.be/XCa6U1BllCY)
+
+WebAIM checklist items:
+
+* 1.3.2: *http://webaim.org/standards/wcag/checklist#sc1.3.2*
+* 2.4.10: *http://webaim.org/standards/wcag/checklist#sc2.4.10*
+* 1.3.1: *http://webaim.org/standards/wcag/checklist#sc1.3.1*
+* 2.4.1: *http://webaim.org/standards/wcag/checklist#sc2.4.1*
+* 2.4.6: *http://webaim.org/standards/wcag/checklist#sc2.4.6*
+
+JavaScript headings snippet:
+
+```javascript
+
+var hs = document.querySelectorAll('h1,h2,h3,h4,h5,h6');
+for (var i = 0; i < hs.length; i++) {
+   console.log(hs[i].textContent.trim() + " " +  
+               hs[i].tagName,
+               hs[i]);
+}
+
+```
+
+## 3.16 Labeling Images With ALT Text
+
+You might want to check out [WebAIM's advice on writing useful text alternatives](http://webaim.org/techniques/alttext/) for a refresher. Specify each image's alt attribute in full, e.g. ```alt="bees"```.
+
+# Lesson 4 [Navigating Content](https://youtu.be/Oo4HoeL6yIE)
+
+Shortcuts mentioned:
+
+* ```CMD+F5``` to turn on VoiceOver on OS X
+* Normal keyboard operation (```TAB```, ```Shift+TAB```, arrow keys etc.) work as normal with VoiceOver running
+* ```CMD+L``` to jump to address bar
+* ```CTRL+Option+U``` to open Web Rotor
+* Type search term with Web Rotor open to search within Web Rotor
+* ```CTRL``` + ```Option``` + ```← ↑ ↓ →``` to explore content
+* ```CTRL``` + ```Option``` + ```CMD + ```H``` to move forward by heading
+* ```CTRL``` + ```Option``` + ```CMD``` + ```Shift``` + ```H``` to move backward by heading
+
+[WebAIM's article on Using VoiceOver to evaluate Web Accessibility](http://webaim.org/articles/voiceover/) has a full introduction to VoiceOver from the point of view of evaluating accessibility, including most keyboard commands available.
+
+If you don't have a Mac device, [NVDA](http://www.nvaccess.org/) is a free, open source screen reader available for Windows. [WebAIM's introduction to NVDA](http://webaim.org/articles/nvda/) covers the basics of using NVDA to check accessibility.
+
+If you only use Linux, [Orca](https://help.gnome.org/users/orca/stable/) is available in the Gnome desktop manager, although this screen reader is much more rarely used and suffers from poor support by web browsers.
+
+## 4.4 [Using Headings](https://youtu.be/ZHWcs5d9IqA)
 
 
+WebAIM checklist items:
 
-# Objects in Depth
+* 1.3.2: *http://webaim.org/standards/wcag/checklist#sc1.3.2*
+* 2.4.10: *http://webaim.org/standards/wcag/checklist#sc2.4.10*
+* 1.3.1: *http://webaim.org/standards/wcag/checklist#sc1.3.1*
+* 2.4.1: *http://webaim.org/standards/wcag/checklist#sc2.4.1*
+* 2.4.6: *http://webaim.org/standards/wcag/checklist#sc2.4.6*
+
+
+JavaScript headings snippet:
+
+```javascript
+
+for (var i = 0, headings = $$('h1,h2,h3,h4,h5,h6');
+     i < headings.length; i++) {
+   console.log(headings[i].textContent.trim() + " " +  
+               headings[i].tagName,
+               headings[i]);
+}
+
+```
+
+## 3.7 [Other navigational options example](https://youtu.be/kqbOBl1jP90)
+
+Shortcuts mentioned:
+
+* ```CTRL+Option+U``` to open Web Rotor
+* ```←``` and ```→``` to change panes within Web Rotor
+* Type search term with Web Rotor open to search within Web Rotor
+* ```Enter``` to move VoiceOver focus to item from Web Rotor
+* ```CTRL + Option + Spacebar``` to activate link/button/other element
+* ```CTRL + Option + ← ↑ ↓ →``` to explore content
+* ```CTRL + Option + CMD + H``` to move forward by heading
+* ```CTRL + Option + CMD + Shift + H``` to move backward by heading
+* ```CTRL + Option + W``` to have a word spelled out
+
+WebAIM's article on ```accesskey```: *http://webaim.org/techniques/keyboard/accesskey*
+
+WebAIM's articles on VoiceOver and NVDA:
+
+*http://webaim.org/articles/voiceover/*
+*http://webaim.org/articles/nvda*
+
+## 4.8 [Link Text](https://youtu.be/SiblO4dfYBg)
+
+* WebAIM checklist item 2.4.9: *http://webaim.org/standards/wcag/checklist#sc2.4.9*
+
+* [Landmarks](https://youtu.be/bww3IaktlRY)
+
+# Lesson 5 [Intro to Semantics: ARIA](https://youtu.be/co6q_Ta6-nY)
+
+* 5.1 [why ARIA](https://youtu.be/0AsaDbou4OQ)
+
+  * ARIA 1.0 spec: *https://www.w3.org/TR/wai-aria/*
+
+  * ARIA 1.1 spec: *https://www.w3.org/TR/wai-aria-1.1/*
+
+* ## 5.2 [What can ARIA do for you](https://youtu.be/7vz1aakYHtw)
+
+  * ARIA 1.0 spec: *https://www.w3.org/TR/wai-aria/*
+
+  * ARIA 1.1 spec: *https://www.w3.org/TR/wai-aria-1.1/*
+
+* ## 5.3 [Roleplaying](https://youtu.be/hzQwHx7563I)
+
+  * ARIA 1.0 roles: *https://www.w3.org/TR/wai-aria-1.0/#roles*
+
+  * ARIA 1.1 roles (draft): *https://www.w3.org/TR/wai-aria-1.1/#roles*
+
+  * ARIA 1.1 practices guide (draft): *https://www.w3.org/TR/wai-aria-practices-1.1/*
+
+  Refer to the [ARIA Practices 1.1 recommendations for the "radio group" pattern](https://www.w3.org/TR/2016/WD-wai-aria-practices-1.1-20160317/#radiobutton).
+
+* [course's GitHub Repository](course's GitHub Repository.)
+
+ * ## [More Ways to Label](https://youtu.be/LjUT2T29bDw)
+
+  * ## 5.4 [Default Semantics and Landmarks](https://youtu.be/cl5HJ4e3FwI)
+
+ARIA in HTML spec, including guidance on what ARIA roles may and may not be used with which HTML elements: *https://www.w3.org/TR/html-aria/*
+
+  * ## 5.5 [ARIA Relationships](https://youtu.be/e1ZmfmnB6v8)
+
+    * ARIA 1.0 relationship attributes: *https://www.w3.org/TR/wai-aria/states_and_properties#attrs_relationships*
+
+    * ARIA 1.1 relationship attributes: *https://www.w3.org/TR/wai-aria-1.1/#attrs_relationships*
+
+  * ## 5.6 [Hidden In Plain Sight](https://youtu.be/gRYXk7joPbc)
+
+    * [WebAIM's article on "invisible content"](http://webaim.org/techniques/css/invisiblecontent/)
+
+* ## 5.7 [Introducing ARIA Live](https://youtu.be/BLlJRVyS2UM)
+
+  * Check out the [number input demo](http://udacity.github.io/ud891/lesson5-semantics-aria/19-aria-live/) yourself, if you like.
+
+* ## 5.8 [Atomic Relevant Busy](https://youtu.be/BayPAmGEN-I)
+  * [recap](https://youtu.be/FxOyqbGvhKA)
+
+* Modal Dialog Quiz not done
+
+# lesson 6 [Style](https://youtu.be/zp3Q5eZLKlI)
+
+* 6.1 [Working with focus styles](https://youtu.be/ZooEnrj8aMc)
+
+WebAIM checklist items:
+
+* 2.4.7: *http://webaim.org/standards/wcag/checklist#sc2.4.7*
+```:focus``` [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:focus)
+
+```outline``` [CSS property](https://developer.mozilla.org/en-US/docs/Web/CSS/outline)
+
+```:hover``` [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:hover)
+
+```::before``` [pseudo-element](https://developer.mozilla.org/en-US/docs/Web/CSS/::before)
+
+## 4.2 [Input Modality](https://youtu.be/bfPGicTGBTI)
+
+```::moz-focusring```: [pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring)
+
+[Proposing CSS input modality article](http://radar.oreilly.com/2015/08/proposing-css-input-modailty.html)
+
+[Input modality shim](https://github.com/alice/modality)
+
+## 4.3 [Styling with Aria](https://youtu.be/K9u9udvm8ng)
+
+[CSS attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)
+
+Just noticed in this example that we left off ```tabindex="0"``` (hopefully you caught that as well)! When you're building custom controls be sure to include ```tabindex``` so keyboard users can easily interact with the elements.
+
+## 4.4 [Responsive design for multi-device](https://youtu.be/6HmLb8nWQVk)
+
+WebAIM checklist items:
+
+* 1.4.4: *http://webaim.org/standards/wcag/checklist#sc1.4.4*
+[Udacity course on Responsive Web Design Fundamentals](https://www.udacity.com/course/responsive-web-design-fundamentals--ud893) !!IMPORTANT!!
+
+[Responsive web design basics on Web Fundamentals](https://developers.google.com/web/fundamentals/design-and-ui/responsive/fundamentals/set-the-viewport?hl=en)  !!IMPORTANT!!
+
+[Material Design Accessibility recommendations for touch targets](https://material.google.com/usability/accessibility.html#accessibility-layout)
+
+**Author's Note**: On older browsers (particularly Mobile Safari) developers would add ```user-scaleable=no``` because it would disable the 350ms click delay in that browser. As of Safari 9.1 this is no longer the case, and using ```width=device-width``` in your viewport will handle removing that click delay.
+
+**Mobile Screen Readers**
+
+Using your mobile device, navigate to *bit.ly/mobile-screenreader*. 
+
+* Using Mobile Screen Readers quiz not done
+
+# [Meeting Contrast Requirements](https://youtu.be/gH1JieTZQ1k)
+
+WebAIM checklist items:
+
+* 1.4.3: *http://webaim.org/standards/wcag/checklist#sc1.4.3*
+* 1.4.6: *http://webaim.org/standards/wcag/checklist#sc1.4.6*
+
+[Chrome Accessibility Developer Tools](https://chrome.google.com/webstore/detail/accessibility-developer-t/fpkknkljclfencbdbgkenhalefipecmb?hl=en)
+
+# [Don’t convey info with color alone](https://youtu.be/q33l7_mxksc)
+
+WebAIM checklist items:
+
+* 1.4.1: *http://webaim.org/standards/wcag/checklist#sc1.4.1*
+
+[NoCoffee Chrome extension](https://chrome.google.com/webstore/detail/nocoffee/jjeeggmbnhckmgdhmgdckeigabjfbddl?hl=en-US)
+
+For more information on color blindness, check out [the Colour Blind Awareness site]http://www.colourblindawareness.org/colour-blindness/.
+
+# [High Contrast Mode](https://youtu.be/h40ARxkvagk)
+
+You can follow [this link to get the Chrome High Contrast extension](https://chrome.google.com/webstore/detail/high-contrast/djcfdncoelnlbldjfhinnjlhdjlikmph?hl=en). Try it out on one of your sites to verify that everything works well for low vision users.
+
+**Author's Note**: The example that shows a "subtle background color" in the navbar really does have a background color, we promise! It doesn't show up very well on YouTube, which I guess proves the point that just because a subtle color might look good on your screen doesn't always mean it'll look good on someone else's monitor.
+
+[Lesson 6 Outro](https://youtu.be/M9T_DF4gfuw)
+[Course Outro](https://youtu.be/3TRnSAjBYtg)
+
+# Lesson 7 Objects in Depth
 
 ## Further Research
 * [**Intro to JavaScript**](https://www.udacity.com/course/intro-to-javascript--ud803)
@@ -2426,7 +2699,7 @@ WebAIM checklist items:
 
 
 
-# Create and Modify Properties
+# 7.1 Create and Modify Properties
 ## Creating Objects
 
 To create a new, blank (i.e., “empty”) object, you can use object **literal notation**, or the ```Object()``` **constructor function**.
@@ -2525,7 +2798,7 @@ Great! The complete ```printer``` object now looks like the following:
 }
 ```
 
-## Removing Properties
+## 7 Removing Properties
 Recall that since objects are mutable, not only can we modify existing properties (or even add new ones) -- we can also delete properties from objects.
 
 Say that the printer object above actually doesn't have any modes (i.e., ```'black and white'```, ```'color'```, etc.). We can go ahead and remove that property from ```printer``` using the ```delete``` operator.
@@ -2551,10 +2824,10 @@ Great! Let's see this all in action below.
 
 
 
-## Further Research
+## 7.1 Further Research
 * [The 'delete' operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete)on MDN
 
-## Invoking Object Methods
+## 7.2 Invoking Object Methods
 
 ```
 const developer = {
@@ -2638,17 +2911,17 @@ A value for ```this``` is set when a method is invoked on an object, and that va
 
 
 
-# Further Research
+# 7.2 Further Research
 [**Defining Methods**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_Objects#Defining_methods) on MDN
 [**"this"** in Methods](https://javascript.info/object-methods#this-in-methods)
 
 
-## Beware of Globals
+## 7.3 Beware of Globals
 
 [video](https://youtu.be/fTVmpcG_9ss)
 [Here's the code from the preceding video.](https://github.com/udacity/OOJS-screencasts/blob/master/L1-objects-in-depth/57-this-without-object.js)
 
-### The window Object
+### 7 The window Object
 If you haven't worked with the ```window``` object yet, this object is provided by the browser environment and is globally accessible to your JavaScript code using the identifier, window. This object is not part of the JavaScript specification (i.e., ECMAScript); instead, it is developed by the [W3C](https://www.w3.org/Consortium/).
 
 This ```window``` object has access to a ton of information about the page itself, including:
@@ -2757,7 +3030,7 @@ How do you know if your browser does support Object.values()? Check out the [Bro
 
 
 
-Further Research
+Further Research 7
 [**JavaScript: The Good Parts**](http://javascript.crockford.com/) by Douglas Crockford
 [**JJavaScript: The Good Parts via**](https://www.goodreads.com/book/show/2998152-javascript) Goodreads
 
@@ -5834,62 +6107,328 @@ END Javascript Course
 
 
 
+# lesson 15 Useful link
+
+* [Shortcuts](https://youtu.be/qxUjOl8hG3g)
+
+  * cmd+t : fuzzy file finder
+  
+  * symbol search menu 
+    * type @ symbol in previous box (cmd+t) 
+    * cmd+r directly
+
+* select element and cmd + alt + g    
+
+* alt + drag column selection
+
+* cmd + D : add next instance to selection
+
+* cmd + ctrl + G : find all instance
+
+#### [Extending Your Editor (only for sublime)](https://youtu.be/St6pvD_TsWo)
+
+Open the Sublime console with View -> Show Console or Ctrl + `
+
+* [Package Control](https://packagecontrol.io/): The Sublime Text package manager
+* [Emmet](http://emmet.io/) home page
+* [Emmet](https://packagecontrol.io/packages/Emmet)  Package Control
+* [SideBarEnhancements](https://packagecontrol.io/packages/SideBarEnhancements) on Package Control
+* [ColorPicker](https://packagecontrol.io/packages/ColorPicker) on Package Control
+* [ColorHighlighter](https://packagecontrol.io/packages/Color%20Highlighter) on Package Control
+
+## [Core qualities of a good built tool](https://youtu.be/P6H_7tHab0g)
+
+* fast execution / built time
+
+* vibrant plugin community
+
+* modular and share task
+
+# [gulp](https://youtu.be/glH_tLlc6bQ)
+
+## Installing Gulp and Course Code
+Note: if you have not installed NodeJS or NPM you will need to install these first before installing Gulp. You can download and install NodeJS and NPM by going to [Nodes official site](https://nodejs.org/) and downloading the latest version of NodeJS.
+
+Take a few moments and install [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md). The instructions are listed in the link.
+
+Grab the course code from [Github](https://github.com/udacity/ud892).
+
+* [Hello Gulp](https://youtu.be/Q81wcdjBL-c)
+  
+  * [Using Gulp](https://youtu.be/oEkfISC0790)
+
+* [Sass](http://sass-lang.com/)
+
+* [Gulp Autoprefixer](https://www.npmjs.com/package/gulp-autoprefixer) plugin on npm
+  * [Gulp Autoprefixer video](https://youtu.be/ZDeu__d1tHM)
+
+```
+$ npm install --save-dev gulp-autoprefixer
+```
+
+```javascript
+const gulp = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+ 
+gulp.task('default', () =>
+    gulp.src('src/app.css')
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(gulp.dest('dist'))
+);
+```
+
+* [Getting started with gulp](https://markgoodyear.com/2014/01/getting-started-with-gulp/)
 
 
+* [Gulp and Setting up a Gulp Workflow (Intermediate)](https://discussions.udacity.com/t/gulp-and-setting-up-a-gulp-workflow-intermediate/24359)
+
+* [Gulp-scotch-tutorials](https://scotch.io/tutorials/automate-your-tasks-easily-with-gulp-js)
+
+* [Gulp for Beginners- css-tricks](https://css-tricks.com/gulp-for-beginners/)
 
 
+## lesson 17 [Expressive live Editing](https://youtu.be/PAe1YJlNYvI)
+
+[quiz](https://youtu.be/faaYYz_VD6o)
+
+1. Live on every keystroke in Sublime
+2. Every save via Gulp
+3. All in the browser
+
+[Different Approaches for Live Editing](https://youtu.be/hep6r060-V8)
+
+* [Takana](https://packagecontrol.io/packages/Takana) plugin on PackageControl
+
+* [Chrome Dev Workspaces](https://developer.chrome.com/devtools/docs/workspaces)
+
+* [Browser Sync](http://www.browsersync.io/)
 
 
+# Using Browser-Sync
+
+Install browser-sync.
+Create a browser-sync object and initialize the server.
+
+```javascript
+var browserSync = require('browser-sync').create();
+ browserSync.init({
+     server: "./"
+ });
+ browserSync.stream();
+ ```
+ 
+Run gulp in Terminal, see how browser opens with the page open.
 
 
+# lesson 18 [Linting](https://youtu.be/RCfKwyGvW3M)
+
+[Comparison of JavaScript linting tools](http://www.sitepoint.com/comparison-javascript-linting-tools/)
+
+*JShint
+*JSCS
+*[ESLint](http://eslint.org/)
+  * helps uncover code style problems
+  * helps elinate dead code or variables
+
+## 18.1 [Setting Up ESLint](https://youtu.be/QUK4hMoYv_c)
+
+* [Sublime Linter](http://www.sublimelinter.com/en/latest/)
+
+* [gulp-eslint on npm](https://www.npmjs.com/package/gulp-eslint)
+
+## 18.2 [Setting up ESLint in Gulp](https://youtu.be/cBSFMhy1upc)
+
+* [How to Use Git and Github](https://www.udacity.com/course/ud775) course
+
+## 18.3 [Unit Testing in Gulp](https://youtu.be/KpQsF9nEdIM)
+
+* Udacity [JavaScript Testing course](https://www.udacity.com/course/javascript-testing--ud549)
+
+## 18.4 [Unit Testing in Gulp](https://youtu.be/DIcXyn9Fris)
+
+* [PhantomJS gulp plugin on npm](PhantomJS gulp plugin on npm)
+
+* ```$ npm install gulp-jasmine-phantom``` in my projecet directory
+
+```javascript
+var jasmine = require('gulp-jasmine-phantom')
+
+```
+
+```javascript
+gulp.task('test', function () {
+  gulp.src('test/spec/extraSpec.js')
+  .pipe(jasmine({
+    integration: true,
+    vendor: 'js/**/*.js'
+  }));
+});
+
+```
+
+# 18.5 [Continuous Integration](https://youtu.be/KTNqlTzNEC4)
+
+* [Continuous Integration](https://classroom.udacity.com/courses/ud611/lessons/4225318865/concepts/44585989490923) in Udacity Intro to DevOps course **!!Important!!**
+
+# Lesson 19 Optimizations
+
+## 19.1 [Development and Production Modes](https://youtu.be/LhHq3ll6ijw)
+
+* **Development** task contain things you reaaly need no matter what. eg. live editing
+
+* **Production**  
+
+## 19.2 [Development and Production Modes Part 2](https://youtu.be/biZ3bFivl_w)
+
+```
+-dist/
+    -css/
+    -js/
+    -index.html
+```
+
+## 19.3 [CSS Concatenation](https://youtu.be/4s66CHXpekI)
+
+## 19.4 [JS Concatenation](https://youtu.be/3DCLo1f-g6c)
+
+1. It reduce a number of HTTP requests needed to load your page in production.
+
+2. It's the most basic variant of dependency management.
+
+## 19.5 [JS Concatenation Hands On](https://youtu.be/BJpNrS24rM8)
+
+* **npm install gulp-concat**
+
+* let concat = require('gulp-concat');
+
+* .pipe(concat('all.js'))
+
+* gulp script (on bash)
+
+* ```<script src='js/all.js'></script>```
+
+## 19.6 [Minification](https://youtu.be/jUkMltQVnfg)
+
+* uglifyJS
+
+* .pipe(uglify())
+
+## 19.7 [Setting up a production task](https://youtu.be/DDVoX9tzyP0)
+
+* [The Difference Between Minification and GZipping](https://css-tricks.com/the-difference-between-minification-and-gzipping/)
+
+* GZippin is better
+
+## 19.8 [Writing Future Proof JavaScript](https://youtu.be/sbUZPuEvQeM)
+
+* Transpiler [Babel JS](https://babeljs.io/learn-es2015/)
+
+* var babel = require('gulp-babel');
+
+* standardization across browser takes a long time.
+
+## 19.9 Source Maps
+
+[Source maps](https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit) are files that associate line numbers from the processed file to the original. This way the browser can lookup the current line number in the sourcemap and open the right source file at the correct line when debugging. In Chrome for instance, the DevTools support source maps both for CSS and JavaScript.
 
 
+**Setup**
+Source maps in gulp are easy to setup. It’s a use case where pipes really shine.
+
+1. Install the ```gulp-sourcemaps``` [plugin](https://www.npmjs.com/package/gulp-sourcemaps).
+
+2. Require the ```gulp-sourcemaps``` plugin and in your scripts-dist or scripts (or styles) task, add a pipe to ```sourcemaps.init()``` after you get the source but before you send the source files through any pipes that transform them materially. After all plugins and pipes have been applied but before you save to the destination, pipe through ```sourcemaps.write()``` with an optional location parameter if you don't want the source maps to be inlined.
+
+```javascript
+var sourcemaps = require('gulp-sourcemaps');
+
+ gulp.task('scripts-dist', function() {
+   gulp.src('js/**/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(concat('all.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/js'));
+});
+
+```
+All of the pipes between init and write must have support. Check the list [here](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support) to verify. In the developer console, the output of app should automically link errors in the generated code to their line numbers in the original source.
+
+Source map Support for other languages
+In addition to things like concatenation and minification, source maps also support some languages/extensions that transpile to JavaScript like Typescript, CoffeeScript and ES6 / JSX.
+
+You can read more some of the technical aspects of Source Maps on [HTML5Rocks](http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/).
+
+## 19.10 [Image Optimization](https://youtu.be/RRPLHQSnaks)
+
+* [Browser Rendering Optimization](https://www.udacity.com/course/browser-rendering-optimization--ud860)
+
+* [Web Performance Optimization](https://www.udacity.com/course/website-performance-optimization--ud884)
+
+* [Responsive Web Design](https://www.udacity.com/course/responsive-web-design-fundamentals--ud893)
+
+* [Responsive Images](https://www.udacity.com/course/responsive-images--ud882)
 
 
+## 19.11 Image Compression
+
+Lossless compression reduces a file in such a way that the original can be recreated from the compressed version. You can think of it as reducing the file size but not throwing away any information.
+
+**Imagemin**
+
+[gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) can losslessly compress JPEGs, GIFS, PNGs and SVGs out of the box. Lossless means that even though the file size will end up being smaller, special care is taken to not cause any visual changes whatsoever, meaning that original visual information stays exactly the same.
+
+After you’ve grabbed the plugin you can simply add a pipe between the new crunch-images task and call ```imagemin()``` in there. There are a few extra options such as generating progressive images, but even without any configuration this will take all of your images and do any safe optimizations.
+
+**Lossy Compression**
+
+Lossy compression, on the other hand, can only recreate an approximation of the original. Lossy compression can give you really small file sizes at the expense of image quality. But there are a few lossy optimizations that are truly smart, and PNG quantization is one of them. PNG quantization takes images with or without alpha transparency and converts them to 256 or less colored 8-bit pngs. Now if you do this manually and just convert a 16-bit image to a 8-bit image, you won’t like the results. It’ll end up...well..like a crappy gif, with unnatural, limited colors.
 
 
+**PNG Quantization**
+
+PNG quantization benefits from the fact that there are colors that our vision and brain perceives as very similar, even though they’re technically completely different. The quantization algorithm aims to understand which colors actually matter and remaps them to new, optimized colors.
+
+A cool thing about pngquant, the plugin we’re going to use, is that it automatically exits and will not save if a certain quality threshold isn’t passed.
+
+**Let's Try It**
+
+1. Download and require the [imagemin-pngquant](https://www.npmjs.com/package/imagemin-pngquant) plugin in addition to gulp-imagemin.
+
+2. Create a config object for imagemin. These are the directives that imagemin will use when you pipe images to it. The following snippet instructs imagemin to use progressive rendering for JPEG images and PNG quant for well, PNGs.
+
+```javascript
+
+gulp.task('default', function() {
+    return gulp.src('src/images/*')
+        .pipe(imagemin({
+            progressive: true,
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest('dist/images'));
+});
+
+```
+
+Progressive rendering loads an image in layers where each layer makes the image more detailed. It can make a page feel faster than typical rendering line by line. If you like, you can now configure pngquant as well by adding quality or speed options. Read more about these on the plugin homepage.
+
+Now you’ve got automatic image crunching in place and working for you but pro-tip, for anything important, take the time to see what will work, even if that means putting in a bit of elbow grease and checking things manually.
+
+**Even better compression options**
+
+Smaller images can tolerate more aggressive lossy compression. You might want to try other things like converting images to SVG where applicable. SVG stands for Scalable Vector Graphics and uses a XML-based format to describe an image and can in most cases be scaled infinitely without any increase in file size or loss of image quality. If you’d like to further explore techniques to work with your images, head to the notes for a few advanced topics. This includes stuff such as automatically resizing your images to become responsive and fit retina and non-retina screens, or inlining your images into your CSS or into a sprite to save a couple more HTTP requests.
 
 
+# Lesson 20: Web Tooling and Automation Conclusion
 
+## [Scaffolding](https://youtu.be/wvV7Obe2u5I)
 
+* [Web Starter Kit](https://developers.google.com/web/tools/starter-kit/)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+* [Yeoman](http://yeoman.io/)
 
 
 
