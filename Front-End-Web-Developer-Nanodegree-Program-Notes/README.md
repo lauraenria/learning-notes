@@ -1463,9 +1463,9 @@ To push the current branch and set the remote as upstream, use
 * go on **GitHub**
 * **create manually a new repository**
 
-![create a new repository](create a new repository.png)
+![create a new repository](https://github.com/lauraenria/learning-notes/blob/master/Front-End-Web-Developer-Nanodegree-Program-Notes/images/create%20a%20new%20repository.png?raw=true)
 
-![push an existing repository from the command line](push an existing repository from the command line.png)
+![push an existing repository from the command line](https://github.com/lauraenria/learning-notes/blob/master/Front-End-Web-Developer-Nanodegree-Program-Notes/images/push%20an%20existing%20repository%20from%20the%20command%20line.png?raw=true)
 
 
 * use the command: ```git remote add origin [repository url]```
