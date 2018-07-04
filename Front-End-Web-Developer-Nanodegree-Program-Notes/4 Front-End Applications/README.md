@@ -320,7 +320,8 @@ The values themselves they're being passed to the functions called by ```.then``
 
 * [Write Your First Promise Solution](https://youtu.be/VK9Nyvmx5lY)
 
-* [Wrapping readyState](https://youtu.be/85UkGKKZUxs)
+
+* [Wrapping readyState](https://youtu.be/85UkGKKZUxs) and [solution](https://youtu.be/64aRzZgFJsQ)
 
 
 
@@ -416,6 +417,8 @@ app/scripts/app.js
 gulp serve
 ```
 
+* use ```ctrl + c``` to log out from the serve in bash
+
 This outputs an IP address you can use to locally test and another that can be used on devices connected to your network.
 
 It's recommended to use Chrome, as non-vulcanized Polymer projects will load fastest on Chrome.
@@ -435,6 +438,29 @@ See [this bug](https://github.com/nodejs/node-gyp/issues/695) if you get the fol
 ```
 "Error: self signed certificate in certificate chain"
 ```
+
+[Source how to fix: ](https://github.com/udacity/exoplanet-explorer/issues/12)
+
+```
+Failed to load resource: net::ERR_FILE_NOT_FOUND    webcomponents-lite.js:1
+
+index.html:1 Access to Imported resource at 'file:///C:/Users/Laura/Documents/GitHub/exoplanet-explorer/app/elements/elements.html' from origin 'null' has been blocked by CORS policy: Invalid response. Origin 'null' is therefore not allowed access.
+```
+
+First off follow the installation guide in the README then run these commands.
+```
+npm install -g npm-check-updates
+ncu -u
+npm install
+bower install
+I was also having a issue with jshint so run this if necessary
+npm install --save-dev jshint gulp-jshint
+```
+
+The go to
+
+* bower.json and change ```"test-fixture": "PolymerElements/test-fixture#^3.0.0"``` the number with the number ```3``` with the last version.
+
 ## [Wrap an XHR - Solution](https://youtu.be/cWqEP9ZBDvk)
 
 
@@ -485,6 +511,55 @@ Checkout ```xhr-solution``` to see my solution.
 * [Fetch API](https://davidwalsh.name/fetch)
 
 
+## XHR
+
+```javascript
+var request;
+if (window.XMLHttpRequest) { // Mozilla, Safari, ...
+  request = new XMLHttpRequest();
+} else if (window.ActiveXObject) { // IE
+  try {
+    request = new ActiveXObject('Msxml2.XMLHTTP');
+  } 
+  catch (e) {
+    try {
+      request = new ActiveXObject('Microsoft.XMLHTTP');
+    } 
+    catch (e) {}
+  }
+}`
+
+request.open('GET', 'https://davidwalsh.name/ajax-endpoint', true);
+request.send(null);
+
+
+request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+```
+**Request Callbacks**
+```javascript
+// state changes
+request.onreadystatechange = function() {
+	if(request.readyState === 4) { // done
+		if(request.status === 200) { // complete	
+			console.log(request.responseText)
+		}
+	}
+};
+
+// addEventListener
+function callbackFn(e) {
+	// Handle each event
+}
+request.addEventListener("progress", callbackFn, false);
+request.addEventListener("load", callbackFn, false);
+request.addEventListener("error", callbackFn, false);
+request.addEventListener("abort", callbackFn, false);
+
+```
+
+* [
+Basic AJAX Request: XMLHttpRequest](https://davidwalsh.name/xmlhttprequest)
+
 ## [Fetch API Exercise](https://youtu.be/2fFfekIljRI)
 
 **Instructions**
@@ -505,3 +580,114 @@ Checkout ```xhr-solution``` to see my solution.
 
 * [What Happens Next?](https://youtu.be/uKXGJW2_2I0)
     * ["Thenable" used in context of promises on MDN.](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#Methods)
+
+
+## Lesson 4 Chaining Promises 
+
+[Fetch and Show First Planet](https://youtu.be/HsnJn9KcTjI)
+
+**Instructions** 
+1 If you haven't already, read this and follow the instructions on working with the Exoplanet Explorer repo.
+2 Checkout the ```first-thumb-start``` branch and navigate to ```app/scripts/app.js```.
+3 Get the planet data and add the search header.
+4 Create the first thumbnail with ```createPlanetThumb(data)```.
+5 Handle errors!
+  * Pass ```'unknown'``` to the search header.
+  * Log the error.
+Follow me online!
+@cwpittman
+
+Checkout the ```first-thumb-solution``` branch to see my code!
+
+[soluction](https://youtu.be/4XfLON4SXOM)
+[solution2](https://youtu.be/N1GK3oSo6xY)
+
+[Promises: Resolve Is Not the Opposite of Reject - Jake Archibald](https://jakearchibald.com/2014/resolve-not-opposite-of-reject/)
+
+[Quiz solution](https://youtu.be/SsEcnNRDks8);
+
+
+* [Series vs Parallel Requests](https://youtu.be/XAxs5IynkQQ)
+* [Series vs Parallel Requests  solution](https://youtu.be/YmwhSgOC5Wk)
+
+
+* [Array Methods and Promises](https://youtu.be/RGRxW4Lz1dQ)
+
+
+* [Promises with .forEach quiz](https://youtu.be/0ob3r8QswGs)
+
+
+* [Promises with .forEach solution](https://youtu.be/loLkm6bboGY)
+
+
+* [Promises with .map](https://youtu.be/JkmwpsCCdwY)
+
+
+* [Promises with .map - solution](https://youtu.be/ieyzYs6wN7Y)
+
+* [All Promises](https://youtu.be/B6YCz2z02qE)
+
+
+* [All Promises - solution](https://youtu.be/e24lQluE_-s)
+
+[Documentation for Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)
+
+
+# Lesson 5 Ajax with XHR
+
+* [Course Intro](https://youtu.be/UGk5BPaytiA)
+
+**Ajax** is the concept of asynchronously requesting data
+
+[Client Server Demonstration](https://youtu.be/nozbz6J3_4w)
+
+
+**Vocabulary**
+
+**GET Request**: An internet request for data. Sent from a client to a server.
+
+**Response**: A server's response to a request. Sent from a server to a client. A response to a GET request will usually include data that the client needs to load the page's content.
+
+
+* [Ajax Definition & Examples](https://youtu.be/7nufhg4DMuc)
+
+* [ Jesse James Garrett coined the term AJAX](https://web.archive.org/web/20080702075113/http://www.adaptivepath.com/ideas/essays/archives/000385.php) mean “Asynchronous Javascript and XML
+
+* [XMLHTTPRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) to fetch data and then modify the current page.
+
+## **APIs**
+
+ where is this data coming from? And how do we get access to it? How will our app know how to retrieve that data?
+
+The acronym "API" stands for:
+
+**A**pplication
+**P**rogramming
+**I**nterface
+
+
+[Google's APIs
+](https://developers.google.com/apis-explorer/) All the Google services you can imagine.
+
+[Giant database of APIs](http://www.programmableweb.com/apis/directory)
+
+ [Udacity API](https://www.udacity.com/public-api/v1/catalog)
+
+
+ ### The XHR Object
+
+ Just like how the ```document``` is provided by the JavaScript engine, the JavaScript engine also provides a way for us to make asynchronous HTTP requests. We do that with an ```XMLHttpRequest``` object. We can create these objects with the provided ```XMLHttpRequest``` constructor function.
+
+One of the best ways to learn is to get your hands dirty and try things out! So go to [Unsplash](https://unsplash.com/), open up the developer tools, and run the following on the console:
+
+```javascript
+const asyncRequestObject = new XMLHttpRequest();
+```
+
+XMLHttpRequests (commonly abbreviated as XHR or xhr) can be used to request any file type (e.g. plain text files, HTML files, JSON files, image files, etc.) or data from an API.
+
+**Note**: We'll be digging into the XMLHttpRequest object. We'll look at how to create it, what methods and properties need to be used, and how to actually send asynchronous requests. For even more info on using the XHR object to make async requests, check out these links:
+
+* MDN's docs - https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/open
+* WHATWG Spec - https://xhr.spec.whatwg.org/
+* W3C Spec - https://www.w3.org/TR/XMLHttpRequest/
