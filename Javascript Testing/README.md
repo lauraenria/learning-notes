@@ -23,7 +23,7 @@ function add(x, y) {
 * StackOverflow: [Is JavaScript's Floating Point Math Broken?](http://stackoverflow.com/questions/588004/is-floating-point-math-broken)
     * [Refactoring add()](https://youtu.be/tQ1BIQga90E)
 
-    * cicle red - green - refractoring
+    * cycle red - green - refactoring
 
 ```javascript
 
@@ -45,7 +45,7 @@ expect(add(0.1, 0.2)).toBe(0.3);
 
 ## [Introducing Suites and Specs](https://youtu.be/I1FHp9Lekho)
 
-* **it**, is used to indetify a specification or a spec, for short.
+* **it**, is used to identify a specification or a spec, for short.
 
 * A **spec** is just a container for a test. A way to identify the exact feature we're testing. A spec can contain multiple test.
     * if all the expectations within the spec return true (each test must return true as well), then that spec passes.
@@ -65,7 +65,7 @@ expect(add(0.1, 0.2)).toBe(0.3);
     });
     ```
 
-* **describe** is used to indetify a *suite* which is a group of related specs.
+* **describe** is used to identify a *suite* which is a group of related specs.
     * in this case, the suite is called "Player", which tells us that everything contained within the proper block is related to the player;
 
  ```javascript
@@ -92,9 +92,9 @@ describe("Player", function() {
   4. The comparison method is called **the matcher** and is a method chained after the call to expect.
     * jasmine includes a lot of matcher function and you can even add your own.
 
-    * In our example our matcher is toBe wich is the equivalent of a strict equal comparison.
+    * In our example our matcher is toBe which is the equivalent of a strict equal comparison.
 
-5. Finally we pass the **expected value** to our matcher, in our case the value ```0.3```.
+5. Finally, we pass the **expected value** to our matcher, in our case the value ```0.3```.
 
  ```javascript
 
@@ -109,7 +109,7 @@ describe("Player", function() {
 
  ```
 
- * ypu can also negate a test by chaining the world no, before the matcher. 
+ * you can also negate a test by chaining the world no, before the matcher. 
 
   ```javascript
     // this test would ebaluate to true
@@ -119,9 +119,9 @@ describe("Player", function() {
 
 ## [Getting Started with Red-Green-Refactor](https://youtu.be/cMXhrLBLpxs)
 
-* !!!**write your test first**!!!. This is called the **Red-Green-Refactor cycle**, it's called this because you write the test first and they all fails since there's no code to make them pass. You then write that code required to make your test pass.
+* !!!**write your test first**!!!. This is called the **Red-Green-Refactor cycle**, it's called this because you write the test first and they all fail since there's no code to make them pass. You then write that code required to make your test pass.
  
-* **Refactor** your code as you continue to add new feature.
+* **Refactor** your code as you continue to add a new feature.
 
 ### [Writing AddressBookSpec.js](https://youtu.be/gies2zF5tx8)
 
@@ -142,7 +142,7 @@ describe("Player", function() {
 
 ## [Correcting our Asynchronous Test](https://youtu.be/I51Ke4jbcT4)
 
-**[OPTIONAL]** If you are curious to see what happens in each combination of passing in vs. calling ```done```, one of our students tried all of them to see what would happen. The results in this [thread](https://discussions.udacity.com/t/async-tests-why-the-second-done-call/40751/6?u=durant) are illuminating and go beyond the [demos for Jasmine 2.1.2](http://jasmine.github.io/2.1/introduction.html). Take special note of the case where if you pass in the done function as an argument, you must also call it (otherwise things break!). And hopefully the Jasmine team will accept a pull request to update this information for all students (see [thread](https://discussions.udacity.com/t/async-tests-why-the-second-done-call/40751/4) if curious).
+**[OPTIONAL]** If you are curious to see what happens in each combination of passing in vs. calling ```done```, one of our students tried all of them to see what would happen. The results in this [thread](https://discussions.udacity.com/t/async-tests-why-the-second-done-call/40751/6?u=durant) are illuminating and go beyond the [demos for Jasmine 2.1.2](http://jasmine.github.io/2.1/introduction.html). Take special note of the case where if you pass in the done function as an argument, you must also call it (otherwise things break!). And hopefully, the Jasmine team will accept a pull request to update this information for all students (see [thread](https://discussions.udacity.com/t/async-tests-why-the-second-done-call/40751/4) if curious).
 
 Also note, if you are testing async, you do not need to pass in and call ```done```.
 
@@ -157,7 +157,7 @@ Also note, if you are testing async, you do not need to pass in and call ```done
 
 ## 19.1 [Development and Production Modes](https://youtu.be/LhHq3ll6ijw)
 
-* **Development** task contain things you reaaly need no matter what. eg. live editing
+* **Development** task contain things you really need no matter what. eg. live editing
 
 * **Production**  
 
@@ -174,7 +174,7 @@ Also note, if you are testing async, you do not need to pass in and call ```done
 
 ## 19.4 [JS Concatenation](https://youtu.be/3DCLo1f-g6c)
 
-1. It reduce a number of HTTP requests needed to load your page in production.
+1. It reduces the number of HTTP requests needed to load your page in production.
 
 2. It's the most basic variant of dependency management.
 
@@ -212,7 +212,7 @@ Also note, if you are testing async, you do not need to pass in and call ```done
 
 ## 19.9 Source Maps
 
-[Source maps](https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit) are files that associate line numbers from the processed file to the original. This way the browser can lookup the current line number in the sourcemap and open the right source file at the correct line when debugging. In Chrome for instance, the DevTools support source maps both for CSS and JavaScript.
+[Source maps](https://docs.google.com/document/d/1U1RGAehQwRypUTovF1KRlpiOFze0b-_2gc6fAH0KY0k/edit) are files that associate line numbers from the processed file to the original. This way the browser can lookup the current line number in the sourcemap and open the right source file at the correct line when debugging. In Chrome, for instance, the DevTools support source maps both for CSS and JavaScript.
 
 
 **Setup**
@@ -235,7 +235,7 @@ var sourcemaps = require('gulp-sourcemaps');
 });
 
 ```
-All of the pipes between init and write must have support. Check the list [here](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support) to verify. In the developer console, the output of app should automically link errors in the generated code to their line numbers in the original source.
+All of the pipes between init and write must have support. Check the list [here](https://github.com/floridoo/gulp-sourcemaps/wiki/Plugins-with-gulp-sourcemaps-support) to verify. In the developer console, the output of app should automatically link errors in the generated code to their line numbers in the original source.
 
 Source map Support for other languages
 In addition to things like concatenation and minification, source maps also support some languages/extensions that transpile to JavaScript like Typescript, CoffeeScript and ES6 / JSX.
@@ -259,13 +259,13 @@ Lossless compression reduces a file in such a way that the original can be recre
 
 **Imagemin**
 
-[gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) can losslessly compress JPEGs, GIFS, PNGs and SVGs out of the box. Lossless means that even though the file size will end up being smaller, special care is taken to not cause any visual changes whatsoever, meaning that original visual information stays exactly the same.
+[gulp-imagemin](https://www.npmjs.com/package/gulp-imagemin) can losslessly compress JPEGs, GIFS, PNGs, and SVGs out of the box. Lossless means that even though the file size will end up being smaller, special care is taken to not cause any visual changes whatsoever, meaning that original visual information stays exactly the same.
 
 After you’ve grabbed the plugin you can simply add a pipe between the new crunch-images task and call ```imagemin()``` in there. There are a few extra options such as generating progressive images, but even without any configuration this will take all of your images and do any safe optimizations.
 
 **Lossy Compression**
 
-Lossy compression, on the other hand, can only recreate an approximation of the original. Lossy compression can give you really small file sizes at the expense of image quality. But there are a few lossy optimizations that are truly smart, and PNG quantization is one of them. PNG quantization takes images with or without alpha transparency and converts them to 256 or less colored 8-bit pngs. Now if you do this manually and just convert a 16-bit image to a 8-bit image, you won’t like the results. It’ll end up...well..like a crappy gif, with unnatural, limited colors.
+Lossy compression, on the other hand, can only recreate an approximation of the original. Lossy compression can give you really small file sizes at the expense of image quality. But there are a few lossy optimizations that are truly smart, and PNG quantization is one of them. PNG quantization takes images with or without alpha transparency and converts them to 256 or less colored 8-bit png. Now if you do this manually and just convert a 16-bit image to an 8-bit image, you won’t like the results. It’ll end up...well..like a crappy gif, with unnatural, limited colors.
 
 
 **PNG Quantization**
@@ -299,7 +299,7 @@ Now you’ve got automatic image crunching in place and working for you but pro-
 
 **Even better compression options**
 
-Smaller images can tolerate more aggressive lossy compression. You might want to try other things like converting images to SVG where applicable. SVG stands for Scalable Vector Graphics and uses a XML-based format to describe an image and can in most cases be scaled infinitely without any increase in file size or loss of image quality. If you’d like to further explore techniques to work with your images, head to the notes for a few advanced topics. This includes stuff such as automatically resizing your images to become responsive and fit retina and non-retina screens, or inlining your images into your CSS or into a sprite to save a couple more HTTP requests.
+Smaller images can tolerate more aggressive lossy compression. You might want to try other things like converting images to SVG where applicable. SVG stands for Scalable Vector Graphics and uses an XML-based format to describe an image and can in most cases be scaled infinitely without any increase in file size or loss of image quality. If you’d like to further explore techniques to work with your images, head to the notes for a few advanced topics. This includes stuff such as automatically resizing your images to become responsive and fit retina and non-retina screens, or inlining your images into your CSS or into a sprite to save a couple more HTTP requests.
 
 
 # Lesson 20: Web Tooling and Automation Conclusion
