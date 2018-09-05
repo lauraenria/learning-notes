@@ -173,3 +173,195 @@ Remember: Cover letters are sometimes read before the resume, so the cover lette
 
 [example]
 
+
+Be sure to include the following:
+
+* A statement of thanks—"Thank you for your consideration."
+
+* A salutation and signature—"Best Regards..." (A signature is nice-to-have, but not required.)
+
+* Pertinent details about further communication or time-frames—"I am available to meet in person in London."
+
+
+By including these key components, you **demonstrate your gratitude for the recruiter or hiring manager's time** and ensure that they **know your availability to continue this conversation** about your qualifications.
+
+## [Format](https://youtu.be/Xlqoq-SoJso)
+
+* Format must looks nice
+
+* use clear professional fomt and the right amount of space beetween word
+
+* Use standard or 1 inch margins
+
+* align all paraghraphs to the left of the page
+
+* Include the date, month day, year, in the upper right or left hand corner
+
+* include a formal address in your letter
+
+* name of the recruiter if avalaible otherwise *dear engineering team* or *dear recruiting team works*
+
+* include a formal closing salutation
+
+* I racommend using the same header you have for your resume to be in your cover letter. 
+
+## Final Advice
+
+* **Eliminate any grammatical or spelling mistakes.** Attention to detail is important! Don't let the small yet important things jeopardize your chance of getting the job.
+
+* **Ensure that your cover letter format is professional.** Use a clear and professional font such as Times New Roman or Verdana, standard or 1 inch margins, and ensure all paragraphs are uniformly aligned on the page. Don't let a poor format distract the recruiter or hiring manager from focusing on the content of your cover letter.
+
+* Visit the Career Resource Center for additional resources on writing the [cover letter](https://career-resource-center.udacity.com/cover-letters).
+
+* Find a [job posting](https://career-resource-center.udacity.com/job-boards) that you want to apply to. Judge if you would be a good fit for the role. (Note: If you're more than 75% qualified for the job on paper, you're probably a good candidate and should give applying a shot!)
+Revise your cover letter using Udacity's [Cover Letter Checklist](https://career-resource-center.udacity.com/job-boards).
+
+
+
+Front-End Interview Preparation
+
+* Teach Me Something in 5 Minutes
+
+* [Front-End Interview Practice Checklist](https://docs.google.com/document/d/e/2PACX-1vTzHMH6U-uF3yLDgQ0Js8Elvx5FSTuY81TUTfXyVr6OoTV2vlekk0I5SxGJLfVNR02FvjuPQtq7TnXs/pub?embedded=true)
+
+
+## **General**
+
+* Answers contain no negative language
+
+𝥷 Answers focus on thought process and approach to problems
+
+**Hiring Perspective**: Employers will pay attention to tone and whether your approach to answering questions exudes confidence and professionalism. They want to know that the person they hire can communicate well with others, especially demonstrating an aptitude for collaboration.
+
+
+Tip: It’s okay if you don’t immediately know the answer to an interview question. Try to speak without rushing, and take some time to reflect on your response before giving an answer. The key is to keep it clear and concise.
+
+
+## **Targeted for Profession**
+
+* Answer(s) relate back to job duties, referring to specific job requirements in the
+
+   description
+
+* Answer(s) addresses the company's mission (eg: interest in education if applying
+
+   to an education company like Udacity)
+
+* Answer(s) demonstrates enthusiasm for learning new skills or topics in targeted
+
+   field
+
+* Answers show I am ready for the role; I am passionate about the specific
+
+   job and have the skills to succeed in the role
+
+* Answer(s) refers to my goals within a year at the target company
+
+* Answer(s) refers to my learning or career goals past one year from now
+
+
+**Hiring Perspective**: In addition to finding someone with the skills for the job, employers want to hire candidates who are passionate and have a personal drive related to the position. These qualities are essential in a constantly evolving field, because passion for the product or field ensures that you will do your best to remain on the cutting edge.
+
+
+**Tip**: Employers know that candidates won’t always fulfill every single qualification for the job—and that’s okay. When answering questions, be sure to explain why you are interested in the job and how this job aligns with your professional goals. If there are qualifications for the job that you don’t have yet, talk about any past experiences that prove you are prepared to take on learning new skills for the job.
+
+
+**Technical Accuracy**
+
+* Technical answers are correct and produce no errors
+
+* Mentions a specific front-end framework
+
+* Explains how framework works
+
+* Discusses advantages and disadvantages of framework
+
+* Compares framework to alternatives or discusses framework in context
+
+* Gives clear, functional code that does what it’s supposed to do
+
+* Provides detailed rationale for the code provided
+
+* Answer is in HTML, CSS and any necessary JavaScript
+
+
+**Hiring Perspective**:  Rather than focusing on whether you get the problem right, employers are more interested in seeing whether you can think like a developer and have strong problem solving abilities. **They want to hire someone who understands basic syntax, rules of the language being used, and what is actually going on with the code**. 
+
+
+**Tip**: Ask clarifying questions and/or for examples before diving into code. At the whiteboard, allow for ample room to write. When writing, try to leave space between the lines in case you have to go back and add lines in the middle. Walk through the solution with 1-2 example inputs, and don’t close the tag until you’re done.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
