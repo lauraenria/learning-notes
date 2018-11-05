@@ -3,18 +3,29 @@
 ## Index 
 
 * [Paths](#Paths)
-* [ls](##ls)
+* [VSCODE](###Editor-VSCODE)
 * [cd](##cd)
+* [ls](##ls)
+* [cp](##cp)
 * [mv](##mv)
-* [man](##man)
+* [rm](##rm)
 * [mkdir](##mkdir)
 * [rmdir](##rmdir)
+* [cat](##cat)
+* [find](##find)
+* [grep](##grep)
 * [touch](##touch)
-* [rm](##rm)
+* [Pipe](##Pipe)
+* [less](##less)
+* [more](##more)
+* [man](##man)
+* [history](##history)
+* [whatis](##whatis)
+* [echo](##echo)
 * [Extra commands](###Extra-commands)
 * [Resources](##Resources)
 
-#  Paths
+# Paths
 
 * `alt + tab` shortcut program I am running
 * `alt + esc` for the windows desktop
@@ -43,7 +54,8 @@
 
 * `/usr/bin` - Another location for programs on the system.
 
-### Editor VSCODE  
+### Editor VSCODE 
+[-i](##Index)
 
 * Use the command `code /path/to/file/or/directory/you/want/to/open` to open your file in VS Code.
 
@@ -71,9 +83,10 @@ OR
 
 `code .` : Open VS Code within the context of a folder
 
-## Linux commands
+## Linux commands 
 
 ## ls
+[-i](##Index)
 1. `ls [OPTION]... [FILE]...` List  information about the FILEs (the current directory by default).  Sort entries alphabetically
 
      `total [number]` : That is the total number of file system blocks, including indirect
@@ -259,7 +272,8 @@ Using color to distinguish file types is disabled both  by  default  and  with  
 With  --color=auto, ls emits color codes only when standard output is connected to a terminal.
 The LS_COLORS environment variable can change the settings.  Use the dircolors command to  set it.
 
-## cd
+## cd 
+[-i](##Index)
 
 2. [**cd**](http://www.linfo.org/cd.html) : change directory eg. `cd/arora/applications`
     * use **relative path** or **absolute path** `cd /path/to/directory`
@@ -278,7 +292,7 @@ The LS_COLORS environment variable can change the settings.  Use the dircolors c
 * `cd -L` :  forces symbolic links (nested) to be followed.
 * `cd -e` : like try and catch in JS, if there is a error stop the script and return the error. If the -P option is supplied, and the current working
                 directory cannot be determined successfully, exit with
-                a non-zero status
+                a non-zero status eg the directory doesn't exist
 * `cd -@` on systems that support it, present a file with extended attributes as a directory containing the file attributes
 
 * `CDPATH`: environment variabe can be used to define base directory for the cd command. 
@@ -310,41 +324,638 @@ The LS_COLORS environment variable can change the settings.  Use the dircolors c
 
 * run `info cd` or `help cd` commands for more info 
 
-## mv
+## cp 
+[-i](##Index)
 
-3. **mv** : move (rename) files - Syntax:
+3. **cp** : copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.
+    
+    SYNOPSIS
 
-## man
+   cp [OPTION]... [-T] SOURCE DEST
+   cp [OPTION]... SOURCE... DIRECTORY
+   cp [OPTION]... -t DIRECTORY SOURCE...
 
-4. **man** : the manual command - is used to show you all information about the command you are using.
+        -a, --archive
+              same as -dR --preserve=all
 
-## mkdir
+       --attributes-only
+              don't copy the file data, just the attributes
 
-5. **mkdir** : make directory - command allows the user to make a new directory.
+       --backup[=CONTROL]
+              make a backup of each existing destination file
+
+       -b     like --backup but does not accept an argument
+
+       --copy-contents
+              copy contents of special files when recursive
+
+       -d     same as --no-dereference --preserve=links
+
+       -f, --force
+              if  an  existing  destination file cannot be opened, remove it and try again (this
+              option is ignored when the -n option is also used)
+
+       -i, --interactive
+              prompt before overwrite (overrides a previous -n option)
+
+       -H     follow command-line symbolic links in SOURCE
+
+       -l, --link
+              hard link files instead of copying
+
+       -L, --dereference
+              always follow symbolic links in SOURCE
+
+       -n, --no-clobber
+              do not overwrite an existing file (overrides a previous -i option)
+
+       -P, --no-dereference
+              never follow symbolic links in SOURCE
+
+       -p     same as --preserve=mode,ownership,timestamps
+
+       --preserve[=ATTR_LIST]
+              preserve the specified attributes (default: mode,ownership,timestamps), if  possi‐
+              ble additional attributes: context, links, xattr, all
+
+       --no-preserve=ATTR_LIST
+              don't preserve the specified attributes
+
+       --parents
+              use full source file name under DIRECTORY
+
+       -R, -r, --recursive
+              copy directories recursively (even sub directory)
+
+        --reflink[=WHEN]
+              control clone/CoW copies. See below
+
+       --remove-destination
+              remove  each existing destination file before attempting to open it (contrast with
+              --force)
+
+       --sparse=WHEN
+              control creation of sparse files. See below
+
+       --strip-trailing-slashes
+              remove any trailing slashes from each SOURCE argument
+
+       -s, --symbolic-link
+              make symbolic links instead of copying
+
+       -S, --suffix=SUFFIX
+              override the usual backup suffix
+
+       -t, --target-directory=DIRECTORY
+              copy all SOURCE arguments into DIRECTORY
+
+       -T, --no-target-directory
+              treat DEST as a normal file
+
+       -u, --update
+              copy only when the SOURCE file is newer than the destination file or when the des‐
+              tination file is missing
+
+       -v, --verbose
+              explain what is being done
+
+       -x, --one-file-system
+              stay on this file system
+
+       -Z     set SELinux security context of destination file to default type
+
+       --context[=CTX]
+              like  -Z, or if CTX is specified then set the SELinux or SMACK security context to
+              CTX
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+`yes|command that you want` : In order to overwrite multiple files to save time pressing multiple yes eg `yes|cp command`
+
+You can copy multiple files and directories as well as use wildcards. A `wildcard` is a character that can be substituted for a pattern based selection. 
+
+* `*` the wildcard of wildcards, it's used to represent all single characters or any string.
+* `?`` used to represent one character
+* `[]` used to represent any character within the brackets
+
+## mv 
+[-i](##Index)
+
+4. **mv** : move (rename) files - Syntax:
+
     mv [OPTION]... [-T] SOURCE DEST
     mv [OPTION]... SOURCE... DIRECTORY
     mv [OPTION]... -t DIRECTORY SOURCE...
 
+    if the destination file doesn’t exist, it will be created. If the destination file exist, then it will be overwrite and the source file will be deleted.
 
-##   rmdir 
+        --backup[=CONTROL]
+              make a backup of each existing destination file (no (~) appended to it.)
 
-6. rmdir : remove directory - command allows the user to remove an existing command using the Linux CLI
+       -b     like --backup but does not accept an argument 
 
-## touch
+       With this option it is easier to take a backup of an existing file that will be overwritten as a result of the mv command. This will create a backup file with the tilde character(~) appended to it.
 
-7. **touch** : allows users to make files
+       -f, --force
+              do not prompt before overwriting
+              
+              mv prompts for confirmation overwriting the destination file if a file is write protected. The -f option overrides this minor protection and overwrite the destination file forcefully and delete the source file.
+
+       -i, --interactive
+              prompt before overwrite. 
+
+              Ask the user for confirmation before moving a file that would overwrite an existing file, you have to press `y` for confirm moving, any other key leaves the file as it is. This option doesn’t work if the file doesn’t exist, it simply rename it or move it to new location.
+
+       -n, --no-clobber
+              do not overwrite an existing file
+              
+
+       If you specify more than one of -i, -f, -n, only the final one takes effect.
+
+       --strip-trailing-slashes
+              remove any trailing slashes from each SOURCE argument
+
+       -S, --suffix=SUFFIX
+              override the usual backup suffix
+
+       -t, --target-directory=DIRECTORY
+              move all SOURCE arguments into DIRECTORY
+
+       -T, --no-target-directory
+              treat DEST as a normal file
+
+       -u, --update
+              move only when the SOURCE file is newer than the destination file or when the destination file is missing
+
+       -v, --verbose
+              explain what is being done
+
+       -Z, --context
+              set SELinux security context of destination file to default type
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+              
+        The  backup  suffix is '~', unless set with --suffix or SIMPLE_BACKUP_SUFFIX.  The version control method may be selected via the --backup option or through the VERSION_CONTROL environment variable.
+       Here are the values:
+
+       none, off
+              never make backups (even if --backup is given)
+
+       numbered, t
+              make numbered backups
+
+       existing, nil
+              numbered if numbered backups exist, simple otherwise
+
+       simple, never
+              always make simple backups
+              
+       move more than one file:
+            $ mv file_1 file_2 /somedirectory
+
+
+
+
+
+## rm 
+[-i](##Index)
+
+5. **rm** :  remove - like the rmdir command is meant to remove files from your Linux OS. Whereas the rmdir command will remove directories and files held within, the rm command will delete created files. An example of the rm command: rm - r
+
+        -f, --force
+              ignore nonexistent files and arguments, never prompt
+
+       -i     prompt before every removal
+
+       -I     prompt once before removing more than three files, or when removing recursively; less intrusive than -i, while still giving protection against most mistakes
+
+       --interactive[=WHEN]
+              prompt according to WHEN: never, once (-I), or always (-i); without WHEN, prompt always
+
+       --one-file-system
+              when removing a hierarchy recursively, skip any directory that is on a file system different from that of the corresponding command line argument
+
+       --no-preserve-root
+              do not treat '/' specially
+              when you remove a directory, don’t care if it deletes even the / (root) directory — which is kind of delete everything, no warning.
+
+       --preserve-root
+              do not remove '/' (default)
+               ensure / (root) directory  won’t be deleted… It’s mostly due to when you delete things recursively or using regex, and you want that extra certainty you either “REALLY” just delete everything even if it’s matching the root directory, or you want to “ENSURE” no root directory will be removed.
+               
+               Extra flag for when you delete things you are certain what you’re doing
+
+       -r, -R, --recursive
+              remove directories and their contents recursively
+
+       -d, --dir
+              remove empty directories
+
+       -v, --verbose
+              explain what is being done
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+       By default, rm does not remove directories.  Use the --recursive (-r or -R) option to remove each listed directory, too, along with all of its contents.
+
+       To remove a file whose name starts with a '-', for example '-foo', use one of these commands:
+
+              rm -- -foo
+
+              rm ./-foo
+              
+              rm -rf * 
+                  remove everything within the directory but leave the directory itself
+
+
+## mkdir 
+[-i](##Index)
+
+6. **mkdir** : make directory - command allows the user to make a new directory.
+
+SYNOPSIS
+       mkdir [OPTION]... DIRECTORY...
+
+        -m, --mode=MODE
+              set file mode (as in chmod), not a=rwx - umask eg Read mode only
+
+       -p, --parents
+              no error if existing, make parent directories as needed
+              eg mkdir -p a/b/c
+            .
+            ./a
+            ./a/b
+            ./a/b/c
+
+       -v, --verbose
+              print a message for each created directory
+
+       -Z     set SELinux security context of each created directory to the default type
+
+       --context[=CTX]
+              like -Z, or if CTX is specified then set the SELinux or SMACK security context to CTX
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+   * `mkdir dir_1 dir_2 ...dirN` create multiple directories at once with mkdir
+
+   * `mkdir dir1 dir2/{subdir1, subdir2, subdir3, subdirN} dir3 dirN` : create multiple subdirectories then you can pass those argument in `{}`
+
+
+
+## rmdir 
+[-i](##Index)
+
+7. rmdir : remove empty directories
+
+SYNOPSIS
+      rmdir [OPTION]... DIRECTORY...
+
+
+
+       --ignore-fail-on-non-empty
+
+            ignore each failure that is solely because a directory is non-empty
+
+       -p, --parents
+       
+            remove DIRECTORY and its ancestors; e.g., 'rmdir -p a/b/c' is similar to 'rmdir a/b/c a/b a'
+
+       -v, --verbose
+       
+            output a diagnostic for every directory processed
+
+       --help display this help and exit
+
+       --version
+       
+            output version information and exit
+
+
+## cat 
+[-i](##Index)
+
+8. cat - concatenate files and print on the standard output
+
+SYNOPSIS
+       cat [OPTION]... [FILE]...
+
+DESCRIPTION
+       Concatenate FILE(s) to standard output.
+
+       With no FILE, or when FILE is -, read standard input.
+
+       -A, --show-all
+              equivalent to -vET
+
+       -b, --number-nonblank
+              number nonempty output lines, overrides -n
+
+       -e     equivalent to -vE
+
+       -E, --show-ends
+              display $ at end of each line
+
+       -n, --number
+              number all output lines
+
+       -s, --squeeze-blank
+              suppress repeated empty output lines
+
+       -t     equivalent to -vT
+
+       -T, --show-tabs
+              display TAB characters as ^I
+
+       -u     (ignored)
+
+       -v, --show-nonprinting
+              use ^ and M- notation, except for LFD and TAB
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+       EXAMPLES
+       cat f - g
+              Output f's contents, then standard input, then g's contents.
+
+       cat    
+            Copy standard input to standard output.
+
+
+* cat filename | less 
+* cat filename | more
+
+
+## find 
+[-i](##Index)
+
+9. find - search for files in a directory hierarchy
+
+GNU find searches the directory tree rooted at each given start‐ing-point by evaluating the given expression from left to right, according to the rules  of  precedence (see  section
+OPERATORS),  until  the outcome is known (the left hand side is false for and operations, true for or), at which point
+find moves on to the next file name.  If no starting-point is specified, '`.`' is assumed.
+
+ If you are using find in an environment where security is important look at **Finding Files**
+
+ The  `-H`,  `-L` and `-P` options control the treatment of symbolic links.  Command-line arguments following these are taken
+ to be names of files or directories to be examined, up to the first argument that begins with `-`, or the argument `(`
+ or  `!`.   That  argument and any following arguments are taken to be the expression describing what is to be searched
+ for.  If no paths are given, the current directory is used.  If no expression is given, the expression `-print` is  used
+ (but you should probably consider using `-print0` instead, anyway).
+
+
+
+
+
+
+
+## grep 
+[-i](##Index)
+
+10. `grep`, egrep, fgrep, rgrep - print lines matching a pattern
+
+SYNOPSIS
+       grep [OPTIONS] PATTERN [FILE...]
+       grep [OPTIONS] -e PATTERN ... [FILE...]
+       grep [OPTIONS] -f FILE ... [FILE...]
+       
+ 
+ DESCRIPTION
+       grep  searches  for  PATTERN  in  each FILE.  A FILE of “-” stands for standard input.  If no FILE is given, recursive
+       searches examine the working directory, and nonrecursive searches read standard input.  By default,  grep  prints  the
+       matching lines.
+
+       In  addition, the variant programs egrep, fgrep and rgrep are the same as grep -E, grep -F, and grep -r, respectively.
+       These variants are deprecated, but are provided for backward compatibility.
+
+example
+
+* grep fox sample.txt
+
+* grep -i somepattern somefile
+
+* env | grep -i User
+
+* ls /somedir | grep '.txt$' 
+      * Should return all files ending with .txt in somedir.
+
+
+
+## touch 
+[-i](##Index)
+
+11. **touch** : allows users to make files
 `syntax: touch nameFile.txt` (if you want a text file)
 
-## rm
+NO SPACE {inside}
 
-8. **rm** :  remove - like the rmdir command is meant to remove files from your Linux OS. Whereas the rmdir command will remove directories and files held within, the rm command will delete created files. An example of the rm command: rn - r
+* `touch {subfile1, subfal2, subfile3, subfileN} file3...filerN` create multiple file
 
-* sudo apt-get dist-upgrade
+* `{subfile1, subfal2, subfile3, subfileN}.typeFile`
+    eg. touch {green,red,blue,pink}.txt 
 
-### Extra commands
+## man 
+[-i](##Index)
+
+12. **man** : the manual command - is used to show you all information about the command you are using.
+
+SYNOPSIS
+       man  [-C  file]  [-d] [-D] [--warnings[=warnings]] [-R encoding] [-L locale] [-m system[,...]] [-M path] [-S list] [-e
+       extension] [-i|-I] [--regex|--wildcard] [--names-only] [-a] [-u] [--no-subpages]  [-P  pager]  [-r  prompt]  [-7]  [-E
+       encoding]  [--no-hyphenation]  [--no-justification]  [-p string] [-t] [-T[device]] [-H[browser]] [-X[dpi]] [-Z] [[sec‐
+       tion] page[.section] ...] ...
+       man -k [apropos options] regexp ...
+       man -K [-w|-W] [-S list] [-i|-I] [--regex] [section] term ...
+       man -f [whatis options] page ...
+       man -l [-C file] [-d] [-D] [--warnings[=warnings]] [-R encoding] [-L locale] [-P pager] [-r prompt] [-7] [-E encoding]
+       [-p string] [-t] [-T[device]] [-H[browser]] [-X[dpi]] [-Z] file ...
+       man -w|-W [-C file] [-d] [-D] page ...
+       man -c [-C file] [-d] [-D] page ...
+       man [-?V]
+
+
+* `man + search term` : Look up the manual page for a particular command.
+
+* `man -k + search term` : Do a keyword search for all manual pages containing the given search term.
+
+* search within a manual page :  `slash / + word` then `enter`. Cycle through them by pressing the `n` button for next eg `eg /word`
+`shift + n` to go back
+
+## file 
+[-i](##Index)
+
+**file** — determine file type
+
+ <pre>
+file [-bcdEhiklLNnprsvzZ0] [--apple] [--extension] [--mime-encoding] [--mime-type] [-e testname] [-F separator] [-f namefile] [-m magicfiles] [-P name=value] file ...
+    
+file -C [-m magicfiles]
+file [--help]
+ </pre>
+
+ ## less
+ [-i](##Index)
+
+ $ less /home/pete/Documents/text1
+
+* `q` - Used to quit out of less and go back to your shell.
+Page up, Page down, Up and Down - Navigate using the arrow keys and page keys.
+* `g` - Moves to beginning of the text file.
+* `G` - Moves to the end of the text file.
+* `/search` - You can search for specific text inside the text document. Prefacing the words you want to search with /
+* `h` - If you need a little help about how to use less while you’re in less, use help.
+
+## history
+[-i](##Index)
+
+history of the commands that you previously entered
+
+## whatis
+[-i](##Index)
+whatis - display one-line manual page descriptions
+
+ whatis [-dlv?V] [-r|-w] [-s list] [-m system[,...]] [-M path] [-L locale] [-C file] name ...
+
+ Each  manual page has a short description available within it.  whatis searches the manual page names and displays the
+ manual page descriptions of any name matched.
+ name may contain wildcards (-w) or be a regular expression (-r). **Index**  databases  are  used  during the search, and are updated by the mandb program. 
+
+       -d, --debug
+              Print debugging information.
+
+       -v, --verbose
+              Print verbose warning messages.
+
+       -r, --regex
+              Interpret  each name as a regular expression.  If a name matches any part of a page name, a match will be made.
+              This option causes whatis to be somewhat slower due to the nature of database searches.
+
+       -w, --wildcard
+              Interpret each name as a pattern containing shell style wildcards.  For a match to be made,  an  expanded  name
+              must match the entire page name.  This option causes whatis to be somewhat slower due to the nature of database
+              searches.
+
+       -l, --long
+              Do not trim output to the terminal width.  Normally, output will be truncated to the terminal  width  to  avoid
+              ugly results from poorly-written NAME sections.
+
+       -s list, --sections list, --section list
+              Search  only  the given manual sections.  list is a colon- or comma-separated list of sections.  If an entry in
+              list is a simple section, for example "3", then the displayed list of descriptions will include pages  in  sec‐
+              tions  "3", "3perl", "3x", and so on; while if an entry in list has an extension, for example "3perl", then the
+              list will only include pages in that exact part of the manual section.
+
+       -m system[,...], --systems=system[,...]
+              If this system has access to other operating system's manual page  names,  they  can  be  accessed  using  this
+              option.  To search NewOS's manual page names, use the option -m NewOS.
+
+              The  system  specified  can be a combination of comma delimited operating system names.  To include a search of
+              the native operating system's manual page names, include the system name man  in  the  argument  string.   This
+              option will override the $SYSTEM environment variable.
+
+       -M path, --manpath=path
+              Specify  an  alternate  set  of colon-delimited manual page hierarchies to search.  By default, whatis uses the
+              $MANPATH environment variable, unless it is empty or unset, in which case it will determine an appropriate man‐
+              path based on your $PATH environment variable.  This option overrides the contents of $MANPATH.
+
+       -L locale, --locale=locale
+              whatis  will normally determine your current locale by a call to the C function setlocale(3) which interrogates
+              various environment variables, possibly including $LC_MESSAGES and $LANG.  To temporarily override  the  deter‐
+              mined  value,  use this option to supply a locale string directly to whatis.  Note that it will not take effect
+              until the search for pages actually begins.  Output such as the help message will always be  displayed  in  the
+              initially determined locale.
+
+       -C file, --config-file=file
+              Use this user configuration file rather than the default of ~/.manpath.
+
+       -?, --help
+              Print a help message and exit.
+
+       --usage
+              Print a short usage message and exit.
+
+
+
+## Echo
+[-i](##Index)
+
+echo - display a line of text
+
+SYNOPSIS
+
+ echo [SHORT-OPTION]... [STRING]...
+
+ echo LONG-OPTION
+
+       -n     do not output the trailing newline
+
+       -e     enable interpretation of backslash escapes
+
+       -E     disable interpretation of backslash escapes (default)
+
+       --help display this help and exit
+
+       --version
+              output version information and exit
+
+       If -e is in effect, the following sequences are recognized:
+
+       \\     backslash
+
+       \a     alert (BEL)
+
+       \b     backspace
+
+       \c     produce no further output
+
+       \e     escape
+
+       \f     form feed
+
+       \n     new line
+
+       \r     carriage return
+
+       \t     horizontal tab
+
+       \v     vertical tab
+
+### Extra commands 
+[-i](##Index)
+
+* `sudo apt-get dist-upgrade`
+
  * `sudo apt-get update && sudo apt-get dist-upgrade` : to get newest versions possible as per version requirements of dependencies
 
-### Resources
+ ## General Knowledge 
+ [-i](##Index)
+ 
+ * `file [path]` obtain information about what type of file a file or directory is
+ * Linux is Case Sensitive
+ * Spaces in names
+
+    * **single or double** Quotes eg `cd 'Holiday Photos'`
+    * **Escape Characters** backslash ( \ ) which  escape (or nullify) the special meaning of the next character eg `cd Holiday\ Photos`
+
+* Hidden Files and Directories
+
+
+### Resources [-i](##Index)
 
 * [Linux CSommand](http://www.linuxcommand.org/tlcl.php/)
 * [ryanstutorials Linux](https://ryanstutorials.net/)
