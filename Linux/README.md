@@ -272,6 +272,9 @@ Using color to distinguish file types is disabled both  by  default  and  with  
 With  --color=auto, ls emits color codes only when standard output is connected to a terminal.
 The LS_COLORS environment variable can change the settings.  Use the dircolors command to  set it.
 
+* ls -lahtr
+
+
 ## cd 
 [-i](##Index)
 
@@ -644,7 +647,7 @@ SYNOPSIS
             output version information and exit
 
 
-## cat 
+## [cat](http://www.linfo.org/cat.html) 
 [-i](##Index)
 
 8. cat - concatenate files and print on the standard output
@@ -701,10 +704,32 @@ DESCRIPTION
 * cat filename | more
 
 
+```
+<!-- INTERACTIVE WAY TO WRITE -->
+cat > random.txt <<EOF
+> asjkdfjkasd
+> asdfjasdkjfa
+> asdfjasdjgfkajsdjkffasdkhf
+> 
+> 
+> asdfjasgdgjfasd
+> EOF
+<!-- this is going to run the script -->
+```
+
+
+
 ## find 
 [-i](##Index)
-
 9. find - search for files in a directory hierarchy
+
+```
+ find [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]
+
+$ find [where to start searching from]
+ [expression determines what to find] [-options] [what to find]
+
+```
 
 GNU find searches the directory tree rooted at each given start‐ing-point by evaluating the given expression from left to right, according to the rules  of  precedence (see  section
 OPERATORS),  until  the outcome is known (the left hand side is false for and operations, true for or), at which point
@@ -718,9 +743,60 @@ find moves on to the next file name.  If no starting-point is specified, '`.`' i
  for.  If no paths are given, the current directory is used.  If no expression is given, the expression `-print` is  used
  (but you should probably consider using `-print0` instead, anyway).
 
+* `find /` To start searching the whole drive (**/** root folder)
+* `find . ` start searching for the folder you are currently
 
+* `find / -name myresume.txt`
+* 1. command
+      * 2. where to start searching
+      * 3. the expression  which determines what to find.
+      * 4. last part is the name of the thing to find.
+* `find ~ -name game` to search for the home folder
 
+### Expressions
 
+* **`-name`** search for the name of a file or folder
+* `-amin n` - The file was last accessed n minutes ago
+* `-anewer` - The file was last accessed more recently than it was modified
+* `-atime n` - The file was last accessed more n days ago
+* `-cmin n` - The file was last changed n minutes ago
+* `-cnewer` - The file was last changed more recently than the file was modified
+* `-ctime n` - The file was last changed more than n days ago
+* **`-empty`** - The file is empty
+* `-exec` executable files
+* `-executable` - The file is executable
+* `-exec CMD` - The file being searched which meets the above criteria and returns 0 for as its exit status for sucessful command execution.
+* **`-ok CMD`** - It works same as -exec except the user is prompted first.
+* `-false` - Always false
+* `-fstype type` - The file is on the specified file system
+* `-gid n` - The file belongs to group with the ID n
+* `-group groupname` - The file belongs to the named group
+* `-ilname pattern` - Search for a symbolic line but ignore case
+* `-iname pattern` - Search for a file but ignore case
+* `-inum n` - Search for a file with the specified node
+* `-ipath path` - Search for a path but ignore case
+* `-iregex expression` - Search for a expression but ignore case
+* `-links n` - Search for a file with the specified number of links
+* `-lname name` - Search for a symbolic link
+* `-mmin n` - File's data was last modified n minutes ago
+* `-mtime n` - File's data was last modified n days ago
+* **`-name namefile`** - Search for a file with the specified name
+* `-newer name` - Search for a file edited more recently than the file given
+* `-nogroup` - Search for a file with no group id
+* `-nouser` - Search for a file with no user attached to it
+* `-path path` - Search for a path
+* `-print` If the file is found the path to the file will be printed as output.
+* `-readable` - Find files which are readable
+* **`-regex pattern`** - Search for files matching a regular expression
+* **`-type type`** - Search for a particular type
+* `-uid uid` - Files numeric user id is the same as uid
+* `-user name` - File is owned by user specified
+* `-writable` - Search for files that can be written to
+
+* `\(expr \)` - True if ‘expr’ is true; used for grouping criteria combined with OR or AND.
+* `! expr` - True if ‘expr’ is false.
+* `find ./GFG -name sample.txt -exec rm -i {} \ ` - How to find and delete a file with confirmation.
+* `find ./GFG -empty`- Search for empty files and directories.
 
 
 
@@ -957,5 +1033,7 @@ SYNOPSIS
 
 ### Resources [-i](##Index)
 
-* [Linux CSommand](http://www.linuxcommand.org/tlcl.php/)
+
+* [linfo Linux CSommands](http://www.linfo.org/command_index.html)
+* [Linux Commands](http://www.linuxcommand.org/tlcl.php/)
 * [ryanstutorials Linux](https://ryanstutorials.net/)

@@ -1,0 +1,15 @@
+{
+  "name": "quiz-linuz-commands",
+  "version": "1.0.0",
+  "description": "quiz",
+  "main": "logic.js",
+  "dependencies": {
+    "inquirer": "^6.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lauraenria",
+  "license": "ISC"
+}
