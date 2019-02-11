@@ -1,7 +1,9 @@
 # Documentations Ubuntu
 
+ find .  -not -name '*.txt' -type f
+ ctrl + L = clear
 ## Index 
-
+* [Chaining Operators](##Chaining-Operators)
 * [Paths](#Paths)
 * [VSCODE](###Editor-VSCODE)
 * [cd](##cd)
@@ -22,6 +24,14 @@
 * [history](##history)
 * [whatis](##whatis)
 * [echo](##echo)
+* [tac](##tac)
+* [nl](##nl)
+* [head](##head)
+* [tail](##tail)
+* [](##)
+* [](##)
+* [](##)
+* [](##)
 * [Extra commands](###Extra-commands)
 * [Resources](##Resources)
 
@@ -83,7 +93,27 @@ OR
 
 `code .` : Open VS Code within the context of a folder
 
-## Linux commands 
+# Linux commands 
+
+## Chaining Operators
+
+1. Ampersand Operator `&` :  to make the command run in background 
+      * eg. `tecmint@localhost:~$ ping ­c5 www.tecmint.com &` 
+      * `root@localhost:/home/tecmint# apt-get update & apt-get upgrade &`
+
+2.semi-colon Operator `;`: makes it possible to run, several commands in a single go and the execution of command occurs sequentially.
+      * eg `root@localhost:/home/tecmint# apt-get update ; apt-get upgrade ; mkdir test`
+
+3. AND Operator (&&)
+4. OR Operator (||)
+5. NOT Operator (!): it's much like an ‘except‘ statement. This command will execute all except the condition provided
+6. AND – OR operator (&& – ||)
+7. PIPE Operator (|): the output of first command acts as an input to the second command. 
+8. Command Combination Operator {}: 8. Command Combination Operator {}
+9. Precedence Operator (): The Operator makes it possible to execute command in precedence order. eg `(Command_x1 &&Command_x2) || (Command_x3 && Command_x4)
+`
+10. Concatenation Operator (\): it's used to concatenate large commands over several lines in the shell.
+
 
 ## ls
 [-i](##Index)
@@ -700,8 +730,22 @@ DESCRIPTION
             Copy standard input to standard output.
 
 
-* cat filename | less 
-* cat filename | more
+
+
+Other 
+
+* `cat file1`
+* `cat file1 > file2` the output from cat is written to file2 instead of being displayed on the monitor screen.
+* `cat file1 file2 file3` **Concatenation**
+* `cat file1 file2 file3 > file4`
+* `cat file1 file2 file3 | sort > file4`
+* `cat filename | less `
+* `cat filename | more`
+* `cat > file1` File Creation
+* `cat >> file1`
+* `cat file1 > file2` creates a new file named file2 that contains a copy of the contents of file1
+* `cat - file5 > file6` create a new file file6 that consists of text typed in from the keyboard followed by the contents of file5
+* `cat file7 - > file8` create a new file file8 that consists of the contents of file7 followed by text typed in from the keyboard
 
 
 ```
@@ -797,6 +841,58 @@ find moves on to the next file name.  If no starting-point is specified, '`.`' i
 * `! expr` - True if ‘expr’ is false.
 * `find ./GFG -name sample.txt -exec rm -i {} \ ` - How to find and delete a file with confirmation.
 * `find ./GFG -empty`- Search for empty files and directories.
+
+## Find types
+
+According to the file type to find the file, use the -type option, the common find file type is shown in the following table.
+
+| File type |	Description |
+|-----------|---------------|
+|b|	Block device file
+|c|	Character device file
+|d|	Directory
+|f|	Ordinary file
+|l|	Symbolic link
+
+
+---
+| Operators type |	Description |
+|----------------|---------------|
+|-and| Matches if the test files on both sides of the operator are true. Can be abbreviated as -a. Note that -and is used by default if no operator is used
+|-or|	Match if any of the test conditions on both sides of the operator are true. Can be abbreviated as -o
+|-not|	Match if the test condition following the operator is false. Can be abbreviated as an exclamation point (!)
+|()|	Combining test conditions and operators to form larger expressions. This will always control the logic calculation priority. By default, find commands are evaluated from left to right. It is often necessary to override the default job search order to get the desired result. Even if not necessary, sometimes including the combined characters is helpful for improving the readability of the command. Note that because parentheses have special meaning to the shell, when using them on the command line, they must be enclosed in parentheses before they can be passed as arguments to the find command. Usually backslash characters are used to escape parentheses
+
+
+## Common Examples
+
+```js
+Example 1: To print all symbolic links ending in .txt in the current directory, use the following command:
+
+find . -type l -name "*.txt" -print
+image desc
+
+Example 2: Print all php files with permissions of 777 in the current directory (php files on web servers generally need execute permission). You can use the following command:
+
+find . -type f -name "*.php" -perm 777
+
+
+Example 3: To print all files owned by the root user in the current directory, use the following command:
+
+find . -type f -user root
+
+
+Example 4: Print all files whose permissions under the current directory are not 777 and 664. You can use the following command:
+
+find . -type f  \( ! -perm 777  -and  ! -perm 644 \)
+```
+
+## tips
+* Find all the folders and files not ending in txt
+`find . -type d && find  .  ! -name "*.txt"
+`
+
+* `find . -type l -name "*.txt" -print`
 
 
 
@@ -1011,12 +1107,42 @@ SYNOPSIS
 
        \v     vertical tab
 
+### example
+
+* `echo "test content for git tutorial" >> CommitTest.txt
+`
+
 ### Extra commands 
 [-i](##Index)
 
 * `sudo apt-get dist-upgrade`
 
  * `sudo apt-get update && sudo apt-get dist-upgrade` : to get newest versions possible as per version requirements of dependencies
+
+ * `df -h /` how much space is used on a partition of your hard disk
+
+ * top -d1 (type “q” to quit) Watch the processes running on your computer.
+
+ * `lpr`
+
+ * `last -1 $USER` how long you’ve been logged in
+
+ * `wget http://linuxpocketguide.com/sample.pdf` Download a file sample.pdf from this book’s website to your current directory, without needing a web browser
+
+ * `ip addr show eth0` Display information about your computer’s IP address
+
+ * `whois oreilly.com | less` See who owns the domain name oreilly.com (press the space bar to move forward page by page, and type “q” to quit)
+
+ * man -k database | less To search for manpages by keyword for a particular topic, use the -k option followed by the keyword (shown here piped into the command less to display the results one screenful at a time; press the space bar to continue and q to quit)
+
+ * `info ls` While info is running, some useful keystrokes are:
+       * To get help, type `h`
+       * To quit, type `q`
+       * To page forward and backward, use the `space bar ` and `Backspace key`, respectively
+       * To jump between hyperlinks, press `Tab`
+       * To follow a hyperlink, press `Enter`
+
+       If info has no documentation on a given program, it displays the program’s manpage. For a listing of available documentation, type info by itself. To learn how to navigate the info system, type info info.
 
  ## General Knowledge 
  [-i](##Index)
@@ -1037,3 +1163,6 @@ SYNOPSIS
 * [linfo Linux CSommands](http://www.linfo.org/command_index.html)
 * [Linux Commands](http://www.linuxcommand.org/tlcl.php/)
 * [ryanstutorials Linux](https://ryanstutorials.net/)
+*[One linux command directory per day](http://www.cnblogs.com/peida/archive/2012/12/05/2803591.html)
+* [labex interactive tutorial](https://labex.io/courses/57)
+* lsblk list dispositivi che ho
